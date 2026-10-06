@@ -11,6 +11,7 @@ FROM dunglas/frankenphp:php8.3-bookworm
 WORKDIR /app
 
 RUN install-php-extensions \
+    calendar \
     pdo_mysql \
     mbstring \
     curl \
