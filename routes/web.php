@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
-Route::get('/__empire-db-check', function () {
+Route::get('/install/__empire-db-check', function () {
     $expected = (string) env('EMPIRE_DB_CHECK_TOKEN');
 
     abort_unless(
@@ -14,9 +14,8 @@ Route::get('/__empire-db-check', function () {
     );
 
     try {
-        $pdo = DB::connection()->getPdo();
         $config = DB::connection()->getConfig();
-
+        $pdo = DB::connection()->getPdo();
         $hasAdmins = Schema::hasTable('admins');
         $adminCount = $hasAdmins ? DB::table('admins')->count() : 0;
 
@@ -26,16 +25,19 @@ Route::get('/__empire-db-check', function () {
             'host' => $config['host'] ?? null,
             'port' => $config['port'] ?? null,
             'database' => $config['database'] ?? null,
-            'pdo' => $pdo ? true : false,
+            'pdo' => (bool) $pdo,
             'admins_table' => $hasAdmins,
             'admins_count' => $adminCount,
         ]);
     } catch (\Throwable $e) {
+        $config = DB::connection()->getConfig();
+
         return response()->json([
             'ok' => false,
-            'host' => DB::connection()->getConfig('host'),
-            'port' => DB::connection()->getConfig('port'),
-            'database' => DB::connection()->getConfig('database'),
+            'driver' => $config['driver'] ?? null,
+            'host' => $config['host'] ?? null,
+            'port' => $config['port'] ?? null,
+            'database' => $config['database'] ?? null,
             'error' => $e->getMessage(),
         ], 500);
     }
