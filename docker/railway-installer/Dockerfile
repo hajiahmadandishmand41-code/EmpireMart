@@ -2,7 +2,7 @@ FROM serversideup/php:8.3-cli
 
 USER root
 
-RUN install-php-extensions intl bcmath calendar
+RUN install-php-extensions intl bcmath calendar gd
 
 WORKDIR /app
 
