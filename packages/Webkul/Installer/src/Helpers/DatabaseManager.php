@@ -37,32 +37,18 @@ class DatabaseManager
      */
     public function isInstalled(): bool
     {
-        if (! file_exists(base_path('.env'))) {
-            return false;
-        }
-
         try {
-            DB::connection()->getPDO();
+            DB::connection()->getPdo();
 
-            $isConnected = (bool) DB::connection()->getDatabaseName();
-
-            if (! $isConnected) {
+            if (! DB::connection()->getDatabaseName()) {
                 return false;
             }
 
-            $hasTable = Schema::hasTable('admins');
-
-            if (! $hasTable) {
+            if (! Schema::hasTable('admins')) {
                 return false;
             }
 
-            $userCount = DB::table('admins')->count();
-
-            if (! $userCount) {
-                return false;
-            }
-
-            return true;
+            return DB::table('admins')->exists();
         } catch (Exception $e) {
             return false;
         }
