@@ -37,23 +37,39 @@ class CanInstall
     /**
      * Application Already Installed.
      *
+     * The `storage/installed` marker file is only a fast-path cache. The
+     * database check performed by the `DatabaseManager` is authoritative:
+     * on runtimes with an ephemeral filesystem (Vercel serverless
+     * functions, containers without a persistent volume) the marker file
+     * disappears on every cold start while the database survives. Falling
+     * back to the database therefore keeps an installed application from
+     * ever redirecting to the installer again, regardless of the state of
+     * the local filesystem.
+     *
      * @return bool
      */
-    public function isAlreadyInstalled()
+    public function isAlreadyInstalled(): bool
     {
         if (file_exists(storage_path('installed'))) {
             return true;
         }
 
-        if (app(DatabaseManager::class)->isInstalled()) {
-            touch(storage_path('installed'));
-
-            Event::dispatch('bagisto.installed');
-
-            return true;
+        if (! app(DatabaseManager::class)->isInstalled()) {
+            return false;
         }
 
-        return false;
+        /**
+         * Persistence of the marker is best-effort: it may fail on
+         * read-only filesystems, which must never break the response.
+         * The installation event only fires when the marker is actually
+         * (re)created so it is not re-dispatched on every request on
+         * ephemeral runtimes.
+         */
+        if (@touch(storage_path('installed'))) {
+            Event::dispatch('bagisto.installed');
+        }
+
+        return true;
     }
 
     /**
