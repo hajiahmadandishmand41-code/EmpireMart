@@ -69,7 +69,7 @@ if (! function_exists('empireDbStatus')) {
             DB::connection()->getPdo();
 
             $payload['pdo'] = true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             /**
              * Connection errors may contain the error message from the server;
              * they never contain the password, so the message itself is safe
@@ -161,7 +161,7 @@ Route::post('/__empire/install', function () {
 
     try {
         DB::connection()->getPdo();
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         return response()->json([
             'ok' => false,
             'stage' => 'connect',
@@ -280,7 +280,7 @@ Route::post('/__empire/install', function () {
 
         try {
             Artisan::call('optimize:clear');
-        } catch (\Throwable) {
+        } catch (Throwable) {
             // Non-critical on serverless runtimes.
         }
 
@@ -300,7 +300,7 @@ Route::post('/__empire/install', function () {
         }
 
         return response()->json($response);
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         report($e);
 
         return response()->json([

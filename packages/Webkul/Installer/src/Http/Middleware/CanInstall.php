@@ -58,8 +58,6 @@ class CanInstall
      * back to the database therefore keeps an installed application from
      * ever redirecting to the installer again, regardless of the state of
      * the local filesystem.
-     *
-     * @return bool
      */
     public function isAlreadyInstalled(): bool
     {
