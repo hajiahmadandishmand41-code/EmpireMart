@@ -27,7 +27,7 @@ export default defineConfig({
 
     forbidOnly: !!process.env.CI,
 
-    retries: 0,
+    retries: process.env.CI ? 2 : 0,
 
     reportSlowTests: null,
 
