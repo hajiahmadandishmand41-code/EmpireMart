@@ -17,6 +17,19 @@ class CanInstall
      */
     public function handle(Request $request, Closure $next)
     {
+        /**
+         * TEMPORARY — EmpireMart production bootstrap. REMOVE ME.
+         *
+         * The short-lived, token-protected bootstrap routes under
+         * `/__empire/*` (see `routes/web.php`) must stay reachable both
+         * before and after installation for verification, so they bypass
+         * this guard entirely. They protect themselves; every other
+         * request keeps the standard installer behaviour.
+         */
+        if (Str::startsWith(trim($request->decodedPath(), '/'), '__empire/')) {
+            return $next($request);
+        }
+
         if ($this->isAlreadyInstalled()) {
             if ($this->isInstallerRequest($request)) {
                 if (! $request->ajax()) {
