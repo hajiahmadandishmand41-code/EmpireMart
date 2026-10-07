@@ -34,35 +34,36 @@ class DatabaseManager
 
     /**
      * Check if the application is installed.
+     *
+     * The database is the single source of truth for the installation state.
+     * Environments with an ephemeral or read-only filesystem (for example
+     * Vercel serverless functions) cannot persist `storage/installed` or a
+     * local `.env` file, because configuration there arrives through real
+     * environment variables. Requiring those files before consulting the
+     * database would make such runtimes believe the application is never
+     * installed and would endlessly redirect every request to the installer.
+     *
+     * Therefore the check only requires:
+     *
+     *  - a working connection to the configured database;
+     *  - an `admins` table, which only exists after the migrations ran;
+     *  - at least one administrator record, which only exists after the
+     *    seeders created the first back-office user.
      */
     public function isInstalled(): bool
     {
-        if (! file_exists(base_path('.env'))) {
-            return false;
-        }
-
         try {
-            DB::connection()->getPDO();
+            DB::connection()->getPdo();
 
-            $isConnected = (bool) DB::connection()->getDatabaseName();
-
-            if (! $isConnected) {
+            if (! DB::connection()->getDatabaseName()) {
                 return false;
             }
 
-            $hasTable = Schema::hasTable('admins');
-
-            if (! $hasTable) {
+            if (! Schema::hasTable('admins')) {
                 return false;
             }
 
-            $userCount = DB::table('admins')->count();
-
-            if (! $userCount) {
-                return false;
-            }
-
-            return true;
+            return DB::table('admins')->exists();
         } catch (Exception $e) {
             return false;
         }
