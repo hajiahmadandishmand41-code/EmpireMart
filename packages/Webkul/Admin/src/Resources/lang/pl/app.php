@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Logo lokalizacji',
                     'name' => 'Nazwa',
                     'save-btn' => 'Zapisz lokalizację',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Wybierz kierunek',
                     'title' => 'Utwórz lokalizację',
                 ],

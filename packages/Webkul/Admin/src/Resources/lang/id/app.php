@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Logo Lokal',
                     'name' => 'Nama',
                     'save-btn' => 'Simpan Lokal',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Pilih Arah',
                     'title' => 'Buat Lokal',
                 ],

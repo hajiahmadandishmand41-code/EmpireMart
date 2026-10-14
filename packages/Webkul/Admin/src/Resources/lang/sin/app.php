@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'භාෂා ලෝගෝ',
                     'name' => 'නම',
                     'save-btn' => 'මාතෘකාව සුරකින්න',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'දිශාව තෝරනවා',
                     'title' => 'මාතෘකාවක් සාදන්න',
                 ],

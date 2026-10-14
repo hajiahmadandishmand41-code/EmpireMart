@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'स्थान लोगो',
                     'name' => 'नाम',
                     'save-btn' => 'स्थान सहेजें',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'दिशा चुनें',
                     'title' => 'स्थान बनाएं',
                 ],

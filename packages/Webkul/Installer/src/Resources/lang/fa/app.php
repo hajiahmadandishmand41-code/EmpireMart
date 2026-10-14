@@ -140,6 +140,7 @@ return [
 
             'currencies' => [
                 'AED' => 'درهم امارات متحده',
+                'AFN' => 'افغانی افغانستان',
                 'ARS' => 'پزوی آرژانتین',
                 'AUD' => 'دلار استرالیا',
                 'BDT' => 'تاکای بنگلادش',
@@ -214,6 +215,7 @@ return [
                 'en' => 'انگلیسی',
                 'es' => 'اسپانیایی',
                 'fa' => 'فارسی',
+                'fa_AF' => 'دری',
                 'fr' => 'فرانسوی',
                 'he' => 'عبری',
                 'hi_IN' => 'هندی',
@@ -815,6 +817,7 @@ return [
             ],
 
             'environment-configuration' => [
+                'afghan-afghani' => 'افغانی افغانستان (AFN)',
                 'algerian-dinar' => 'دینار الجزایری (DZD)',
                 'allowed-currencies' => 'ارزهای مجاز',
                 'allowed-locales' => 'زبان‌های مجاز',
@@ -981,6 +984,7 @@ return [
             'catalan' => 'کاتالان',
             'chinese' => 'چینی',
             'continue' => 'ادامه',
+            'dari' => 'دری',
             'dutch' => 'هلندی',
             'english' => 'انگلیسی',
             'french' => 'فرانسوی',

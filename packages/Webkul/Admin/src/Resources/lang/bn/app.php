@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'লোকেল লোগো',
                     'name' => 'নাম',
                     'save-btn' => 'লোকেল সংরক্ষণ করুন',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'দিক নির্বাচন করুন',
                     'title' => 'নতুন লোকাল তৈরি করুন',
                 ],

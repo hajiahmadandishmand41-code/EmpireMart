@@ -536,6 +536,29 @@ return [
         ],
     ],
 
+    'storefront' => [
+        'empty-address' => 'نشانی‌ای ثبت نشده',
+        'empty-review' => 'دیدگاهی ثبت نشده',
+        'empty-search-result' => 'نتیجه‌ای یافت نشد',
+        'empty-wishlist' => 'فهرست علاقه‌مندی‌ها خالی است',
+        'enter-your-password' => 'رمز عبور خود را وارد کنید',
+        'go-back' => 'بازگشت',
+        'go-to-slide' => 'رفتن به اسلاید',
+        'hello' => 'سلام!',
+        'more-options' => 'گزینه‌های بیشتر',
+        'no-image' => 'بدون تصویر',
+        'profile-image' => 'تصویر پروفایل',
+        'review-image' => 'تصویر دیدگاه',
+        'search-image' => 'تصویر جست‌وجو',
+        'show-more-products' => 'نمایش محصولات بیشتر',
+        'skip-to-content' => 'رفتن به محتوای اصلی',
+        'toggle-accordion' => 'باز و بسته کردن بخش',
+        'uploaded-image' => 'تصویر بارگذاری‌شده',
+        'stars' => ':count ستاره',
+        'uploaded-image-url' => 'نشانی تصویر بارگذاری‌شده',
+        'video-unsupported' => 'مرورگر شما از پخش ویدیوی HTML پشتیبانی نمی‌کند.',
+    ],
+
     'components' => [
         'accordion' => [
             'default-content' => 'محتوای پیش‌فرض',

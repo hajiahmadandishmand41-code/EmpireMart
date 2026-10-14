@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Taal Logo',
                     'name' => 'Naam',
                     'save-btn' => 'Taal Opslaan',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Richting selecteren',
                     'title' => 'Taal Aanmaken',
                 ],

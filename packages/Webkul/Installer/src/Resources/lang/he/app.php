@@ -140,6 +140,7 @@ return [
 
             'currencies' => [
                 'AED' => 'דירהם של איחוד האמירויות',
+                'AFN' => 'אפגני',
                 'ARS' => 'פזו ארגנטינאי',
                 'AUD' => 'דולר אוסטרלי',
                 'BDT' => 'טאקה בנגלדשי',
@@ -214,6 +215,7 @@ return [
                 'en' => 'אנגלית',
                 'es' => 'ספרדית',
                 'fa' => 'פרסית',
+                'fa_AF' => 'דארי',
                 'fr' => 'צרפתית',
                 'he' => 'עברית',
                 'hi_IN' => 'הינדית',
@@ -815,6 +817,7 @@ return [
             ],
 
             'environment-configuration' => [
+                'afghan-afghani' => 'אפגני (AFN)',
                 'algerian-dinar' => 'דינר אלגי (DZD)',
                 'allowed-currencies' => 'מטבעות מותרים',
                 'allowed-locales' => 'שפות מותרות',
@@ -981,6 +984,7 @@ return [
             'catalan' => 'קטלאני',
             'chinese' => 'סיני',
             'continue' => 'המשך',
+            'dari' => 'דארי',
             'dutch' => 'הולנדי',
             'english' => 'אנגלית',
             'french' => 'צרפתי',

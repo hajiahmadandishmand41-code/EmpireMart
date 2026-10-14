@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'ロケールロゴ',
                     'name' => '名前',
                     'save-btn' => 'ロケールを保存',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => '方向を選択',
                     'title' => 'ロケールを作成',
                 ],

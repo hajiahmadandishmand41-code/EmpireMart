@@ -140,6 +140,7 @@ return [
 
             'currencies' => [
                 'AED' => 'アラブ首長国連邦ディルハム',
+                'AFN' => 'アフガニスタン・アフガニ',
                 'ARS' => 'アルゼンチンペソ',
                 'AUD' => 'オーストラリアドル',
                 'BDT' => 'バングラデシュタカ',
@@ -214,6 +215,7 @@ return [
                 'en' => '英語',
                 'es' => 'スペイン語',
                 'fa' => 'ペルシャ語',
+                'fa_AF' => 'ダリー語',
                 'fr' => 'フランス語',
                 'he' => 'ヘブライ語',
                 'hi_IN' => 'ヒンディー語',
@@ -815,6 +817,7 @@ return [
             ],
 
             'environment-configuration' => [
+                'afghan-afghani' => 'アフガニスタン・アフガニ (AFN)',
                 'algerian-dinar' => 'アルジェリアディナール（DZD）',
                 'allowed-currencies' => '許可された通貨',
                 'allowed-locales' => '許可されたロケール',
@@ -981,6 +984,7 @@ return [
             'catalan' => 'カタルーニャ語',
             'chinese' => '中国語',
             'continue' => '続行',
+            'dari' => 'ダリー語',
             'dutch' => 'オランダ語',
             'english' => '英語',
             'french' => 'フランス語',

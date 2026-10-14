@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Logotip de l\'Idioma',
                     'name' => 'Nom',
                     'save-btn' => 'Desar Idioma',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Seleccionar direcció',
                     'title' => 'Crear Idioma',
                 ],

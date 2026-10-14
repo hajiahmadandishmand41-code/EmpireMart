@@ -536,6 +536,29 @@ return [
         ],
     ],
 
+    'storefront' => [
+        'empty-address' => 'Empty Address',
+        'empty-review' => 'Empty Review',
+        'empty-search-result' => 'Empty result',
+        'empty-wishlist' => 'Empty wishlist',
+        'enter-your-password' => 'Enter your password',
+        'go-back' => 'Go back',
+        'go-to-slide' => 'Go to slide',
+        'hello' => 'Hello!',
+        'more-options' => 'More Options',
+        'no-image' => 'No Image',
+        'profile-image' => 'Profile Image',
+        'review-image' => 'Review Image',
+        'search-image' => 'Search image',
+        'show-more-products' => 'Show more products',
+        'skip-to-content' => 'Skip to main content',
+        'toggle-accordion' => 'Toggle accordion',
+        'uploaded-image' => 'Uploaded Image',
+        'stars' => ':count Stars',
+        'uploaded-image-url' => 'Uploaded image url',
+        'video-unsupported' => 'Your browser does not support HTML video.',
+    ],
+
     'components' => [
         'accordion' => [
             'default-content' => 'Default Content',
