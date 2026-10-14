@@ -11,7 +11,7 @@
         type="text/x-template"
         id="v-coupon-template"
     >
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-md:font-normal max-sm:text-sm">
                 @{{ cart.coupon_code ? "@lang('shop::app.checkout.coupon.applied')" : "@lang('shop::app.checkout.coupon.discount')" }}
             </p>

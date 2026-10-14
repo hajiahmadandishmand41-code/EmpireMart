@@ -30,7 +30,7 @@
                         <input
                             type="text"
                             class="block w-full rounded-lg border bg-white py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 ltr:pl-3 ltr:pr-10 rtl:pl-10 rtl:pr-3"
-                            placeholder="Search by name"
+                            placeholder="@lang('admin::app.components.products.search.title')"
                             v-model.lazy="searchTerm"
                             v-debounce="500"
                         />
@@ -108,7 +108,7 @@
                         </div>
 
                         <!-- Actions -->
-                        <div class="grid place-content-start gap-1 text-right">
+                        <div class="grid place-content-start gap-1 text-end">
                             <p class="font-semibold text-gray-800 dark:text-white">
                                 @{{ product.formatted_price }}
                             </p>

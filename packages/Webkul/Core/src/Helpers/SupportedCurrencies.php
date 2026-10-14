@@ -11,9 +11,14 @@ class SupportedCurrencies
      * label is read from, so the installer's console and its screens both name it the same
      * way; `symbol` and `decimal` are what the currency is seeded with, the latter being the
      * number of minor units the currency actually has rather than an assumed two.
+     *
+     * `position` is optional. A currency that sets it is written with the symbol in that
+     * place and with the number of decimals above, which is how the Afghani is shown as
+     * "؋ ۱٬۲۳۴٫۵۰" in Dari instead of being rounded to whole afghanis by the ICU default.
      */
     const ALL = [
         'AED' => ['name' => 'united-arab-emirates-dirham', 'symbol' => 'د.إ', 'decimal' => 2],
+        'AFN' => ['name' => 'afghan-afghani', 'symbol' => '؋', 'decimal' => 2, 'position' => 'left_with_space'],
         'ARS' => ['name' => 'argentine-peso', 'symbol' => '$', 'decimal' => 2],
         'AUD' => ['name' => 'australian-dollar', 'symbol' => 'A$', 'decimal' => 2],
         'BDT' => ['name' => 'bangladeshi-taka', 'symbol' => '৳', 'decimal' => 2],
@@ -117,5 +122,14 @@ class SupportedCurrencies
     public static function decimal(string $code): int
     {
         return self::ALL[$code]['decimal'] ?? 2;
+    }
+
+    /**
+     * Get the position a currency symbol is written in, or null when the locale
+     * the store is being read in should decide it.
+     */
+    public static function position(string $code): ?string
+    {
+        return self::ALL[$code]['position'] ?? null;
     }
 }

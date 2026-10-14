@@ -3,7 +3,7 @@
 return [
     'path-hint' => [
         'template' => 'Template',
-        'parents' => 'Parents',
+        'parents' => 'والدین',
     ],
 
     'currency-position' => [

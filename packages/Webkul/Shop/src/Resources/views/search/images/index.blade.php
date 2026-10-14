@@ -64,7 +64,7 @@
                 id="uploaded-image-url"
                 class="hidden"
                 :src="uploadedImageUrl"
-                alt="uploaded image url"
+                alt="@lang('shop::app.storefront.uploaded-image-url')"
                 width="20"
                 height="20"
             />

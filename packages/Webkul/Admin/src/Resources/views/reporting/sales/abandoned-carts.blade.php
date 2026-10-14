@@ -139,7 +139,7 @@
                                 <div class="flex items-center gap-5">
                                     <div class="relative h-2 w-full bg-slate-100">
                                         <div
-                                            class="absolute left-0 h-2 bg-blue-500"
+                                            class="absolute start-0 h-2 bg-blue-500"
                                             :style="{ 'width': product.progress + '%' }"
                                         ></div>
                                     </div>

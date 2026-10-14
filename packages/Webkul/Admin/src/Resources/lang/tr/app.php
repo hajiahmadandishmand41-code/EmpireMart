@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Yerel Logosu',
                     'name' => 'Adı',
                     'save-btn' => 'Yereli Kaydet',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Yön seç',
                     'title' => 'Yerel Oluştur',
                 ],

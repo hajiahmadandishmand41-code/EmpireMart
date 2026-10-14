@@ -2,6 +2,43 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **Unreleased** - *Afghanistan store (Dari, AFN)*
+
+- The store is set up for Afghanistan: `fa_AF` (Dari) is a locale with a full translation pack, the Afghani (AFN) is the base currency, the timezone is `Asia/Kabul` and Afghanistan is the default country. A migration prepares a store that is already running and `php artisan bagisto:afghanistan:setup` converts its stored prices once the shop owner supplies the rate.
+
+- Right to left pages are written in Vazirmatn, self-hosted with its licence under `public/fonts/vazirmatn`, for the storefront, the admin panel, the installer, the emails and the invoice PDFs.
+
+- Afghanistan's 34 provinces are seeded with Dari and English names, so the state field offers them instead of free text, and the postal code requirement is cleared because the country does not use postal codes.
+
+- Fixed the phone rule refusing the way Afghan numbers are written down (`+93 700 123 456`), in the browser and on the server, and translated the validation messages into Dari.
+
+- Fixed the RMA screens showing every amount as US dollars through a hard-coded formatter, and the order factory writing test orders in a currency the store was not configured with.
+
+- Fixed the right-to-left invoice printing the amount of an Afghani price without its currency: Vazirmatn and the DejaVu Sans the invoices were drawn with have no glyph for the sign of the Afghani. The storefront serves the sign from a 692-byte subset of Noto Sans Arabic named for U+060B alone, and the invoice embeds the full Noto Sans Arabic for Persian and Dari.
+
+- The date pickers in both panels read in Dari: flatpickr ships no Afghan locale, so the Afghan month names, the Saturday week start and the labels a screen reader announces are added, and a regional code such as `fa_IR` falls back to the language it starts with instead of leaving the calendar in English.
+
+- Added the storefront strings that were still hard-coded in English (image alts, accessibility labels, star ratings, the video fallback) to the language files, and named both text directions in the locale screen.
+
+
+- The right-to-left layout is finished off in both panels: one-sided utilities in the views became Tailwind's logical ones (`ps`/`pe`, `ms`/`me`, `start`/`end`, `text-start`/`text-end`, `border-s`/`border-e`, `rounded-s`/`rounded-e`), which read the same in English and follow the writing direction in Dari, and the arrows that had no mirrored glyph (carousels, pagination, the date picker, the media gallery, the image zoomer) got one. Centring pairs such as `left-1/2 -translate-x-1/2` are untouched on purpose.
+
+- `DariOrderTest` buys something in the Dari storefront in CI: a product at 1000 AFN, a ten percent coupon, the order, the page the customer is shown once it is placed, the invoice, and every amount asserted both as a number and as the Afghan string the customer reads.
+
+
+- The Vercel check that had been failing on every commit since the sources were imported is now skipped on purpose: Bagisto is a PHP/MySQL application that Vercel cannot build or run, so `vercel.json` points the Ignored Build Step at `scripts/vercel-ignore-build.sh`, which explains why in the build log. The store's own deployment path — the single-container production image in `docker/production`, built from this branch's `.env.example`, so it boots already in Dari and priced in Afghanis — is written up in `docs/afghanistan-store.md`.
+
+- The long browser matrices no longer run on pull requests: each starts twenty jobs that run for hours, and while they were queued for every push and pull request the Pest, Pint and translation jobs for the same event never got to start. They run when `main` moves, and on demand from the Actions tab, while a single job from each workflow runs on every pull request - the storefront and the panel, each installed in Dari and checked in a browser. Those two matrices also install the platform's own store now (English, dollars, no default country): they find the shop and the panel by their English labels, and the store priced in Afghanis had been the reason the platform's own price test read an Afghani sign out of a JSON body that escapes it.
+
+
+- `scripts/rtl-audit.py` reports any view still written for one direction only, and `scripts/check-built-css.py` reports any class the views use that the built stylesheets do not have - the mistake that makes an RTL fix disappear in production. Both are documented in `docs/afghanistan-store.md` and both pass.
+
+- Two tests assert the deployment: that `.env.example` carries the Afghan settings, and that the three production Dockerfiles install the store from that file, so an image built here boots already in Dari and priced in Afghanis.
+
+
+- The admin panel is checked in a browser on every pull request, the way the storefront already was: a job installs it in Dari and asserts the direction, the language and the font it is typeset in. Both browser workflows now keep one generation of runs per branch, so a queued browser suite can no longer hold the queue and starve the fast suites.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

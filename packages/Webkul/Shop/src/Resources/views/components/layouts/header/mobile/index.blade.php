@@ -284,7 +284,7 @@
                                     class="flex flex-col justify-between gap-2.5 max-md:gap-0"
                                     v-pre
                                 >
-                                    <p class="text-2xl break-all font-mediums max-md:text-xl">Hello! {{ auth()->user()?->first_name }}</p>
+                                    <p class="text-2xl break-all font-mediums max-md:text-xl">@lang('shop::app.storefront.hello') {{ auth()->user()?->first_name }}</p>
 
                                     <p class="no-underline text-zinc-500 max-md:text-sm">{{ auth()->user()?->email }}</p>
                                 </div>
@@ -361,7 +361,7 @@
                         : bagisto_asset('images/default-language.svg')
                                                             }}"
                                                         class="h-full"
-                                                        alt="Default locale"
+                                                        alt="@lang('shop::app.components.layouts.header.desktop.top.default-locale')"
                                                         width="24"
                                                         height="16"
                                                     />
@@ -457,7 +457,7 @@
                         <button
                             @click="goBackToMainView"
                             class="flex items-center justify-center gap-2 focus:outline-none"
-                            aria-label="Go back"
+                            aria-label="@lang('shop::app.storefront.go-back')"
                         >
                         <span class="text-lg icon-arrow-left rtl:icon-arrow-right"></span>
                         <div class="text-base font-medium text-black">

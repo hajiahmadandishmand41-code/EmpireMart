@@ -220,7 +220,7 @@
                                     @{{ attribute.admin_name }}
                                 </span>
 
-                                <i class="icon-sort-right text-lg"></i>
+                                <i class="icon-sort-right rtl:icon-sort-left text-lg"></i>
 
                                 @{{ option.admin_name }}
                             </div>
@@ -263,7 +263,7 @@
                     <!-- Edit Drawer -->
                     <x-admin::drawer
                         ref="updateVariantsDrawer"
-                        class="text-left"
+                        class="text-start"
                     >
                         <!-- Drawer Header -->
                         <x-slot:header>
@@ -861,7 +861,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="grid place-content-start gap-1 text-right">
+            <div class="grid place-content-start gap-1 text-end">
                 <p class="font-semibold text-gray-800 dark:text-white">
                     @{{ $admin.formatPrice(variant.price) }}  
                 </p>
@@ -897,7 +897,7 @@
                                 <!-- Edit Drawer -->
                                 <x-admin::drawer
                                     ref="editVariantDrawer"
-                                    class="text-left"
+                                    class="text-start"
                                 >
                                     <!-- Drawer Header -->
                                     <x-slot:header>

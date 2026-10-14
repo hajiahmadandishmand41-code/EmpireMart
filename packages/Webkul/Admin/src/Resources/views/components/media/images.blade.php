@@ -174,7 +174,7 @@
                                     <template v-else>
                                         <p class="truncate text-lg font-bold text-gray-800 dark:text-white">
                                             <span
-                                                class="icon-arrow-right mr-1 cursor-pointer align-middle text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                                                class="icon-arrow-right rtl:icon-arrow-left me-1 cursor-pointer align-middle text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                                 @click="ai.images = []"
                                             ></span>
 

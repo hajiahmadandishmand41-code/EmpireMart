@@ -35,6 +35,8 @@
         />
 
         @stack('styles')
+
+        @include('core::blade.rtl-fonts')
     </head>
 
     @php
@@ -205,7 +207,7 @@
                             </div>
                         </div>
 
-                        <p class="mb-6 w-full place-self-end text-left">
+                        <p class="mb-6 w-full place-self-end text-start">
                             <a
                                 class="bg-white text-blue-600 underline"
                                 href="https://bagisto.com/en/"
@@ -806,7 +808,7 @@
                                         <x-installer::form.control-group.control
                                             type="select"
                                             name="app_currency"
-                                            ::value="envData.app_currency ?? 'USD'"
+                                            ::value="envData.app_currency ?? '{{ config('app.currency') }}'"
                                             :aria-label="trans('installer::app.installer.index.environment-configuration.default-currency')"
                                             rules="required"
                                             :label="trans('installer::app.installer.index.environment-configuration.default-currency')"
@@ -814,7 +816,7 @@
                                             <option value="" disabled>Select Currencies</option>
 
                                             @foreach ($currencies as $value => $label)
-                                                <option value="{{ $value }}" @if($value == 'USD') selected @endif>
+                                                <option value="{{ $value }}" @if($value == config('app.currency')) selected @endif>
                                                     @lang("installer::app.installer.index.environment-configuration.$label")
                                                 </option>
                                             @endforeach

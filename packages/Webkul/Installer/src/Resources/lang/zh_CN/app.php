@@ -140,6 +140,7 @@ return [
 
             'currencies' => [
                 'AED' => '阿联酋迪拉姆',
+                'AFN' => '阿富汗尼',
                 'ARS' => '阿根廷比索',
                 'AUD' => '澳大利亚元',
                 'BDT' => '孟加拉塔卡',
@@ -214,6 +215,7 @@ return [
                 'en' => '英語',
                 'es' => '西班牙語',
                 'fa' => '波斯語',
+                'fa_AF' => '达利语',
                 'fr' => '法語',
                 'he' => '希伯來語',
                 'hi_IN' => '印度區區',
@@ -815,6 +817,7 @@ return [
             ],
 
             'environment-configuration' => [
+                'afghan-afghani' => '阿富汗尼 (AFN)',
                 'algerian-dinar' => '阿尔及利亚第纳尔 (DZD)',
                 'allowed-currencies' => '允许的货币',
                 'allowed-locales' => '允许的语言环境',
@@ -981,6 +984,7 @@ return [
             'catalan' => '加泰罗尼亚语',
             'chinese' => '中文',
             'continue' => '继续',
+            'dari' => '达利语',
             'dutch' => '荷兰语',
             'english' => '英语',
             'french' => '法语',

@@ -1,6 +1,21 @@
 name: Pest Tests
 
-on: [push, pull_request]
+# Pushes to main, and every pull request. A branch push that is also a pull request
+# used to start this suite twice and fight the long browser suites for runners; the
+# pull request event is the one that matters for a branch, and main is covered here.
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
+
+concurrency:
+  # One generation of a suite per branch: a new push cancels the runs the previous push
+  # left pending, which is what kept the queue from ever reaching the newest commit.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -71,10 +86,72 @@ jobs:
           sed -i "s|^\(DB_DATABASE=\s*\).*$|\1bagisto|" .env
           sed -i "s|^\(DB_USERNAME=\s*\).*$|\1${{ matrix.db-user }}|" .env
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1${{ matrix.db-password }}|" .env
+          #
+          # The store ships in Dari, but this suite asserts the English labels,
+          # the English address rules and the platform's own defaults, so the
+          # installation it runs against is put back to the values this suite was
+          # written for - including an empty default country, which is what the
+          # platform ships with. The store the shop owner actually gets - in
+          # Dari, priced in Afghanis - is installed and checked by the last two
+          # steps below.
+          #
+          sed -i "s|^\(APP_LOCALE=\s*\).*$|\1en|" .env
+          sed -i "s|^\(APP_CURRENCY=\s*\).*$|\1USD|" .env
+          sed -i "s|^\(APP_TIMEZONE=\s*\).*$|\1Asia/Kolkata|" .env
+          sed -i "s|^\(APP_DEFAULT_COUNTRY=\).*$|\1|" .env
           cat .env
 
       - name: Running Bagisto Installer
         run: php artisan bagisto:install --no-interaction
 
       - name: Running Pest Test
-        run: vendor/bin/pest --parallel --colors=always
+        run: |
+          set +e
+
+          vendor/bin/pest --parallel --colors=never 2>&1 | tee /tmp/pest.log
+
+          status=${PIPESTATUS[0]}
+
+          if [ $status -ne 0 ]; then
+            # The job log is not reachable from the outside, so what failed is repeated as
+            # annotations: first the failing tests, then the assertions behind them.
+            strip_ansi="sed -r 's/\\x1B\\[[0-9;]*[mK]//g'"
+
+            eval "$strip_ansi /tmp/pest.log" | grep -E '⨯|Tests:' | head -60 | while IFS= read -r line; do
+              echo "::error title=Pest failure::${line}"
+            done
+
+            eval "$strip_ansi /tmp/pest.log" | grep -E 'Failed asserting' | head -40 | while IFS= read -r line; do
+              echo "::warning title=Pest detail::${line}"
+            done
+          fi
+
+          exit $status
+
+      - name: Installing the store in Dari
+        run: |
+          sed -i "s|^\(APP_LOCALE=\s*\).*$|\1fa_AF|" .env
+          sed -i "s|^\(APP_CURRENCY=\s*\).*$|\1AFN|" .env
+          sed -i "s|^\(APP_TIMEZONE=\s*\).*$|\1Asia/Kabul|" .env
+          sed -i "s|^\(APP_DEFAULT_COUNTRY=\).*$|\1AF|" .env
+          php artisan bagisto:install --no-interaction
+
+      - name: Running the Afghan store tests against the Dari installation
+        run: |
+          set +e
+          vendor/bin/pest packages/Webkul/Core/tests/Unit/Afghanistan packages/Webkul/Shop/tests/Feature/Afghanistan --colors=never 2>&1 | tee /tmp/afghanistan.log
+          status=${PIPESTATUS[0]}
+
+          if [ $status -ne 0 ]; then
+            strip_ansi="sed -r 's/\\x1B\\[[0-9;]*[mK]//g'"
+
+            eval "$strip_ansi /tmp/afghanistan.log" | grep -E '⨯|Tests:' | head -60 | while IFS= read -r line; do
+              echo "::error title=Afghan store::${line}"
+            done
+
+            eval "$strip_ansi /tmp/afghanistan.log" | grep -E 'Failed asserting|Expected|at packages' | head -40 | while IFS= read -r line; do
+              echo "::warning title=Afghan store detail::${line}"
+            done
+          fi
+
+          exit $status

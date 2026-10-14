@@ -8,8 +8,8 @@
             ])
         </p>
 
-        <nav aria-label="Page Navigation">
-            <ul class="inline-flex items-center -space-x-px">
+        <nav aria-label="@lang('shop::app.components.datagrid.table.page-navigation')">
+            <ul class="inline-flex items-center -space-x-px rtl:space-x-reverse">
                 <!-- Previous Page Link -->
                 <li>
                     @if ($paginator->onFirstPage())

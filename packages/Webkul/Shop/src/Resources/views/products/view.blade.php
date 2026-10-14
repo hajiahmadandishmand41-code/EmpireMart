@@ -218,7 +218,7 @@
                                             <img
                                                 class="min-h-5 min-w-5 h-5 w-5"
                                                 src="{{ Storage::url($customAttributeValue['value']) }}"
-                                                alt="Product Image"
+                                                alt="@lang('shop::app.products.view.gallery.product-image')"
                                             />
                                         </a>
                                     @else

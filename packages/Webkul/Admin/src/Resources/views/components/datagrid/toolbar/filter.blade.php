@@ -52,7 +52,7 @@
                                 </span>
 
                                 <span
-                                    class="icon-dot absolute right-2 top-1.5 text-sm font-bold"
+                                    class="icon-dot absolute end-2 top-1.5 text-sm font-bold"
                                     v-if="hasAnyAppliedColumn()"
                                 >
                                 </span>

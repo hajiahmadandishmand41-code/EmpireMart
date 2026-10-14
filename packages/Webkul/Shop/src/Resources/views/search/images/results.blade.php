@@ -38,7 +38,7 @@
                 <img
                     class="h-[110px] max-h-[110px] min-h-[110px] w-[110px] max-w-[110px] rounded-sm max-sm:h-[60px] max-sm:max-h-[60px] max-sm:min-h-[60px] max-sm:w-[60px] max-sm:max-w-[60px] max-sm:rounded-xl"
                     :src="searchedImageUrl"
-                    alt="search image"
+                    alt="@lang('shop::app.storefront.search-image')"
                     height="110"
                     width="110"
                 />

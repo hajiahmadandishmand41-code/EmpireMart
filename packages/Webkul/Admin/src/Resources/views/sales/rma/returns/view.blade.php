@@ -450,10 +450,7 @@
 
                                                 <!-- Message Bubble -->
                                                 <div
-                                                    :class="[
-                                                        'rounded-xl p-3.5 text-left shadow-sm',
-                                                        message.is_admin == 1 ? 'bg-blue-50 dark:bg-blue-900/40' : 'bg-white dark:bg-gray-800'
-                                                    ]"
+                                                    :class="[ 'rounded-xl p-3.5 text-start shadow-sm', message.is_admin == 1 ? 'bg-blue-50 dark:bg-blue-900/40' : 'bg-white dark:bg-gray-800' ]"
                                                     style="word-break: break-word; min-width: 160px;"
                                                 >
                                                     <div class="flex items-center gap-2 mb-1">
@@ -488,7 +485,7 @@
                                                             @click="viewAttachmentModal(message.attachment_path)"
                                                             class="icon-attribute dark:text-black-300 text-base font-normal cursor-pointer hover:underline"
                                                         >
-                                                            <span class="text-base ml-2">
+                                                            <span class="text-base ms-2">
                                                                 @{{ message.attachment }}
                                                             </span>
                                                         </a>

@@ -186,7 +186,7 @@
 
                                         <button
                                             type="button"
-                                            class="min-w-0 flex-1 text-left ltr:pr-1 rtl:pl-1"
+                                            class="min-w-0 flex-1 text-start ltr:pr-1 rtl:pl-1"
                                             @click="select(element)"
                                         >
                                             <span class="flex items-center gap-1">

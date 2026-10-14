@@ -329,7 +329,8 @@ class CartRuleRepository extends Repository
     }
 
     /**
-     * Retrieve all grouped states by country code.
+     * Retrieve all grouped states by country code, named in the language the
+     * panel is being read in.
      *
      * @return array
      */
@@ -339,7 +340,19 @@ class CartRuleRepository extends Repository
 
         $countries = DB::table('countries')->get();
 
-        $countriesStates = DB::table('country_states')->get();
+        $translations = DB::table('country_state_translations')
+            ->where('locale', app()->getLocale())
+            ->pluck('default_name', 'country_state_id');
+
+        $countriesStates = DB::table('country_states')->get()->map(function ($state) use ($translations) {
+            $translated = $translations[$state->id] ?? null;
+
+            if ($translated) {
+                $state->default_name = $translated;
+            }
+
+            return $state;
+        });
 
         foreach ($countries as $country) {
             $states = $countriesStates->where('country_id', $country->id);

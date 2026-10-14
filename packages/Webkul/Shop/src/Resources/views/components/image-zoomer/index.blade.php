@@ -29,14 +29,14 @@
                 </span>
 
                 <span
-                    class="icon-arrow-left fixed left-2.5 top-1/2 z-10 -mt-12 w-auto cursor-pointer rounded-full bg-[rgba(0,0,0,0.8)] p-3 text-2xl font-bold text-white opacity-30 transition-all hover:opacity-100"
+                    class="icon-arrow-left rtl:icon-arrow-right fixed start-2.5 top-1/2 z-10 -mt-12 w-auto cursor-pointer rounded-full bg-[rgba(0,0,0,0.8)] p-3 text-2xl font-bold text-white opacity-30 transition-all hover:opacity-100"
                     v-if="attachments.length >= 2"
                     @click="navigate(currentIndex -= 1)"
                 >
                 </span>
 
                 <span
-                    class="icon-arrow-right fixed right-2.5 top-1/2 z-10 -mt-12 w-auto cursor-pointer rounded-full bg-[rgba(0,0,0,0.8)] p-3 text-2xl font-bold text-white opacity-30 transition-all hover:opacity-100"
+                    class="icon-arrow-right rtl:icon-arrow-left fixed end-2.5 top-1/2 z-10 -mt-12 w-auto cursor-pointer rounded-full bg-[rgba(0,0,0,0.8)] p-3 text-2xl font-bold text-white opacity-30 transition-all hover:opacity-100"
                     v-if="attachments.length >= 2"
                     @click="navigate(currentIndex += 1)"
                 >
@@ -66,7 +66,7 @@
                             >
                                 <source :src="attachment.url" type="video/mp4">
                                 <source :src="attachment.url" type="video/ogg">
-                                    Your browser does not support HTML video.
+                                    @lang('shop::app.storefront.video-unsupported')
                             </video>
 
                             <template v-if="attachment.type === 'image'">

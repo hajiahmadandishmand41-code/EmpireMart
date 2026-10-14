@@ -29,7 +29,7 @@
             <p class="py-3 text-xl font-bold leading-6 text-gray-800 dark:text-white">
                 @lang('admin::app.eu_withdrawal.view.heading')
 
-                <span class="ml-1 font-mono text-base text-gray-500 dark:text-gray-400">
+                <span class="ms-1 font-mono text-base text-gray-500 dark:text-gray-400">
                     #{{ $withdrawal->id }}
                 </span>
             </p>

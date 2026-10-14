@@ -30,7 +30,7 @@
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.sub_total.before') !!}
 
                     <template v-if="displayTax.subtotal == 'including_tax'">
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.sub-total')
                             </p>
@@ -42,7 +42,7 @@
                     </template>
 
                     <template v-else-if="displayTax.subtotal == 'both'">
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.sub-total-excl-tax')
                             </p>
@@ -52,7 +52,7 @@
                             </p>
                         </div>
                         
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.sub-total-incl-tax')
                             </p>
@@ -64,7 +64,7 @@
                     </template>
 
                     <template v-else>
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.sub-total')
                             </p>
@@ -82,7 +82,7 @@
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.tax.before') !!}
 
                     <div
-                        class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right"
+                        class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end"
                         v-for="(amount, index) in cart.tax_amounts"
                         v-if="parseFloat(cart.tax_total)"
                     >
@@ -101,7 +101,7 @@
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.delivery_charges.before') !!}
 
                     <template v-if="displayTax.shipping == 'including_tax'">
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.shipping-amount')
                             </p>
@@ -113,7 +113,7 @@
                     </template>
 
                     <template v-else-if="displayTax.shipping == 'both'">
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.shipping-amount-excl-tax')
                             </p>
@@ -123,7 +123,7 @@
                             </p>
                         </div>
                         
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.shipping-amount-incl-tax')
                             </p>
@@ -135,7 +135,7 @@
                     </template>
 
                     <template v-else>
-                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                        <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                             <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.create.cart.summary.shipping-amount')
                             </p>
@@ -154,7 +154,7 @@
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.discount_amount.before') !!}
 
                     <div
-                        class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right"
+                        class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end"
                         v-if="parseFloat(cart.discount_amount)"
                     >
                         <p class="text-base font-medium text-gray-600 dark:text-gray-300">
@@ -172,7 +172,7 @@
                     <!-- Discount -->
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.coupon.before') !!}
 
-                    <div class="row grid grid-cols-2 grid-rows-1 justify-items-end gap-4 text-right">
+                    <div class="row grid grid-cols-2 grid-rows-1 justify-items-end gap-4 text-end">
                         <p class="text-base font-medium text-gray-600 dark:text-gray-300">
                             @lang('admin::app.sales.orders.create.cart.summary.apply-coupon')
                         </p>
@@ -208,7 +208,7 @@
                     <!-- Cart Grand Total -->
                     {!! view_render_event('bagisto.admin.sales.order.create.left_component.summary.grand_total.before') !!}
 
-                    <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-right">
+                    <div class="row grid grid-cols-2 grid-rows-1 justify-between gap-4 text-end">
                         <p class="text-lg font-semibold dark:text-white">
                             @lang('admin::app.sales.orders.create.cart.summary.grand-total')
                         </p>

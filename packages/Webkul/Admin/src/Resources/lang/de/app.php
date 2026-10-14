@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Sprachversionslogo',
                     'name' => 'Name',
                     'save-btn' => 'Sprachversion speichern',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Richtung auswählen',
                     'title' => 'Sprachversion erstellen',
                 ],

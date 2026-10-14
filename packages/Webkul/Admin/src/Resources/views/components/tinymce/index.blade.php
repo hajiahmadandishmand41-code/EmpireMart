@@ -108,7 +108,7 @@
 
                         <!-- Generated Content -->
                         <x-admin::form.control-group class="mt-5">
-                            <x-admin::form.control-group.label class="text-left">
+                            <x-admin::form.control-group.label class="text-start">
                                 @lang('admin::app.components.tinymce.ai-generation.generated-content')
                             </x-admin::form.control-group.label>
 

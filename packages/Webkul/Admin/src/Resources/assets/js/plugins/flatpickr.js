@@ -5,6 +5,7 @@ import { Spanish } from "flatpickr/dist/l10n/es.js";
 import { Catalan } from "flatpickr/dist/l10n/cat.js"
 import { Arabic } from "flatpickr/dist/l10n/ar.js";
 import { Persian } from "flatpickr/dist/l10n/fa.js";
+import Dari from "../../locales/fa_AF.js";
 import { Turkish } from "flatpickr/dist/l10n/tr.js";
 import { Bengali } from "flatpickr/dist/l10n/bn.js";
 import { German } from "flatpickr/dist/l10n/de.js";
@@ -34,6 +35,7 @@ export default {
                 ca: Catalan,
                 ar: Arabic,
                 fa: Persian,
+                fa_AF: Dari,
                 tr: Turkish,
                 bn: Bengali,
                 de: German,
@@ -52,7 +54,14 @@ export default {
                 zh: Chinese,
             };
 
-            const locale = localeMap[lang] || null;
+            /**
+             * A regional code such as fa_IR or en_GB is not in the map, but the
+             * language it starts with is, so the calendar still reads in the
+             * language the panel is written in.
+             */
+            const locale = localeMap[lang]
+                || localeMap[String(lang).split("_")[0]]
+                || null;
 
             if (locale) {
                 window.Flatpickr.localize(locale);

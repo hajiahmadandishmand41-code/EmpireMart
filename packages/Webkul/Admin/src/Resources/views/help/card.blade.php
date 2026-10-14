@@ -5,7 +5,7 @@
     class="group relative flex flex-col rounded-xl border border-gray-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-blue-500/50"
 >
     <!-- External Link Indicator -->
-    <span class="absolute right-5 top-5 text-gray-300 transition-colors group-hover:text-blue-600 dark:text-gray-600 dark:group-hover:text-blue-400">
+    <span class="absolute end-5 top-5 text-gray-300 transition-colors group-hover:text-blue-600 dark:text-gray-600 dark:group-hover:text-blue-400">
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 17 17 7M9 7h8v8"></path>
         </svg>

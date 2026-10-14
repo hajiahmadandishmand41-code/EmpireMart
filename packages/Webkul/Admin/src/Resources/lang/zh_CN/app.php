@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => '区域标志',
                     'name' => '名称',
                     'save-btn' => '保存区域',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => '选择方向',
                     'title' => '创建区域',
                 ],

@@ -1,6 +1,21 @@
 name: Pint Tests
 
-on: [push, pull_request]
+# Pushes to main, and every pull request. A branch push that is also a pull request
+# used to start this suite twice and fight the long browser suites for runners; the
+# pull request event is the one that matters for a branch, and main is covered here.
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
+
+concurrency:
+  # One generation of a suite per branch: a new push cancels the runs the previous push
+  # left pending, which is what kept the queue from ever reaching the newest commit.
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -26,4 +41,37 @@ jobs:
           COMPOSER_HOME: ${{ runner.temp }}/composer
 
       - name: Run Pint
-        run: ${{ runner.temp }}/composer/vendor/bin/pint --test
+        run: |
+          set +e
+
+          # Pint reports in agent, checkstyle, gitlab, json, junit, txt or xml; `agent` is the one
+          # that names the files it would rewrite in a single small JSON report. It is written to
+          # its own file because the job log is not reachable from the outside: the report is
+          # repeated below as annotations, which are.
+          ${{ runner.temp }}/composer/vendor/bin/pint --test --format=agent > /tmp/pint.json 2>/tmp/pint.log
+
+          status=$?
+
+          cat /tmp/pint.log 2>/dev/null
+
+          cat /tmp/pint.json 2>/dev/null
+
+          # The report is one JSON object on its own line; taking that line keeps the parse
+          # working even if something else reaches stdout first.
+          grep -m1 '^{' /tmp/pint.json > /tmp/pint.report.json || :
+
+          if [ $status -ne 0 ]; then
+            if jq -e '.result' /tmp/pint.report.json > /dev/null 2>&1; then
+              jq -r '.files[]? | "::error file=" + .path + ",line=1,title=Pint::" + (.fixers | join(", "))' /tmp/pint.report.json
+
+              jq -r '.errors[]? | "::error file=" + .path + ",line=1,title=Pint::" + .message' /tmp/pint.report.json
+
+              jq -r '"::notice title=Pint::" + .result + ", " + ((.files // []) | length | tostring) + " file(s) to rewrite"' /tmp/pint.report.json
+            else
+              grep -E '\.php' /tmp/pint.log | head -40 | while IFS= read -r line; do
+                echo "::error title=Pint::${line}"
+              done
+            fi
+          fi
+
+          exit $status

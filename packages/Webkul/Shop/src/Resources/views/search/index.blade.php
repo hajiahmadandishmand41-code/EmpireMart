@@ -118,7 +118,7 @@
                                         <img
                                             class="max-sm:h-[100px] max-sm:w-[100px]"
                                             src="{{ bagisto_asset('images/thank-you.png') }}"
-                                            alt="Empty result"
+                                            alt="@lang('shop::app.storefront.empty-search-result')"
                                             loading="lazy"
                                             decoding="async"
                                         />
@@ -161,7 +161,7 @@
                                         <img
                                             class="max-sm:h-[100px] max-sm:w-[100px]"
                                             src="{{ bagisto_asset('images/thank-you.png') }}"
-                                            alt="Empty result"
+                                            alt="@lang('shop::app.storefront.empty-search-result')"
                                             loading="lazy"
                                             decoding="async"
                                         />

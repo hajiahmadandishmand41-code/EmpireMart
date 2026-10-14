@@ -86,7 +86,7 @@
                                             </span>
                                         </div>
 
-                                        <div class="flex flex-col gap-1 text-right">
+                                        <div class="flex flex-col gap-1 text-end">
                                             <span class="text-xs text-gray-500">
                                                 @lang('shop::app.customers.account.rma.index.datagrid.order-ref')
                                             </span>
@@ -109,7 +109,7 @@
                                             </span>
                                         </div>
 
-                                        <div class="flex flex-col gap-1 text-right">
+                                        <div class="flex flex-col gap-1 text-end">
                                             <span class="text-xs text-gray-500">
                                                 @lang('shop::app.customers.account.rma.index.datagrid.quantity')
                                             </span>

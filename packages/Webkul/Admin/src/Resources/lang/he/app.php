@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'לוגו אזור',
                     'name' => 'שם',
                     'save-btn' => 'שמור אזור',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'בחר כיוון',
                     'title' => 'צור אזור',
                 ],

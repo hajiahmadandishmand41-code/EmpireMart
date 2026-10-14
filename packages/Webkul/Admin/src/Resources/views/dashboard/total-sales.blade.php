@@ -31,12 +31,12 @@
 
                     <div class="flex flex-col justify-between gap-1">
                         <!-- Orders Time Duration -->
-                        <p class="text-right text-xs font-semibold text-gray-400 dark:text-white">
+                        <p class="text-end text-xs font-semibold text-gray-400 dark:text-white">
                             @{{ report.date_range }}
                         </p>
 
                         <!-- Total Orders -->
-                        <p class="text-right text-xs font-semibold text-gray-400 dark:text-white">
+                        <p class="text-end text-xs font-semibold text-gray-400 dark:text-white">
                             @{{ "@lang('admin::app.dashboard.index.order')".replace(':total_orders', report.statistics.total_orders.current ?? 0) }}
                         </p>
                     </div>

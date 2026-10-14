@@ -140,6 +140,7 @@ return [
 
             'currencies' => [
                 'AED' => 'Dirham dos Emirados Árabes Unidos',
+                'AFN' => 'Afegâni afegão',
                 'ARS' => 'Peso Argentino',
                 'AUD' => 'Dólar Australiano',
                 'BDT' => 'Taka de Bangladesh',
@@ -214,6 +215,7 @@ return [
                 'en' => 'Inglês',
                 'es' => 'Espanhol',
                 'fa' => 'Persa',
+                'fa_AF' => 'Dari',
                 'fr' => 'Francês',
                 'he' => 'Hebraico',
                 'hi_IN' => 'Hindi',
@@ -815,6 +817,7 @@ return [
             ],
 
             'environment-configuration' => [
+                'afghan-afghani' => 'Afegâni afegão (AFN)',
                 'algerian-dinar' => 'Dinar Argelino (DZD)',
                 'allowed-currencies' => 'Moedas Permitidas',
                 'allowed-locales' => 'Locais Permitidos',
@@ -981,6 +984,7 @@ return [
             'catalan' => 'Kataloński',
             'chinese' => 'Chiński',
             'continue' => 'Kontynuuj',
+            'dari' => 'Dari',
             'dutch' => 'Holenderski',
             'english' => 'Angielski',
             'french' => 'Francuski',

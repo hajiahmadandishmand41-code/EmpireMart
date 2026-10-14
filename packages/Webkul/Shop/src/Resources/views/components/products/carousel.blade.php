@@ -29,7 +29,7 @@
                         <p class="items-center text-xl max-md:text-base max-sm:text-sm">
                             @lang('shop::app.components.products.carousel.view-all')
 
-                            <span class="icon-arrow-right text-2xl max-md:text-lg max-sm:text-sm"></span>
+                            <span class="icon-arrow-right rtl:icon-arrow-left text-2xl max-md:text-lg max-sm:text-sm"></span>
                         </p>
                     </a>
 

@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Логотип Локалі',
                     'name' => 'Назва',
                     'save-btn' => 'Зберегти Локаль',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Вибрати напрямок',
                     'title' => 'Створити Локаль',
                 ],

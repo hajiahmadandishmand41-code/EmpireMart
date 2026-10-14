@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'Logo de la locale',
                     'name' => 'Nom',
                     'save-btn' => 'Enregistrer la locale',
+                    'direction-left-to-right' => 'Text direction left to right',
+                    'direction-right-to-left' => 'Text direction right to left',
                     'select-direction' => 'Sélectionner la direction',
                     'title' => 'Créer une locale',
                 ],

@@ -135,7 +135,7 @@
                         </div>
                         
                         <!-- Actions -->
-                        <div class="flex place-content-start gap-x-5 text-right">
+                        <div class="flex place-content-start gap-x-5 text-end">
                             <p
                                 class="cursor-pointer text-blue-600 transition-all hover:underline"
                                 @click="ticketItem=element;toggle()"

@@ -20,12 +20,12 @@
                 >
                     <!-- Left Arrow -->
                     <template #arrow-prev="">
-                        <span class="icon-sort-left flex h-8 w-8 items-center justify-center rounded-full text-xl text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"></span>
+                        <span class="icon-sort-left rtl:icon-sort-right flex h-8 w-8 items-center justify-center rounded-full text-xl text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"></span>
                     </template>
 
                     <!-- Right Arrow -->
                     <template #arrow-next="">
-                        <span class="icon-sort-right flex h-8 w-8 items-center justify-center rounded-full text-xl text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"></span>
+                        <span class="icon-sort-right rtl:icon-sort-left flex h-8 w-8 items-center justify-center rounded-full text-xl text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"></span>
                     </template>
 
                     <!-- No Events Content -->
@@ -36,7 +36,7 @@
                     <!-- Content -->
                     <template #event="{ event, view }">
                         <div
-                            class="slot group relative h-full cursor-pointer overflow-hidden rounded-md border-l-[3px] text-left text-xs shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-px hover:shadow-md"
+                            class="slot group relative h-full cursor-pointer overflow-hidden rounded-md border-s-[3px] text-start text-xs shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-px hover:shadow-md"
                             :class="[
                                 event.status === 'pending' ? 'border-amber-500 bg-amber-50/90 hover:bg-amber-100 dark:border-amber-400 dark:bg-amber-500/15 dark:hover:bg-amber-500/25' :
                                 event.status === 'completed' ? 'border-emerald-500 bg-emerald-50/90 hover:bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-500/15 dark:hover:bg-emerald-500/25' :
@@ -59,7 +59,7 @@
                                 ></span>
 
                                 <span class="truncate">
-                                    @{{ new Date(event.start).toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }) }} - @{{ new Date(event.end).toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }) }}
+                                    @{{ new Date(event.start).toLocaleTimeString(document.documentElement.lang.replace('_', '-'), { hour12: true, hour: 'numeric', minute: '2-digit' }) }} - @{{ new Date(event.end).toLocaleTimeString(document.documentElement.lang.replace('_', '-'), { hour12: true, hour: 'numeric', minute: '2-digit' }) }}
                                 </span>
                             </div>
 
@@ -102,7 +102,7 @@
                         </div>
 
                         <span
-                            class="ml-auto mr-2 inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+                            class="ms-auto me-2 inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
                             :class="[
                                 event.status === 'pending' ? 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300' :
                                 event.status === 'completed' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300' :

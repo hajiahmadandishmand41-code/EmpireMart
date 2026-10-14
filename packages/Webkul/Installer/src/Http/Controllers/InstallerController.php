@@ -79,20 +79,20 @@ class InstallerController extends Controller
 
         $allParameters = request('allParameters');
 
-        $appLocale = $allParameters['app_locale'] ?? null;
+        $appLocale = $allParameters['app_locale'] ?? config('app.locale');
 
-        $appCurrency = $allParameters['app_currency'] ?? null;
+        $appCurrency = $allParameters['app_currency'] ?? config('app.currency');
 
         $allowedLocales = array_unique(
             array_merge(
-                [($appLocale ?? 'en')],
+                [($appLocale ?? config('app.locale'))],
                 $selectedParameters['allowed_locales']
             )
         );
 
         $allowedCurrencies = array_unique(
             array_merge(
-                [($appCurrency ?? 'USD')],
+                [($appCurrency ?? config('app.currency'))],
                 $selectedParameters['allowed_currencies']
             )
         );

@@ -68,7 +68,7 @@
                                     <x-slot:toggle>
                                         <button 
                                             class="icon-more cursor-pointer rounded-md px-1.5 py-1 text-2xl text-zinc-500 transition-all hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black max-md:p-0" 
-                                            aria-label="More Options"
+                                            aria-label="@lang('shop::app.storefront.more-options')"
                                         >
                                         </button>
                                     </x-slot>
@@ -156,7 +156,7 @@
                 <img 
                     class="max-md:h-[100px] max-md:w-[100px]"
                     src="{{ bagisto_asset('images/no-address.png') }}" 
-                    alt="Empty Address" 
+                    alt="@lang('shop::app.storefront.empty-address')" 
                     title=""
                 >
                 

@@ -328,7 +328,7 @@
                                 </div>
 
                                 <!-- Right Information -->
-                                <div class="grid place-content-center gap-1 text-right">
+                                <div class="grid place-content-center gap-1 text-end">
                                     <p class="text-sm font-semibold text-gray-600 dark:text-gray-300 sm:text-base">
                                         @{{ product.formatted_price }}
                                     </p>

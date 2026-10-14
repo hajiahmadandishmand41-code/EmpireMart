@@ -887,10 +887,10 @@ return [
                     'confirm-item-canceled' => 'وضعیت لغو کالا، کالا را لغو خواهد کرد. آیا مایل به ادامه هستید؟',
                     'confirm-item-refund' => 'وضعیت دریافت بسته، مبلغ را به مشتری بازپرداخت می‌کند. آیا مایل به ادامه هستید؟',
                     'confirm-print' => 'برای چاپ RMA روی تایید کلیک کنید',
-                    'cancel-item' => 'Cancel Item',
-                    'item-action-note' => 'This action affects the order and cannot be undone.',
-                    'order-actions' => 'Order Actions',
-                    'refund-item' => 'Refund Item',
+                    'cancel-item' => 'لغو قلم',
+                    'item-action-note' => 'این عملیات روی سفارش تأثیر می‌گذارد و قابل بازگردانی نیست.',
+                    'order-actions' => 'عملیات سفارش',
+                    'refund-item' => 'بازپرداخت قلم',
                     'conversation-process' => 'درخواست RMA شما پردازش شد.',
                     'conversations' => 'مکالمات',
                     'customer' => 'مشتری :',
@@ -1229,7 +1229,7 @@ return [
                 ],
 
                 'categories' => [
-                    'search' => 'Search categories',
+                    'search' => 'جست‌وجوی دسته‌بندی‌ها',
                     'title' => 'دسته‌بندی‌ها',
                 ],
 
@@ -1830,7 +1830,7 @@ return [
                 'use-in-flat' => 'ایجاد در جدول محصول',
                 'validations' => 'اعتبارسنجی‌ها',
                 'value-per-channel' => 'مقدار برای کانال',
-                'value-per-locale' => 'مقدار برای مکان (Locale)',
+                'value-per-locale' => 'مقدار برای هر زبان',
                 'yes' => 'بله',
 
                 'info' => [
@@ -1904,7 +1904,7 @@ return [
                 'use-in-flat' => 'ایجاد در جدول محصول',
                 'validations' => 'اعتبارسنجی‌ها',
                 'value-per-channel' => 'مقدار برای کانال',
-                'value-per-locale' => 'مقدار برای مکان (Locale)',
+                'value-per-locale' => 'مقدار برای هر زبان',
                 'yes' => 'بله',
 
                 'info' => [
@@ -3565,6 +3565,8 @@ return [
                     'locale-logo' => 'لوگو زبان',
                     'name' => 'نام',
                     'save-btn' => 'ذخیره زبان',
+                    'direction-left-to-right' => 'جهت متن: چپ به راست',
+                    'direction-right-to-left' => 'جهت متن: راست به چپ',
                     'select-direction' => 'انتخاب جهت',
                     'title' => 'ایجاد زبان',
                 ],
@@ -5491,16 +5493,16 @@ return [
                 ],
 
                 'full-page-cache' => [
-                    'title' => 'Full Page Cache',
-                    'info' => 'Serve rendered storefront pages from a cache instead of building them for every visitor.',
+                    'title' => 'کش صفحه کامل',
+                    'info' => 'صفحات فروشگاه را از کش ارائه کنید تا برای هر بازدیدکننده دوباره ساخته نشوند.',
 
                     'settings' => [
-                        'title' => 'Settings',
-                        'info' => 'Turn the page cache on or off and choose how long a page stays cached.',
-                        'enabled' => 'Enable Full Page Cache',
-                        'enabled-info' => 'Storefront pages are served from the cache. Turning this off makes every page render again on each visit.',
-                        'lifetime' => 'Cache Lifetime (Minutes)',
-                        'lifetime-info' => 'How long a cached page is kept before it is rendered again. Leave empty to use the application default.',
+                        'title' => 'تنظیمات',
+                        'info' => 'کش صفحه را روشن یا خاموش کنید و مدت نگهداری هر صفحه در کش را انتخاب کنید.',
+                        'enabled' => 'فعال‌سازی کش صفحه کامل',
+                        'enabled-info' => 'صفحات فروشگاه از کش ارائه می‌شوند. با خاموش کردن این گزینه، هر صفحه در هر بازدید دوباره ساخته می‌شود.',
+                        'lifetime' => 'مدت نگهداری در کش (دقیقه)',
+                        'lifetime-info' => 'مدتی که یک صفحه در کش می‌ماند تا دوباره ساخته شود. برای استفاده از مقدار پیش‌فرض برنامه، خالی بگذارید.',
                     ],
                 ],
             ],

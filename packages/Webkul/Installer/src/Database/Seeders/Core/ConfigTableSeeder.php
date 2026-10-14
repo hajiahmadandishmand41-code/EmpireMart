@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 class ConfigTableSeeder extends Seeder
 {
     /**
+     * Address settings a store set up for Afghanistan starts with.
+     */
+    protected const AFGHAN_ADDRESS_SETTINGS = [
+        'customer.address.requirements.postcode' => '0',
+        'customer.address.information.street_lines' => '2',
+    ];
+
+    /**
      * Seed the application's database.
      *
      * @param  array  $parameters
@@ -166,5 +174,33 @@ class ConfigTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ]);
+
+        $this->seedAfghanAddressSettings($now);
+    }
+
+    /**
+     * The address settings an Afghan store starts with: no postal code is asked
+     * for, because the country does not use them, and an address is written
+     * over two lines. Both settings are stored per channel, which is why a row
+     * is written for every channel that was just created.
+     */
+    protected function seedAfghanAddressSettings(Carbon $now): void
+    {
+        if (config('app.default_country') !== 'AF') {
+            return;
+        }
+
+        foreach (DB::table('channels')->pluck('code') as $channelCode) {
+            foreach (self::AFGHAN_ADDRESS_SETTINGS as $code => $value) {
+                DB::table('core_config')->insert([
+                    'code' => $code,
+                    'value' => $value,
+                    'channel_code' => $channelCode,
+                    'locale_code' => null,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
     }
 }
