@@ -9,7 +9,7 @@
             <img
                 src="{{ $customer->image_url ??  bagisto_asset('images/user-placeholder.png') }}"
                 class="h-[60px] w-[60px] rounded-full"
-                alt="Profile Image"
+                alt="@lang('shop::app.storefront.profile-image')"
             >
         </div>
 
@@ -18,7 +18,7 @@
             v-pre
         >
             <p class="text-2xl break-all font-mediums max-md:text-xl"> 
-                Hello! {{ $customer->first_name }}
+                @lang('shop::app.storefront.hello') {{ $customer->first_name }}
             </p>
 
             <p class="no-underline max-md:text-md: text-zinc-500">

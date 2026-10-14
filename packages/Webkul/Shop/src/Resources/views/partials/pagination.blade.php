@@ -8,7 +8,7 @@
             ])
         </p>
 
-        <nav aria-label="Page Navigation">
+        <nav aria-label="@lang('shop::app.components.datagrid.table.page-navigation')">
             <ul class="inline-flex items-center -space-x-px">
                 <!-- Previous Page Link -->
                 <li>

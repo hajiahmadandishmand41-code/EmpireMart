@@ -20,7 +20,7 @@
                     <span
                         v-bind:class="isOpen ? 'icon-arrow-up text-2xl' : 'icon-arrow-down text-2xl'"
                         role="button"
-                        aria-label="Toggle accordion"
+                        aria-label="@lang('shop::app.storefront.toggle-accordion')"
                         tabindex="0"
                     ></span>
                 </div>

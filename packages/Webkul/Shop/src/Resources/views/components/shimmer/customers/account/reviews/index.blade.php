@@ -11,7 +11,7 @@
             <div class="flex gap-5">
                 <x-shop::media.images.lazy
                     class="h-[146px] max-h-[146px] w-32 min-w-32 max-w-32 rounded-xl max-md:h-20 max-md:w-20 max-md:min-w-20"
-                    alt="Review Image"
+                    alt="@lang('shop::app.storefront.review-image')"
                 />
     
                 <div class="w-full">

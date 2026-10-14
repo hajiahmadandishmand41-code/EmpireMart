@@ -196,7 +196,7 @@
                             <img
                                 class="max-md:h-[100px] max-md:w-[100px]"
                                 src="{{ bagisto_asset('images/review.png') }}"
-                                alt="Empty Review"
+                                alt="@lang('shop::app.storefront.empty-review')"
                                 title=""
                             >
 

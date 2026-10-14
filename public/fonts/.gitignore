@@ -10,3 +10,6 @@
 !NotoSansSinhala-Bold.ttf
 !NotoSansSinhala-Regular.ttf
 !.gitignore
+!vazirmatn/
+!vazirmatn/*.woff2
+!vazirmatn/OFL.txt

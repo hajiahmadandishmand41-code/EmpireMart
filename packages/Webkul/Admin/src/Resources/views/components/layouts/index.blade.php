@@ -81,6 +81,8 @@
     </style>
 
     {!! view_render_event('bagisto.admin.layout.head.after') !!}
+    @include('core::blade.rtl-fonts')
+
 </head>
 
 <body class="h-full dark:bg-gray-950">

@@ -69,6 +69,8 @@
     </style>
 
     {!! view_render_event('bagisto.admin.layout.head') !!}
+    @include('core::blade.rtl-fonts')
+
 </head>
 
 <body>

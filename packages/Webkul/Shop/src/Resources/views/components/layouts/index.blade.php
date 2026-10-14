@@ -88,6 +88,8 @@
             </script>
         @endif
 
+        @include('core::blade.rtl-fonts')
+
         {!! view_render_event('bagisto.shop.layout.head.after') !!}
 
     </head>
@@ -99,7 +101,7 @@
             href="#main"
             class="skip-to-main-content-link"
         >
-            Skip to main content
+            @lang('shop::app.storefront.skip-to-content')
         </a>
 
         <!-- Built With Bagisto -->

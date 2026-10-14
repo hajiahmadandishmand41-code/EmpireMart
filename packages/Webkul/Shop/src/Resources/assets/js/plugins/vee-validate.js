@@ -11,6 +11,7 @@ import de from "@vee-validate/i18n/dist/locale/de.json";
 import en from "@vee-validate/i18n/dist/locale/en.json";
 import es from "@vee-validate/i18n/dist/locale/es.json";
 import fa from "@vee-validate/i18n/dist/locale/fa.json";
+import fa_AF from "../../locales/fa_AF.json";
 import fr from "@vee-validate/i18n/dist/locale/fr.json";
 import he from "@vee-validate/i18n/dist/locale/he.json";
 import hi_IN from "../../locales/hi_IN.json";
@@ -39,7 +40,20 @@ export default {
         app.component("VField", Field);
         app.component("VErrorMessage", ErrorMessage);
 
-        window.addEventListener("load", () => setLocale(document.documentElement.attributes.lang.value));
+        /**
+         * A locale the bundled catalogue does not know (fa_AF, for instance, is a
+         * storefront locale that the validation package never shipped) would leave
+         * every message blank. Fall back to the language, and finally to English.
+         */
+        const resolveLocale = () => {
+            const requested = document.documentElement.attributes.lang.value || "en";
+
+            const candidates = [requested, requested.split(/[-_]/)[0], "en"];
+
+            return candidates.find((locale) => locale in messageLocales) ?? "en";
+        };
+
+        window.addEventListener("load", () => setLocale(resolveLocale()));
 
         /**
          * Registration of all global validators.
@@ -67,7 +81,15 @@ export default {
 
             const trimmedValue = value.trim();
 
-            if (!/^\+?\d+$/.test(trimmedValue)) {
+            /**
+             * Afghan numbers are commonly written as "+93 700 123 456" or
+             * "0700 123 456", so separators are ignored before the digits are
+             * counted. Six digits is the shortest number the store accepts and
+             * fifteen is the longest a phone number can be.
+             */
+            const digits = trimmedValue.replace(/[\s\-().]/g, "");
+
+            if (!/^\+?\d{6,15}$/.test(digits)) {
                 return false;
             }
 
@@ -126,12 +148,7 @@ export default {
             }
         );
 
-        configure({
-            /**
-             * Built-in error messages and custom error messages are available. Multiple
-             * locales can be added in the same way.
-             */
-            generateMessage: localize({
+        const messageLocales = {
                 en: {
                     ...en,
                     messages: {
@@ -193,6 +210,15 @@ export default {
                         phone: "این {field} باید یک شماره تلفن معتبر باشد",
                         address: "این {field} باید یک آدرس معتبر باشد",
                     },
+
+                fa_AF: {
+                    ...fa_AF,
+                    messages: {
+                        ...fa_AF.messages,
+                        phone: "این {field} باید یک شماره تلیفون معتبر باشد",
+                        address: "این {field} باید یک آدرس معتبر باشد",
+                    },
+                },
                 },
 
                 fr: {
@@ -330,7 +356,14 @@ export default {
                         address: "这个 {field} 必须是一个有效的地址",
                     },
                 },
-            }),
+        };
+
+        configure({
+            /**
+             * Built-in error messages and custom error messages are available. Multiple
+             * locales can be added in the same way.
+             */
+            generateMessage: localize(messageLocales),
 
             validateOnBlur: true,
             validateOnInput: true,

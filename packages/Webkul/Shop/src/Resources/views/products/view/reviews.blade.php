@@ -190,7 +190,7 @@
                                 <div class="grid max-w-[365px] flex-wrap gap-y-3 max-md:max-w-full">
                                     @for ($i = 5; $i >= 1; $i--)
                                         <div class="row grid grid-cols-[1fr_2fr] items-center gap-4 max-md:grid-cols-[0.5fr_2fr] max-sm:flex-wrap max-sm:gap-0">
-                                            <div class="whitespace-nowrap text-base font-medium max-sm:text-sm">{{ $i }} Stars</div>
+                                            <div class="whitespace-nowrap text-base font-medium max-sm:text-sm">@lang('shop::app.storefront.stars', ['count' => $i])</div>
 
                                             <div class="h-4 w-[275px] max-w-full rounded-sm bg-neutral-200 max-sm:h-3.5 max-sm:w-full">
                                                 <div

@@ -216,7 +216,7 @@
                                             />
                                         @else
                                             <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-dashed text-gray-300">
-                                                <span class="text-xs">No Image</span>
+                                                <span class="text-xs">@lang('shop::app.storefront.no-image')</span>
                                             </div>
                                         @endif
 
@@ -294,7 +294,7 @@
                                 />
                             @else
                                 <div class="w-16 h-16 border border-dashed rounded flex items-center justify-center text-gray-300">
-                                    <span class="text-xs">No Image</span>
+                                    <span class="text-xs">@lang('shop::app.storefront.no-image')</span>
                                 </div>
                             @endif
 

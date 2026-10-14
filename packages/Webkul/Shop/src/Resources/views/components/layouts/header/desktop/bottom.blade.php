@@ -493,7 +493,7 @@
                                     <button
                                         @click="goBackToMainView"
                                         class="flex items-center justify-center gap-2 focus:outline-none"
-                                        aria-label="Go back"
+                                        aria-label="@lang('shop::app.storefront.go-back')"
                                     >
                                         <span class="text-lg icon-arrow-left rtl:icon-arrow-right"></span>
 

@@ -208,14 +208,14 @@
 
                                     <option
                                         value="ltr"
-                                        selected title="Text direction left to right"
+                                        selected title="@lang('admin::app.settings.locales.index.create.direction-left-to-right')"
                                     >
                                         LTR
                                     </option>
 
                                     <option
                                         value="rtl"
-                                        title="Text direction right to left"
+                                        title="@lang('admin::app.settings.locales.index.create.direction-right-to-left')"
                                     >
                                         RTL
                                     </option>

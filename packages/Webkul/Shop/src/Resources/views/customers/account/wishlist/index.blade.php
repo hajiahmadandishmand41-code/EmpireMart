@@ -84,7 +84,7 @@
                             <img
                                 class="max-md:h-[100px] max-md:w-[100px]"
                                 src="{{ bagisto_asset('images/wishlist.png') }}"
-                                alt="Empty wishlist"
+                                alt="@lang('shop::app.storefront.empty-wishlist')"
                             >
 
                             <p

@@ -33,7 +33,7 @@
                             class="rounded-xl object-cover max-md:rounded-full"
                             :src="uploadedFiles.url"
                             :class="{ 'opacity-25' : uploadedFiles.showDeleteButton }"
-                            alt="Uploaded Image"
+                            alt="@lang('shop::app.storefront.uploaded-image')"
                         >
 
                         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform opacity-0 transition-opacity group-hover:opacity-100">

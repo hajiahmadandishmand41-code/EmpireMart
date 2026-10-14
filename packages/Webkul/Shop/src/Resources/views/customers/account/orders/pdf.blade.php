@@ -29,7 +29,7 @@
                 ];
             }
 
-            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'tr', 'ru', 'uk'])) {
+            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'fa_AF', 'tr', 'ru', 'uk'])) {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',

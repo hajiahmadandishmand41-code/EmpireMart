@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+    lang="{{ app()->getLocale() }}"
+    dir="{{ core()->getCurrentLocale()->direction }}"
+>
     <head>
         <title>@lang('razorpay::app.drop-in-ui.title')</title>
 

@@ -59,7 +59,7 @@
                                 ></span>
 
                                 <span class="truncate">
-                                    @{{ new Date(event.start).toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }) }} - @{{ new Date(event.end).toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit' }) }}
+                                    @{{ new Date(event.start).toLocaleTimeString(document.documentElement.lang.replace('_', '-'), { hour12: true, hour: 'numeric', minute: '2-digit' }) }} - @{{ new Date(event.end).toLocaleTimeString(document.documentElement.lang.replace('_', '-'), { hour12: true, hour: 'numeric', minute: '2-digit' }) }}
                                 </span>
                             </div>
 

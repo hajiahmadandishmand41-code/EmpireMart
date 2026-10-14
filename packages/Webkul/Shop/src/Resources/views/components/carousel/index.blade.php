@@ -128,7 +128,7 @@
                     :class="{ 'bg-navyBlue': index === Math.abs(currentIndex), 'opacity-30 bg-gray-500': index !== Math.abs(currentIndex) }"
                     role="button"
                     tabindex="0"
-                    :aria-label="'Go to slide ' + (index + 1)"
+                    :aria-label="'{{ __('shop::app.storefront.go-to-slide') }} ' + (index + 1)"
                     @click="navigateByPagination(index)"
                     @keydown.enter="navigateByPagination(index)"
                     @keydown.space.prevent="navigateByPagination(index)"
