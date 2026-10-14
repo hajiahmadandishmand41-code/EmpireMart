@@ -26,4 +26,23 @@ jobs:
           COMPOSER_HOME: ${{ runner.temp }}/composer
 
       - name: Run Pint
-        run: ${{ runner.temp }}/composer/vendor/bin/pint --test --format=github
+        run: |
+          set +e
+
+          ${{ runner.temp }}/composer/vendor/bin/pint --test --format=github 2>&1 | tee /tmp/pint.log
+
+          status=${PIPESTATUS[0]}
+
+          if [ $status -ne 0 ]; then
+            # The job log is not reachable from the outside, so the report is repeated as
+            # annotations, which are: the files Pint would rewrite, then the summary.
+            grep -E '\.php' /tmp/pint.log | head -40 | while IFS= read -r line; do
+              echo "::error title=Pint::${line}"
+            done
+
+            tail -12 /tmp/pint.log | while IFS= read -r line; do
+              echo "::error title=Pint summary::${line}"
+            done
+          fi
+
+          exit $status
