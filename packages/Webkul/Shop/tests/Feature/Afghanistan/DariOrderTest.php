@@ -231,6 +231,19 @@ it('buys a product in Dari and prices the order, the discount and the invoice in
     expect(core()->formatPrice($invoice->grand_total, 'AFN'))->toBe('؋ ۹۰۰٫۰۰');
 
     $this->assertPrice($discountedTotal, $invoice->grand_total);
+
+    /**
+     * And the page the customer is sent to once the order is placed: the order it names, the
+     * tracking it promises, read from the right and written in Dari.
+     */
+    $this
+        ->withSession(['order_id' => $order->id])
+        ->get(route('shop.checkout.onepage.success'))
+        ->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee($order->increment_id)
+        ->assertSee(trans('shop::app.checkout.success.thanks'), false)
+        ->assertSee(trans('shop::app.checkout.success.info'), false);
 });
 
 it('keeps the shop priced in afghanis when a second order is placed the same day', function () {

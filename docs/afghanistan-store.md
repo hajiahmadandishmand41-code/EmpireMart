@@ -198,7 +198,8 @@ The suites that only make sense in Dari run against a Dari installation:
 
 `DariOrderTest` walks the storefront: a product at 1000 AFN goes into an Afghan
 cart, a ten percent coupon takes a hundred Afghanis off, the order is placed,
-invoiced and read back. Every amount is asserted twice — as the number the shop
+the customer is shown the page that names it, and the order is invoiced and read
+back. Every amount is asserted twice — as the number the shop
 calculated and as the string the customer sees, `؋ ۱۰۰۰٫۰۰` and `؋ ۹۰۰٫۰۰` —
 and the invoice is asserted to be a right-to-left document in a font that has
 the sign of the Afghani. Both paths are those run by the "Installing the store
@@ -206,7 +207,8 @@ in Dari" steps of `.github/workflows/pest_tests.yml`.
 
 `DariOrderTest` describes the Dari installation - it opens by asserting the
 locale - so the platform's own run leaves it out (`phpunit.xml`) and the step
-that installs that store is the one that runs it.
+that installs that store is the one that runs it. It also skips itself if it is
+ever collected into a run against another installation.
 
 End-to-end, with the store running:
 
@@ -232,9 +234,11 @@ and then asserts the direction and language of the dashboard and the font it is
 typeset in.
 
 The rest of the upstream Playwright suites find the shop and the admin panel by
-their English labels. Run them against an installation with `APP_LOCALE=en`
-(which is what `.github/workflows/*_playwright_tests.yml` do), or translate the
-labels they look for when the Dari panel becomes the one under test.
+their English labels. Run them against the platform's own installation - English,
+dollars, no default country, the clock the platform ships with - which is what
+the sharded matrices in `.github/workflows/*_playwright_tests.yml` set up, or
+translate the labels they look for when the Dari store becomes the one under
+test.
 
 Those two workflows are the long ones: each sharded matrix starts twenty jobs
 and takes hours, and while they were queued for every push and every pull
