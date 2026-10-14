@@ -251,9 +251,10 @@ Checked on the machine this work was done on, without a database:
   and `rounded-l`/`rounded-r` either is logical now, carries its `rtl:`
   counterpart, or is part of a `translate-x` centring pair (audited with a
   script over `views`, `assets` and `*.vue`);
-* every direction-related class the views use is present in the built
-  stylesheets of both panels, `rtl:icon-arrow-*` and the logical utilities
-  included;
+* every logical utility and every `rtl:` mirror the views use is present in the
+  built stylesheets of both panels (the check skips classes built from arbitrary
+  values with commas in them, such as `group-[.inactive]/item:ltr:shadow-[…]`,
+  which the upstream build already covers);
 * the text was shaped and drawn offline with HarfBuzz from the exact font files
   this repository serves — Vazirmatn for the letters, the Noto subset for the
   sign — which is what confirms the joining forms, the Persian digits and the
@@ -282,6 +283,12 @@ database. Those are wired into CI and listed above as the steps to run.
   in its own font and leaves the sign out, and the fix is the URL, not the
   template.
 * The upstream Playwright suites need an English installation, as described above.
+* A few icons the panels call for have no glyph in the fonts they ship with
+  (`icon-warning` in both panels, `icon-clock` and `icon-error` in the admin
+  panel), so those spans draw nothing. It is the same in upstream Bagisto, and
+  the sentences next to them carry the meaning; the icons the shop's own
+  pagination and filters called for were pointed at the glyphs that do exist
+  (`icon-left-arrow`, `icon-right-arrow`, `icon-arrow-down`, `icon-cancel`).
 * The language switcher falls back to a generic globe icon for Dari, because no
   flag image ships for it (`packages/Webkul/Installer/src/Resources/assets/images/seeders/locales/`);
   five other locales are in the same position. A Dari flag can be uploaded

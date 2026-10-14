@@ -186,14 +186,14 @@
                                     class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-1 rounded-md border border-transparent p-1.5 text-center text-gray-600 transition-all marker:shadow hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-black active:border-gray-300"
                                     @click="changePage('previous')"
                                 >
-                                    <span class="icon-sort-left rtl:icon-sort-right text-2xl"></span>
+                                    <span class="icon-left-arrow rtl:icon-right-arrow text-2xl"></span>
                                 </div>
 
                                 <div
                                     class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-1 rounded-md border border-transparent p-1.5 text-center text-gray-600 transition-all marker:shadow hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-black active:border-gray-300"
                                     @click="changePage('next')"
                                 >
-                                    <span class="icon-sort-right rtl:icon-sort-left text-2xl"></span>
+                                    <span class="icon-right-arrow rtl:icon-left-arrow text-2xl"></span>
                                 </div>
                             </div>
 
