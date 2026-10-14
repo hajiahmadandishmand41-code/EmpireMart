@@ -10,6 +10,7 @@ use Illuminate\Foundation\Console\UpCommand;
 use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Core\Console\Commands\AfghanistanStoreSetup;
 use Webkul\Core\Console\Commands\BagistoVersion;
 use Webkul\Core\Console\Commands\ExchangeRateUpdate;
 use Webkul\Core\Console\Commands\InvoiceOverdueCron;
@@ -69,6 +70,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                AfghanistanStoreSetup::class,
                 BagistoVersion::class,
                 ExchangeRateUpdate::class,
                 InvoiceOverdueCron::class,
