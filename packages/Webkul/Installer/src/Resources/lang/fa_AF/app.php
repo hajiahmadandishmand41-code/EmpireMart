@@ -511,7 +511,7 @@ return [
                     'description' => '<p>لباس رسمی</p>',
                     'meta-description' => '',
                     'meta-keywords' => '',
-                    'meta-title' => 'Girls Clothing',
+                    'meta-title' => 'لباس دخترانه',
                     'name' => 'لباس رسمی',
                     'slug' => 'girls-clothing',
                     'url-path' => 'kids/girls-clothing',
@@ -519,9 +519,9 @@ return [
 
                 '14' => [
                     'description' => '<p>لباس راحتی</p>',
-                    'meta-description' => 'Boys Fashion',
+                    'meta-description' => 'لباس پسرانهٔ شیک',
                     'meta-keywords' => '',
-                    'meta-title' => 'Boys Clothing',
+                    'meta-title' => 'لباس پسرانه',
                     'name' => 'لباس راحتی',
                     'slug' => 'boys-clothing',
                     'url-path' => 'kids/boys-clothing',
@@ -529,9 +529,9 @@ return [
 
                 '15' => [
                     'description' => '<p>لباس ورزشی</p>',
-                    'meta-description' => 'Girls Fashionable Footwear Collection',
+                    'meta-description' => 'مجموعهٔ کفش‌های شیک دخترانه',
                     'meta-keywords' => '',
-                    'meta-title' => 'Girls Footwear',
+                    'meta-title' => 'کفش دخترانه',
                     'name' => 'لباس ورزشی',
                     'slug' => 'girls-footwear',
                     'url-path' => 'kids/girls-footwear',
@@ -539,9 +539,9 @@ return [
 
                 '16' => [
                     'description' => '<p>کفش</p>',
-                    'meta-description' => 'Boys Stylish Footwear Collection',
+                    'meta-description' => 'مجموعهٔ کفش‌های شیک پسرانه',
                     'meta-keywords' => '',
-                    'meta-title' => 'Boys Footwear',
+                    'meta-title' => 'کفش پسرانه',
                     'name' => 'کفش',
                     'slug' => 'boys-footwear',
                     'url-path' => 'kids/boys-footwear',
@@ -569,9 +569,9 @@ return [
 
                 '19' => [
                     'description' => '<p>کتاب‌های الکترونیکی</p>',
-                    'meta-description' => 'Books Collection',
+                    'meta-description' => 'مجموعهٔ کتاب‌ها',
                     'meta-keywords' => '',
-                    'meta-title' => 'Books Collection',
+                    'meta-title' => 'مجموعهٔ کتاب‌ها',
                     'name' => 'کتاب‌های الکترونیکی',
                     'slug' => 'e-books',
                     'url-path' => 'wellness/e-books',
@@ -579,9 +579,9 @@ return [
 
                 '20' => [
                     'description' => '<p>بلیط سینما</p>',
-                    'meta-description' => 'Immerse yourself in the magic of 10 movies each month without extra charges. Valid nationwide with no blackout dates, this pass offers exclusive perks and concession discounts, making it a must-have for movie enthusiasts.',
+                    'meta-description' => 'هر ماه ده فلم را بدون هزینهٔ اضافی تماشا کنید؛ معتبر در سراسر کشور.',
                     'meta-keywords' => '',
-                    'meta-title' => 'CineXperience Monthly Movie Pass',
+                    'meta-title' => 'بلیط ماهانهٔ سینما',
                     'name' => 'بلیط سینما',
                     'slug' => 'movie-pass',
                     'url-path' => 'wellness/movie-pass',
