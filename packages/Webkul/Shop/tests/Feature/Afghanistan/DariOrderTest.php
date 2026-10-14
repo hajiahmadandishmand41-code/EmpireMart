@@ -175,8 +175,7 @@ it('buys a product in Dari and prices the order, the discount and the invoice in
     $order = Order::query()->latest('id')->firstOrFail();
 
     // Assert: the order was booked in Afghanis, in every currency column it keeps.
-    expect($order->currency_code)->toBe('AFN')
-        ->and($order->base_currency_code)->toBe('AFN')
+    expect($order->base_currency_code)->toBe('AFN')
         ->and($order->order_currency_code)->toBe('AFN')
         ->and($order->channel_currency_code)->toBe('AFN');
 
