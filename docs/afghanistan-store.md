@@ -111,7 +111,11 @@ compiled — run the front-end build of both packages before deploying, or the
 browser keeps the old bundle.
 
 The Vazirmatn webfonts are committed under `public/fonts/vazirmatn` (SIL OFL,
-licence text included), so no storefront page depends on a font CDN.
+licence text included), so no storefront page depends on a font CDN. Vazirmatn
+carries every letter Dari is written with but not the Afghani sign, so that one
+glyph is served from a 692-byte subset of Noto Sans Arabic
+(`public/fonts/noto-arabic/afghani-sign.woff2`, also SIL OFL) and pulled in by
+`unicode-range: U+060B` — the browser downloads it only for that character.
 
 ## Tests
 
@@ -162,4 +166,12 @@ With the store in Dari and pricing in Afghanis, confirm on the storefront:
   language.
 * Tax rates and exchange rates are settings, not data: they are seeded empty and
   have to be entered for Afghanistan.
+* An invoice PDF is drawn with the font mPDF is given (DejaVu Sans for the
+  right-to-left locales). DejaVu has the Arabic letters and the Persian digits
+  but no glyph for the Afghani sign, so an invoice prints the amount without the
+  sign beside it. Point mPDF at an Arabic-capable TTF — Vazirmatn or Noto Naskh
+  Arabic plus Noto Sans Arabic for the sign — through the `fontdata` option in
+  `Webkul\Core\Traits\PDFHandler::buildMpdf()` to have it print as it does on
+  the page. It is left as it is here because it cannot be rendered without a
+  vendor directory, and a font mPDF cannot find fails the whole invoice.
 * The upstream Playwright suites need an English installation, as described above.

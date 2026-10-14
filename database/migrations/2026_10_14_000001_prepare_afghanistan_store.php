@@ -23,7 +23,6 @@ return new class extends Migration
      */
     protected const COUNTRY_CODE = 'AF';
 
-
     /**
      * The address settings an Afghan store starts with, keyed by the
      * configuration field they belong to. Both rows are per channel, which is
@@ -184,6 +183,10 @@ return new class extends Migration
         }
 
         $countryId = DB::table('countries')->where('code', self::COUNTRY_CODE)->value('id');
+
+        if (! $countryId) {
+            return;
+        }
 
         $locales = DB::table('locales')
             ->whereIn('code', ['en', 'fa', self::LOCALE_CODE])

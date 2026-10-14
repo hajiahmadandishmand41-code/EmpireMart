@@ -2,7 +2,9 @@
     Typography for right-to-left locales (Persian/Dari, Arabic, Hebrew).
 
     Vazirmatn is self-hosted under public/fonts/vazirmatn so no storefront page or
-    admin screen depends on a third-party font CDN. The rules below only take over
+    admin screen depends on a third-party font CDN. It carries every letter Dari is
+    written with but not the sign of the Afghani, so that one glyph comes from a
+    self-hosted subset of Noto Sans Arabic, pulled in for U+060B only. The rules below only take over
     while the document direction is RTL, so every Latin locale keeps the
     Poppins/Inter stack the theme was designed with, and the icon fonts are left
     untouched so their glyphs keep rendering.
@@ -116,16 +118,25 @@
         unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
     }
 
+    @font-face {
+        font-family: 'Afghani Sign';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('{{ asset('fonts/noto-arabic/afghani-sign.woff2') }}') format('woff2');
+        unicode-range: U+060B;
+    }
+
     html[dir="rtl"] body,
     html[dir="rtl"] button,
     html[dir="rtl"] input,
     html[dir="rtl"] optgroup,
     html[dir="rtl"] select,
     html[dir="rtl"] textarea {
-        font-family: 'Vazirmatn', 'Poppins', 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Afghani Sign', 'Poppins', 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
     }
 
     html[dir="rtl"] :not([class^="icon-"]):not([class*=" icon-"]) {
-        font-family: 'Vazirmatn', 'Poppins', 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Afghani Sign', 'Poppins', 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
     }
 </style>

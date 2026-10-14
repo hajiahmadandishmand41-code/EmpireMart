@@ -56,11 +56,16 @@ test.describe("Storefront localization", () => {
     test("writes Dari in a font that has the letters", async ({ shopPage }) => {
         test.skip(locale !== "fa_AF", "the storefront is not being served in Dari");
 
-        const fontFile = await shopPage.request.get(
-            "/fonts/vazirmatn/vazirmatn-arabic-400-normal.woff2",
+        const fontFiles = await Promise.all(
+            [
+                "/fonts/vazirmatn/vazirmatn-arabic-400-normal.woff2",
+                "/fonts/noto-arabic/afghani-sign.woff2",
+            ].map((font) => shopPage.request.get(font)),
         );
 
-        expect(fontFile.status()).toBe(200);
+        for (const fontFile of fontFiles) {
+            expect(fontFile.status()).toBe(200);
+        }
 
         await shopPage.goto("");
 

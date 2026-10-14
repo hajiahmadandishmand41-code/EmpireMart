@@ -13,3 +13,5 @@
 !vazirmatn/
 !vazirmatn/*.woff2
 !vazirmatn/OFL.txt
+!noto-arabic/
+!noto-arabic/**
