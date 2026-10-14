@@ -36,6 +36,9 @@ This changelog consists of the bug & security fixes and new features being inclu
 - Two tests assert the deployment: that `.env.example` carries the Afghan settings, and that the three production Dockerfiles install the store from that file, so an image built here boots already in Dari and priced in Afghanis.
 
 
+- The admin panel is checked in a browser on every pull request, the way the storefront already was: a job installs it in Dari and asserts the direction, the language and the font it is typeset in. Both browser workflows now keep one generation of runs per branch, so a queued browser suite can no longer hold the queue and starve the fast suites.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

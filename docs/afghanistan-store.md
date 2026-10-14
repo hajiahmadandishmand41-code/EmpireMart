@@ -219,6 +219,18 @@ That spec asserts the direction and language the storefront is served in, the
 currency it prices in, and that the Dari font file loads and is applied — it
 looks for configuration rather than for a label, so it holds in every language.
 
+The admin panel has the same check, for the panel a shop owner in Kabul works
+in:
+
+```bash
+cd packages/Webkul/Admin
+npx playwright test --config=tests/e2e-pw/playwright.config.ts tests/e2e-pw/tests/localization.spec.ts
+```
+
+This one signs in with the credentials a non-interactive installation creates,
+and then asserts the direction and language of the dashboard and the font it is
+typeset in.
+
 The rest of the upstream Playwright suites find the shop and the admin panel by
 their English labels. Run them against an installation with `APP_LOCALE=en`
 (which is what `.github/workflows/*_playwright_tests.yml` do), or translate the
@@ -230,11 +242,20 @@ request the Pest, Pint and translation jobs for the same event never got to
 start. The matrices run when `main` moves, and on demand from the Actions tab
 (`workflow_dispatch`).
 
-One job does run on every pull request: `dari_storefront` in
-`.github/workflows/shop_playwright_tests.yml`. It is the one that installs the
-store the way this repository is meant to be run - in Dari, priced in Afghanis -
-and drives `localization.spec.ts` through it, so the direction, the font and the
-currency of the real storefront are checked before anything is merged.
+Two jobs do run on every pull request, one browser each:
+
+* `dari_storefront` in `.github/workflows/shop_playwright_tests.yml` installs the
+  store the way this repository is meant to be run - in Dari, priced in Afghanis -
+  and drives `localization.spec.ts` through it;
+* `dari_panel` in `.github/workflows/admin_playwright_tests.yml` does the same for
+  the admin panel, and drives its own `localization.spec.ts` through it.
+
+Those two are the checks that say the storefront and the panel a customer and a
+shop owner in Kabul actually get are right, before anything is merged.
+
+Each workflow keeps one generation of runs per branch: a new push cancels the
+runs the previous push left pending, so a browser suite that has been queued can
+never hold the queue again.
 
 ## Acceptance walkthrough
 
