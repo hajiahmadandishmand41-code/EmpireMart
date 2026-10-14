@@ -12,7 +12,7 @@ return [
          * conversion: the shop owner changes it under
          * Settings → Sales → Shipping Methods whenever the tariff moves.
          */
-        'default_rate' => '150',
+        'default_rate' => '10',
         'type' => 'per_unit',
         'class' => 'Webkul\Shipping\Carriers\FlatRate',
     ],
