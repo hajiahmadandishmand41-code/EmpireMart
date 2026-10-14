@@ -26,6 +26,11 @@ This changelog consists of the bug & security fixes and new features being inclu
 - `DariOrderTest` buys something in the Dari storefront in CI: a product at 1000 AFN, a ten percent coupon, the order, the invoice, and every amount asserted both as a number and as the Afghan string the customer reads.
 
 
+- The Vercel check that had been failing on every commit since the sources were imported is now skipped on purpose: Bagisto is a PHP/MySQL application that Vercel cannot build or run, so `vercel.json` points the Ignored Build Step at `scripts/vercel-ignore-build.sh`, which explains why in the build log. The store's own deployment path — the single-container production image in `docker/production`, built from this branch's `.env.example`, so it boots already in Dari and priced in Afghanis — is written up in `docs/afghanistan-store.md`.
+
+- The browser suites no longer run on pull requests: each starts more than twenty jobs that run for hours, and while they were queued for every push and pull request the Pest, Pint and translation jobs for the same event never got to start. They run when `main` moves, and on demand from the Actions tab.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

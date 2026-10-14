@@ -227,6 +227,90 @@ With the store in Dari and pricing in Afghanis, confirm on the storefront:
 6. Open the same pages on a phone (or a narrow window): the drawer, the mini
    cart and the checkout steps must stay usable right to left.
 
+## Deployment
+
+### What cannot host this store: Vercel
+
+The repository is wired to a Vercel project, and its check has been red on every
+commit since the sources were imported - not because of anything in the Dari
+work. Bagisto is a Laravel application: it needs PHP 8.3 with `intl`, `gd`,
+`mbstring` and `pdo_mysql`, a MySQL database, and a **writable** `storage/`
+directory for compiled views, caches and logs. Vercel's builder instead finds
+the Vite configuration in the repository root, tries to build a static front end
+from it, and fails; the platform has no PHP runtime in this project and no
+database, and its functions have a size limit far below a Bagisto checkout with
+its `vendor/` tree.
+
+`vercel.json` therefore points Vercel's Ignored Build Step at
+`scripts/vercel-ignore-build.sh`, which skips the build and prints the reason
+into the build log: exit code 0 to Vercel means *skip*, exit code 1 means
+*continue*. That stops the permanent red check and stops the build minutes being
+spent. It does **not** put the store online - nothing is deployed to Vercel. If
+the Vercel project is not wanted at all, unlink it in the Vercel dashboard
+(Settings → Git) and delete `vercel.json` and `scripts/vercel-ignore-build.sh`.
+
+### What does host it: the production image in this repository
+
+`docker/production/` builds a single container that comes up installed,
+migrated and seeded, with the web server and the database inside it - see
+`docker/production/README.md` for the variants (nginx, Apache, OpenLiteSpeed ×
+MySQL, MariaDB) and for the external-database mode.
+
+The image is built from this repository and installs Bagisto from its
+`.env.example`, which this work sets to the Afghan store:
+
+```bash
+APP_TIMEZONE=Asia/Kabul
+APP_LOCALE=fa_AF
+APP_CURRENCY=AFN
+APP_DEFAULT_COUNTRY=AF
+```
+
+so an image built from this branch boots into a store that is already in Dari,
+already priced in Afghanis, with the 34 provinces seeded and the channel linked
+to the locale and the currency. Build and run it with:
+
+```bash
+docker build -f docker/production/nginx/Dockerfile -t empiremart:afghan .
+docker run -d -p 80:80 --name empiremart \
+    -e APP_URL=https://your-store.example \
+    -e APP_KEY=base64:... \
+    empiremart:afghan
+```
+
+`.github/workflows/docker_publish.yml` builds and pushes the image for all six
+variants when a `v*` tag is pushed, or on demand. It needs two repository
+secrets, `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` (a Docker Hub access token,
+not the account password); without them that workflow stops at the push step.
+It publishes under `webkul/bagisto`, so change `IMAGE_NAME` in the workflow if
+the image should go to a different Docker Hub namespace.
+
+Two things to know about the published image: it seeds Bagisto's demo products
+at build time (upstream behaviour), and it writes the locale, currency and
+timezone from `-e` variables into `.env` at boot. If the store has to start
+empty, install from source instead - `A new installation` above - and delete the
+demo products afterwards, or set `APP_URL`/`APP_KEY` and empty those tables.
+
+### Deploying onto a PHP host
+
+The same steps as `A new installation` above, on the server:
+
+1. PHP 8.3 with `bcmath calendar curl exif gd gmp intl mbstring pdo_mysql soap
+   sockets xml zip imagick`, Composer, Node 20+, MySQL 8.
+2. `composer install --no-dev --optimize-autoloader`,
+   `cp .env.example .env`, `php artisan key:generate`.
+3. `.env`: `APP_URL`, the database credentials, and the Afghan settings listed
+   in `What the store is set to` above.
+4. `php artisan migrate --force` (the Afghan migration runs here on an existing
+   database), then `php artisan bagisto:afghanistan:setup --rate=…` if there are
+   prices in another currency to convert.
+5. `npm ci && npm run build` in `packages/Webkul/Shop` and
+   `packages/Webkul/Admin`, or copy the built bundles that are committed under
+   `public/themes/{shop,admin}/default/build/`.
+6. `php artisan storage:link`, `php artisan optimize`,
+   and the queue worker and scheduler from the deployment section of Bagisto's
+   own documentation.
+
 ## What has been verified, and how
 
 Checked on the machine this work was done on, without a database:
