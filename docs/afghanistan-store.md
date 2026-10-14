@@ -157,6 +157,31 @@ With the store in Dari and pricing in Afghanis, confirm on the storefront:
 6. Open the same pages on a phone (or a narrow window): the drawer, the mini
    cart and the checkout steps must stay usable right to left.
 
+## What has been verified, and how
+
+Checked on the machine this work was done on, without a database:
+
+* every PHP file in the repository parses (PHP 8.3, whole tree, no syntax error);
+* the translation gate's own rules hold — each package's locale folders match
+  the supported locales, and every English key exists in Dari with the same file
+  and line structure (0 differences);
+* both front-end bundles build (`npm run build` in `packages/Webkul/Shop` and
+  `packages/Webkul/Admin`), and the validation plugins and locale modules parse
+  as ES modules;
+* the validation catalogue is read back out of both plugins and asserted to
+  carry 23 languages with Dari beside them, and the Dari messages inside;
+* every non-ASCII character the Dari pack uses exists in a font this repository
+  serves — Vazirmatn for the letters, the Noto subset for the sign of the
+  Afghani, which Vazirmatn does not have;
+* the Afghani is formatted by ICU as `؋ ۱٬۲۳۴٫۵۰` in Dari and `؋ 1,234.50` in
+  English, with two decimals rather than the whole units ICU would default to
+  for a currency without minor units of its own.
+
+Not run here — this machine has no PHP runtime, no Composer and no MySQL, so
+Laravel cannot start: the Pest suites, the Playwright suites, a real checkout,
+an invoice PDF, and the migration and conversion command against a live
+database. Those are wired into CI and listed above as the steps to run.
+
 ## Known remaining items
 
 * The storefront and admin panel are translated; the seeded demo content,
