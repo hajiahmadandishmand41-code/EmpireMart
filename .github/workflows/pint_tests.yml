@@ -26,4 +26,4 @@ jobs:
           COMPOSER_HOME: ${{ runner.temp }}/composer
 
       - name: Run Pint
-        run: ${{ runner.temp }}/composer/vendor/bin/pint --test
+        run: ${{ runner.temp }}/composer/vendor/bin/pint --test --format=github

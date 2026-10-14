@@ -86,7 +86,16 @@ jobs:
         run: php artisan bagisto:install --no-interaction
 
       - name: Running Pest Test
-        run: vendor/bin/pest --parallel --colors=always
+        run: |
+          set +e
+          vendor/bin/pest --parallel --colors=never 2>&1 | tee /tmp/pest.log
+          status=${PIPESTATUS[0]}
+          if [ $status -ne 0 ]; then
+            tail -40 /tmp/pest.log | while IFS= read -r line; do
+              echo "::error title=Pest::${line}"
+            done
+          fi
+          exit $status
 
       - name: Installing the store in Dari
         run: |
@@ -94,4 +103,13 @@ jobs:
           php artisan bagisto:install --no-interaction
 
       - name: Running the Afghan store tests against the Dari installation
-        run: vendor/bin/pest packages/Webkul/Core/tests/Unit/Afghanistan --colors=always
+        run: |
+          set +e
+          vendor/bin/pest packages/Webkul/Core/tests/Unit/Afghanistan --colors=never 2>&1 | tee /tmp/afghanistan.log
+          status=${PIPESTATUS[0]}
+          if [ $status -ne 0 ]; then
+            tail -40 /tmp/afghanistan.log | while IFS= read -r line; do
+              echo "::error title=AfghanStore::${line}"
+            done
+          fi
+          exit $status
