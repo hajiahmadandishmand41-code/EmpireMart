@@ -711,13 +711,28 @@ class Core
     /**
      * Retrieve all grouped states by country code.
      *
-     * @return Collection
+     * The name of a state is translated for the locale in use, which is what the
+     * address forms read: a province of Afghanistan is named in Dari on the
+     * storefront and in the admin panel alike. States the platform seeds carry no
+     * translations, and keep the name they were seeded with.
+     *
+     * @return array
      */
     public function groupedStatesByCountries()
     {
         $collection = [];
 
+        $translations = DB::table('country_state_translations')
+            ->where('locale', app()->getLocale())
+            ->pluck('default_name', 'country_state_id');
+
         foreach (DB::table('country_states')->get() as $state) {
+            $translated = $translations[$state->id] ?? null;
+
+            if ($translated) {
+                $state->default_name = $translated;
+            }
+
             $collection[$state->country_code][] = $state;
         }
 
