@@ -1,6 +1,15 @@
 name: Pest Tests
 
-on: [push, pull_request]
+# Pushes to main, and every pull request. A branch push that is also a pull request
+# used to start this suite twice and fight the long browser suites for runners; the
+# pull request event is the one that matters for a branch, and main is covered here.
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
 
 permissions:
   contents: read
