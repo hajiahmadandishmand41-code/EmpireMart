@@ -29,7 +29,24 @@
                 ];
             }
 
-            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'fa_AF', 'tr', 'ru', 'uk'])) {
+            if (in_array(app()->getLocale(), ['fa', 'fa_AF'])) {
+                /**
+                 * DejaVu Sans draws the letters of Persian and Dari but has no
+                 * glyph for the sign of the Afghani, so an invoice priced in
+                 * Afghanis would print the amount without its currency. Noto
+                 * Sans Arabic carries both, and is embedded here as the other
+                 * scripts are.
+                 */
+                $fontPath = [
+                    'regular' => asset('fonts/NotoSansArabic-Regular.ttf'),
+                    'bold'    => asset('fonts/NotoSansArabic-Bold.ttf'),
+                ];
+
+                $fontFamily = [
+                    'regular' => 'Noto Sans Arabic',
+                    'bold'    => 'Noto Sans Arabic Bold',
+                ];
+            } elseif (in_array(app()->getLocale(), ['ar', 'he', 'tr', 'ru', 'uk'])) {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',

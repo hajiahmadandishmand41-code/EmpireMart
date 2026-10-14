@@ -15,13 +15,26 @@ it('keeps the Dari webfonts in the repository', function () {
         'fonts/vazirmatn/vazirmatn-arabic-600-normal.woff2',
         'fonts/vazirmatn/vazirmatn-arabic-700-normal.woff2',
         'fonts/noto-arabic/afghani-sign.woff2',
+        'fonts/NotoSansArabic-Regular.ttf',
+        'fonts/NotoSansArabic-Bold.ttf',
         'fonts/vazirmatn/OFL.txt',
         'fonts/noto-arabic/OFL.txt',
+        'fonts/NotoSansArabic-OFL.txt',
     ];
 
     foreach ($fonts as $font) {
         expect(file_exists(public_path($font)))->toBeTrue("{$font} is missing.");
     }
+});
+
+it('hands the invoice a font that has the sign of the Afghani', function () {
+    $invoice = file_get_contents(
+        __DIR__.'/../../../../Shop/src/Resources/views/customers/account/orders/pdf.blade.php'
+    );
+
+    expect($invoice)->toContain("fonts/NotoSansArabic-Regular.ttf")
+        ->and($invoice)->toContain("fonts/NotoSansArabic-Bold.ttf")
+        ->and($invoice)->toContain("'fa_AF'");
 });
 
 it('draws the sign of the Afghani when Vazirmatn has no glyph for it', function () {
