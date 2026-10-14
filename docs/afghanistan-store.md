@@ -205,6 +205,12 @@ their English labels. Run them against an installation with `APP_LOCALE=en`
 (which is what `.github/workflows/*_playwright_tests.yml` do), or translate the
 labels they look for when the Dari panel becomes the one under test.
 
+Those two workflows run on `main`, on pull requests and on demand, rather than
+on every push to a branch: each of them starts more than twenty jobs and takes
+hours, and while they held the queue the Pest, Pint and translation jobs for the
+same push never got to start. Start them from the Actions tab
+(`workflow_dispatch`) when the browser suites are wanted.
+
 ## Acceptance walkthrough
 
 With the store in Dari and pricing in Afghanis, confirm on the storefront:

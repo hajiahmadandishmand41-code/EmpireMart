@@ -1,6 +1,18 @@
 name: Shop | Playwright Tests
 
-on: [push, pull_request]
+# The browser suites take hours and occupy the runners: they run on main and on
+# pull requests, and can be started by hand from the Actions tab (the Dari
+# storefront spec is `.github/workflows/shop_playwright_tests.yml`, job
+# `dari_storefront`). Leaving them on every branch push held the queue so long
+# that the Pest and Pint jobs - which answer the same pushes in minutes - never
+# started.
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
 
 permissions:
   contents: read
