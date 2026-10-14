@@ -1,13 +1,18 @@
 name: Shop | Playwright Tests
 
-# The browser suites are the long ones: each starts more than twenty jobs that run
-# for hours, and while they were queued for every push and every pull request the
-# Pest, Pint and translation jobs for the same event never got to start. They run
-# when main moves, and on demand from the Actions tab - the Dari storefront spec is
-# the `dari_storefront` job of `.github/workflows/shop_playwright_tests.yml`.
+# The sharded matrix below is the long one: twenty jobs that run for hours, and while
+# they were queued for every push and every pull request, the Pest, Pint and
+# translation jobs for the same event never got to start. It runs when main moves, and
+# on demand from the Actions tab.
+#
+# The storefront this repository is for is checked on every pull request by the
+# `dari_storefront` job, which installs the store in Dari and prices it in Afghanis and
+# drives one browser through it: that job is one job, not twenty.
 on:
   push:
     branches: [main]
+
+  pull_request:
 
   workflow_dispatch:
 
@@ -18,7 +23,11 @@ env:
   FORCE_COLOR: 1
 
 jobs:
+  # The English installation this matrix drives is the platform's own, and it is not the
+  # store the pull requests are about, so it is left to main and to a manual run.
   shop_playwright_test:
+    if: github.event_name != 'pull_request'
+
     runs-on: ${{ matrix.operating-systems }}
 
     strategy:
@@ -236,6 +245,10 @@ jobs:
       - name: Checking the storefront in Dari
         env:
           BASE_URL: "http://127.0.0.1:8000"
+          # The spec takes the language and the currency to expect from these, and this
+          # job is the one that installs the store they name.
+          APP_LOCALE: "fa_AF"
+          APP_CURRENCY: "AFN"
         run: |
           npx playwright test --config=tests/e2e-pw/playwright.config.ts tests/e2e-pw/tests/localization.spec.ts
         working-directory: packages/Webkul/Shop

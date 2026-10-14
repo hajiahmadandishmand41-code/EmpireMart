@@ -204,6 +204,10 @@ and the invoice is asserted to be a right-to-left document in a font that has
 the sign of the Afghani. Both paths are those run by the "Installing the store
 in Dari" steps of `.github/workflows/pest_tests.yml`.
 
+`DariOrderTest` describes the Dari installation - it opens by asserting the
+locale - so the platform's own run leaves it out (`phpunit.xml`) and the step
+that installs that store is the one that runs it.
+
 End-to-end, with the store running:
 
 ```bash
@@ -220,11 +224,17 @@ their English labels. Run them against an installation with `APP_LOCALE=en`
 (which is what `.github/workflows/*_playwright_tests.yml` do), or translate the
 labels they look for when the Dari panel becomes the one under test.
 
-Those two workflows run on `main`, on pull requests and on demand, rather than
-on every push to a branch: each of them starts more than twenty jobs and takes
-hours, and while they held the queue the Pest, Pint and translation jobs for the
-same push never got to start. Start them from the Actions tab
-(`workflow_dispatch`) when the browser suites are wanted.
+Those two workflows are the long ones: each sharded matrix starts twenty jobs
+and takes hours, and while they were queued for every push and every pull
+request the Pest, Pint and translation jobs for the same event never got to
+start. The matrices run when `main` moves, and on demand from the Actions tab
+(`workflow_dispatch`).
+
+One job does run on every pull request: `dari_storefront` in
+`.github/workflows/shop_playwright_tests.yml`. It is the one that installs the
+store the way this repository is meant to be run - in Dari, priced in Afghanis -
+and drives `localization.spec.ts` through it, so the direction, the font and the
+currency of the real storefront are checked before anything is merged.
 
 ## Acceptance walkthrough
 
