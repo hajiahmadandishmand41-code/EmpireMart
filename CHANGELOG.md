@@ -21,6 +21,11 @@ This changelog consists of the bug & security fixes and new features being inclu
 - Added the storefront strings that were still hard-coded in English (image alts, accessibility labels, star ratings, the video fallback) to the language files, and named both text directions in the locale screen.
 
 
+- The right-to-left layout is finished off in both panels: one-sided utilities in the views became Tailwind's logical ones (`ps`/`pe`, `ms`/`me`, `start`/`end`, `text-start`/`text-end`, `border-s`/`border-e`, `rounded-s`/`rounded-e`), which read the same in English and follow the writing direction in Dari, and the arrows that had no mirrored glyph (carousels, pagination, the date picker, the media gallery, the image zoomer) got one. Centring pairs such as `left-1/2 -translate-x-1/2` are untouched on purpose.
+
+- `DariOrderTest` buys something in the Dari storefront in CI: a product at 1000 AFN, a ten percent coupon, the order, the invoice, and every amount asserted both as a number and as the Afghan string the customer reads.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

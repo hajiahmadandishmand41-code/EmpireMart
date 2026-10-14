@@ -101,6 +101,30 @@ php artisan cache:clear
 * **Appearance → Themes** and **Content** — any content written before the
   conversion is still in the old wording and needs translating.
 
+## Right-to-left layout
+
+The direction comes from the locale: `SupportedLocales::direction('fa_AF')` is
+`rtl`, the `<html>` tag carries it, and both panels' CSS is written for it
+already (`[dir="rtl"]` rules, `rtl:` variants, `rtl:icon-*` glyphs). What was
+missing were the places that use a fixed side instead of a logical one.
+
+Tailwind's logical utilities are now used for spacing, borders, corners and
+alignment (`ps-`/`pe-`, `ms-`/`me-`, `border-s`/`border-e`,
+`rounded-s`/`rounded-e`, `text-start`/`text-end`, `start-`/`end-`). They compute
+the same values as their physical twins while the page is LTR, so nothing moved
+for English, and they follow the writing direction once the page is RTL.
+Icons that point along the text (`icon-arrow-left`, `icon-sort-right`, the
+carousel and pagination arrows, the date-picker and gallery arrows) carry the
+mirrored class as an `rtl:` variant, and `space-x-*` groups carry
+`rtl:space-x-reverse`.
+
+When editing a view, keep to that: prefer the logical utility; if the physical
+one is unavoidable, add the `rtl:` counterpart next to it. The two exceptions
+are deliberate — `left-1/2 -translate-x-1/2` centring, which is direction
+independent, and pairs that already spell out both directions with `ltr:` and
+`rtl:`. After changing views, rebuild (below) and mirror the change in the CSS
+check described under "What has been verified".
+
 ## Asset build
 
 The RTL type and the direction of the layout come from Blade partials and are
@@ -124,6 +148,21 @@ php artisan bagisto:translations:check   # Dari files match English key for key
 ./vendor/bin/pest                         # PHPUnit/Pest suites, locale independent
 ./vendor/bin/pint --test                  # code style
 ```
+
+The suites that only make sense in Dari run against a Dari installation:
+
+```bash
+./vendor/bin/pest packages/Webkul/Core/tests/Unit/Afghanistan \
+                  packages/Webkul/Shop/tests/Feature/Afghanistan
+```
+
+`DariOrderTest` walks the storefront: a product at 1000 AFN goes into an Afghan
+cart, a ten percent coupon takes a hundred Afghanis off, the order is placed,
+invoiced and read back. Every amount is asserted twice — as the number the shop
+calculated and as the string the customer sees, `؋ ۱۰۰۰٫۰۰` and `؋ ۹۰۰٫۰۰` —
+and the invoice is asserted to be a right-to-left document in a font that has
+the sign of the Afghani. Both paths are those run by the "Installing the store
+in Dari" steps of `.github/workflows/pest_tests.yml`.
 
 End-to-end, with the store running:
 
@@ -175,7 +214,19 @@ Checked on the machine this work was done on, without a database:
   Afghani, which Vazirmatn does not have;
 * the Afghani is formatted by ICU as `؋ ۱٬۲۳۴٫۵۰` in Dari and `؋ 1,234.50` in
   English, with two decimals rather than the whole units ICU would default to
-  for a currency without minor units of its own.
+  for a currency without minor units of its own;
+* no view is left with a one-sided direction utility: every `pl-`/`pr-`,
+  `ml-`/`mr-`, `left-`/`right-`, `text-left`/`text-right`, `border-l`/`border-r`
+  and `rounded-l`/`rounded-r` either is logical now, carries its `rtl:`
+  counterpart, or is part of a `translate-x` centring pair (audited with a
+  script over `views`, `assets` and `*.vue`);
+* every direction-related class the views use is present in the built
+  stylesheets of both panels, `rtl:icon-arrow-*` and the logical utilities
+  included;
+* the text was shaped and drawn offline with HarfBuzz from the exact font files
+  this repository serves — Vazirmatn for the letters, the Noto subset for the
+  sign — which is what confirms the joining forms, the Persian digits and the
+  `؋` really come out of that font stack.
 
 Not run here — this machine has no PHP runtime, no Composer and no MySQL, so
 Laravel cannot start: the Pest suites, the Playwright suites, a real checkout,
@@ -200,3 +251,8 @@ database. Those are wired into CI and listed above as the steps to run.
   in its own font and leaves the sign out, and the fix is the URL, not the
   template.
 * The upstream Playwright suites need an English installation, as described above.
+* The language switcher falls back to a generic globe icon for Dari, because no
+  flag image ships for it (`packages/Webkul/Installer/src/Resources/assets/images/seeders/locales/`);
+  five other locales are in the same position. A Dari flag can be uploaded
+  against the locale in Settings → Locales, which is where the other flags come
+  from.
