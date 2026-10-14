@@ -38,20 +38,34 @@ jobs:
         run: |
           set +e
 
-          ${{ runner.temp }}/composer/vendor/bin/pint --test --format=github 2>&1 | tee /tmp/pint.log
+          # Pint reports in agent, checkstyle, gitlab, json, junit, txt or xml; `agent` is the one
+          # that names the files it would rewrite in a single small JSON report. It is written to
+          # its own file because the job log is not reachable from the outside: the report is
+          # repeated below as annotations, which are.
+          ${{ runner.temp }}/composer/vendor/bin/pint --test --format=agent > /tmp/pint.json 2>/tmp/pint.log
 
-          status=${PIPESTATUS[0]}
+          status=$?
+
+          cat /tmp/pint.log 2>/dev/null
+
+          cat /tmp/pint.json 2>/dev/null
+
+          # The report is one JSON object on its own line; taking that line keeps the parse
+          # working even if something else reaches stdout first.
+          grep -m1 '^{' /tmp/pint.json > /tmp/pint.report.json || :
 
           if [ $status -ne 0 ]; then
-            # The job log is not reachable from the outside, so the report is repeated as
-            # annotations, which are: the files Pint would rewrite, then the summary.
-            grep -E '\.php' /tmp/pint.log | head -40 | while IFS= read -r line; do
-              echo "::error title=Pint::${line}"
-            done
+            if jq -e '.result' /tmp/pint.report.json > /dev/null 2>&1; then
+              jq -r '.files[]? | "::error file=" + .path + ",line=1,title=Pint::" + (.fixers | join(", "))' /tmp/pint.report.json
 
-            tail -12 /tmp/pint.log | while IFS= read -r line; do
-              echo "::error title=Pint summary::${line}"
-            done
+              jq -r '.errors[]? | "::error file=" + .path + ",line=1,title=Pint::" + .message' /tmp/pint.report.json
+
+              jq -r '"::notice title=Pint::" + .result + ", " + ((.files // []) | length | tostring) + " file(s) to rewrite"' /tmp/pint.report.json
+            else
+              grep -E '\.php' /tmp/pint.log | head -40 | while IFS= read -r line; do
+                echo "::error title=Pint::${line}"
+              done
+            fi
           fi
 
           exit $status

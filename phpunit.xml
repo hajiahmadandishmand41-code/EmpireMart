@@ -75,6 +75,14 @@
         <!-- Shop package testsuites. -->
         <testsuite name="Shop Feature Test">
             <directory suffix="Test.php">packages/Webkul/Shop/tests/Feature</directory>
+
+            <!--
+                The Afghan acceptance suite asserts the storefront of the store installed in Dari
+                and priced in Afghanis, which is not the installation this run installs: the store
+                it describes is installed by the "Installing the store in Dari" step of
+                .github/workflows/pest_tests.yml, and that step is the one that runs it.
+            -->
+            <exclude>packages/Webkul/Shop/tests/Feature/Afghanistan</exclude>
         </testsuite>
 
         <!-- Stripe package testsuites. -->
