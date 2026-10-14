@@ -137,3 +137,107 @@ jobs:
             packages/Webkul/Shop/tests/e2e-pw/test-results
             storage/logs/laravel.log
           retention-days: 1
+
+  # The suite above drives an English installation, because it finds the shop and
+  # the admin panel by their English labels. This job installs the store the way
+  # it is meant to be run - in Dari, priced in Afghanis - and checks the
+  # storefront that comes out of it: the direction, the language, the currency
+  # and the font. It reads the configuration rather than any label, so it holds
+  # in either language and runs on one shard.
+  dari_storefront:
+    runs-on: ubuntu-latest
+
+    name: Shop | Dari storefront
+
+    services:
+      database:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bagisto
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: curl, fileinfo, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.1'
+
+      - name: Install Node.js Dependencies
+        run: npm install
+        working-directory: packages/Webkul/Shop
+
+      - name: Install Playwright Browsers
+        run: |
+          sudo apt-get update --allow-releaseinfo-change
+          npx playwright install --with-deps chromium
+        working-directory: packages/Webkul/Shop
+
+      - name: Setting Environment
+        run: |
+          cp .env.example .env
+          sed -i "s|^\(DB_CONNECTION=\s*\).*$|\1mysql|" .env
+          sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env
+          sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.database.ports[3306] }}|" .env
+          sed -i "s|^\(DB_DATABASE=\s*\).*$|\1bagisto|" .env
+          sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
+          sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
+          sed -i "s|^\(APP_DEBUG=\s*\).*$|\1false|" .env
+          sed -i "s|^\(APP_URL=\s*\).*$|\1http://127.0.0.1:8000|" .env
+          #
+          # Left in the Dari the store is configured with, so this install is the
+          # one a customer in Kabul would browse.
+          #
+          sed -i "s|^\(APP_LOCALE=\s*\).*$|\1fa_AF|" .env
+          sed -i "s|^\(APP_CURRENCY=\s*\).*$|\1AFN|" .env
+          sed -i "s|^\(APP_DEFAULT_COUNTRY=\s*\).*$|\1AF|" .env
+          cat .env
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Running Bagisto Installer
+        run: php artisan bagisto:install --no-interaction
+
+      - name: Seed Product Table
+        run: php artisan db:seed --class="Webkul\\Installer\\Database\\Seeders\\ProductTableSeeder"
+
+      - name: Indexing Product Table
+        run: php artisan indexer:index --mode=full
+
+      - name: Start Laravel server
+        run: |
+          php artisan serve --host=0.0.0.0 --port=8000 > server.log 2>&1 &
+          echo "Waiting for server to start..."
+          timeout 30 bash -c 'until curl -s http://127.0.0.1:8000 > /dev/null; do sleep 1; done'
+
+      - name: Checking the storefront in Dari
+        env:
+          BASE_URL: "http://127.0.0.1:8000"
+        run: |
+          npx playwright test --config=tests/e2e-pw/playwright.config.ts tests/e2e-pw/tests/localization.spec.ts
+        working-directory: packages/Webkul/Shop
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shop-dari-results-${{ github.run_id }}-${{ github.run_number }}
+          path: |
+            packages/Webkul/Shop/tests/e2e-pw/playwright-report
+            packages/Webkul/Shop/tests/e2e-pw/test-results
+            storage/logs/laravel.log
+          retention-days: 1
