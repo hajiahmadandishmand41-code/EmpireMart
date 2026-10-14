@@ -147,8 +147,21 @@ When editing a view, keep to that: prefer the logical utility; if the physical
 one is unavoidable, add the `rtl:` counterpart next to it. The two exceptions
 are deliberate — `left-1/2 -translate-x-1/2` centring, which is direction
 independent, and pairs that already spell out both directions with `ltr:` and
-`rtl:`. After changing views, rebuild (below) and mirror the change in the CSS
-check described under "What has been verified".
+`rtl:`.
+
+Two scripts keep this honest, and both run from the repository root:
+
+```bash
+python3 scripts/rtl-audit.py         # views still written for one direction only
+python3 scripts/check-built-css.py   # classes used by views that are not in the built CSS
+```
+
+The first fails on any one-sided utility that has neither a logical form nor an
+`rtl:` counterpart, and on direction-carrying icons without a mirrored variant;
+it currently reports nothing. The second fails when a view was changed without
+rebuilding the bundles, which is the mistake that makes an RTL fix silently
+disappear; it currently reports every class present. Run both after touching a
+view, then rebuild.
 
 ## Asset build
 
@@ -172,6 +185,8 @@ glyph is served from a 692-byte subset of Noto Sans Arabic
 php artisan bagisto:translations:check   # Dari files match English key for key
 ./vendor/bin/pest                         # PHPUnit/Pest suites, locale independent
 ./vendor/bin/pint --test                  # code style
+python3 scripts/rtl-audit.py              # the views' direction rules
+python3 scripts/check-built-css.py        # views and built bundles still agree
 ```
 
 The suites that only make sense in Dari run against a Dari installation:

@@ -31,6 +31,11 @@ This changelog consists of the bug & security fixes and new features being inclu
 - The browser suites no longer run on pull requests: each starts more than twenty jobs that run for hours, and while they were queued for every push and pull request the Pest, Pint and translation jobs for the same event never got to start. They run when `main` moves, and on demand from the Actions tab.
 
 
+- `scripts/rtl-audit.py` reports any view still written for one direction only, and `scripts/check-built-css.py` reports any class the views use that the built stylesheets do not have - the mistake that makes an RTL fix disappear in production. Both are documented in `docs/afghanistan-store.md` and both pass.
+
+- Two tests assert the deployment: that `.env.example` carries the Afghan settings, and that the three production Dockerfiles install the store from that file, so an image built here boots already in Dari and priced in Afghanis.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

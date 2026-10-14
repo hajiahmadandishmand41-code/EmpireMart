@@ -269,3 +269,35 @@ it('leaves the amounts alone during a dry run', function () {
 
     expect(flatRate())->toBe('10');
 });
+
+it('ships the Afghan settings in the environment a deployment starts from', function () {
+    /**
+     * The deployment starts here: the production image copies `.env.example` to
+     * `.env` while it is being built and installs the store from it, and a host
+     * that follows the runbook fills its `.env` from the same file. Every Afghan
+     * setting therefore has to be in it, or a deployment would come up in the
+     * platform's defaults instead of this store's.
+     */
+    $example = file_get_contents(base_path('.env.example'));
+
+    expect($example)->toContain('APP_TIMEZONE=Asia/Kabul')
+        ->and($example)->toContain('APP_LOCALE=fa_AF')
+        ->and($example)->toContain('APP_DEFAULT_COUNTRY=AF')
+        ->and($example)->toContain('APP_CURRENCY=AFN');
+});
+
+it('has the production images install the store from that environment', function () {
+    foreach (['nginx', 'apache', 'litespeed'] as $server) {
+        $dockerfile = file_get_contents(base_path("docker/production/{$server}/Dockerfile"));
+
+        // the environment the image installs from ...
+        expect($dockerfile)->toContain('cp .env.example .env');
+
+        // ... and the install itself, which build-install.sh runs at build time
+        expect($dockerfile)->toContain('bash /tmp/build-install.sh');
+
+        $build = file_get_contents(base_path('docker/production/shared/build-install.sh'));
+
+        expect($build)->toContain('bagisto:install');
+    }
+});
