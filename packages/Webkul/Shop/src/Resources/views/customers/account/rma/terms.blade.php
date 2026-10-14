@@ -39,7 +39,7 @@
                         
                         <a 
                             href="javascript:void(0);" 
-                            class="ml-1 text-blue-500 hover:text-blue-600 hover:underline max-md:text-xs"
+                            class="ms-1 text-blue-500 hover:text-blue-600 hover:underline max-md:text-xs"
                             @click.prevent="$refs.agreementModel.open()"
                         >
                             @lang('shop::app.customers.account.rma.terms.read')

@@ -71,7 +71,7 @@
                     >
                         @lang('shop::app.eu_withdrawal.form.reason_label')
 
-                        <span class="ml-1 text-xs font-normal text-zinc-500">
+                        <span class="ms-1 text-xs font-normal text-zinc-500">
                             @lang('shop::app.eu_withdrawal.form.reason_optional')
                         </span>
                     </label>

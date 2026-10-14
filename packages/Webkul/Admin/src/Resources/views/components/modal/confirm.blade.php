@@ -42,7 +42,7 @@
                                 @{{ title }}
                             </div>
 
-                            <div class="px-4 py-3 text-left text-gray-600 dark:text-gray-300">
+                            <div class="px-4 py-3 text-start text-gray-600 dark:text-gray-300">
                                 @{{ message }}
                             </div>
 

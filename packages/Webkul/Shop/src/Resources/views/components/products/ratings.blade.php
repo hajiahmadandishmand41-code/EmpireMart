@@ -27,7 +27,7 @@
             >
             </span>
             
-            <span class="border-l border-zinc-300 text-sm font-medium text-black max-sm:border-zinc-300 max-sm:text-xs ltr:pl-1 rtl:pr-1">
+            <span class="border-s border-zinc-300 text-sm font-medium text-black max-sm:border-zinc-300 max-sm:text-xs ltr:pl-1 rtl:pr-1">
                 @{{ abbreviatedTotal }}
 
                 <span v-if="rating">@lang('shop::app.components.products.ratings.title')</span>

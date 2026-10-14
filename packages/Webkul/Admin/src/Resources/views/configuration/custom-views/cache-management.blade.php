@@ -28,7 +28,7 @@
                     @lang('admin::app.configuration.index.cache-management.warning-title')
                 </p>
 
-                <ul class="list-disc pl-5 text-xs text-amber-700 dark:text-amber-400">
+                <ul class="list-disc ps-5 text-xs text-amber-700 dark:text-amber-400">
                     <li>@lang('admin::app.configuration.index.cache-management.warning-route-closures')</li>
                     <li>@lang('admin::app.configuration.index.cache-management.warning-config-closures')</li>
                     <li>@lang('admin::app.configuration.index.cache-management.warning-permissions')</li>

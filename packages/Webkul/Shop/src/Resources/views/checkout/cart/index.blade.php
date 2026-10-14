@@ -19,7 +19,7 @@
 
     <!-- Page Header -->
     <div class="flex flex-wrap">
-        <div class="flex w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] py-4 max-lg:px-8 max-md:px-4">
+        <div class="flex w-full justify-between border border-b border-s-0 border-e-0 border-t-0 px-[60px] py-4 max-lg:px-8 max-md:px-4">
             <div class="flex items-center gap-x-14 max-[1180px]:gap-x-9">
                 {!! view_render_event('bagisto.shop.checkout.cart.logo.before') !!}
 
@@ -150,7 +150,7 @@
                                     </span>
 
                                     @if (auth()->guard()->check())
-                                        <span class="mx-2.5 border-r-2 border-zinc-200"></span>
+                                        <span class="mx-2.5 border-e-2 border-zinc-200"></span>
 
                                         <span
                                             class="cursor-pointer text-base text-blue-700 max-sm:text-xs"
@@ -342,7 +342,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="text-right max-md:hidden">
+                                    <div class="text-end max-md:hidden">
                                         {!! view_render_event('bagisto.shop.checkout.cart.total.before') !!}
 
                                         <template v-if="displayTax.prices == 'including_tax'">

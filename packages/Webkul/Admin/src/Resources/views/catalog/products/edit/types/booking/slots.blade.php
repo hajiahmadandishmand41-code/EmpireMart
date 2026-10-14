@@ -121,7 +121,7 @@
                         </div>
 
                         <p
-                            class="text-right text-blue-600 transition-all cursor-pointer place-content-start hover:underline"
+                            class="text-end text-blue-600 transition-all cursor-pointer place-content-start hover:underline"
                             @click="currentIndex=dayIndex;toggle()"
                         >
                             @lang('admin::app.catalog.products.edit.types.booking.slots.action.add')

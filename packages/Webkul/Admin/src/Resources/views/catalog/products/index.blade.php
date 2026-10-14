@@ -191,7 +191,7 @@
                                             :src='record.base_image'
                                         />
 
-                                        <span class="absolute -bottom-1 -right-1 rounded-full bg-darkPink px-1 text-xs font-bold leading-normal text-white">
+                                        <span class="absolute -bottom-1 -end-1 rounded-full bg-darkPink px-1 text-xs font-bold leading-normal text-white">
                                             @{{ record.images_count }}
                                         </span>
                                     </template>

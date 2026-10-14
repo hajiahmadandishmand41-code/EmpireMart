@@ -117,7 +117,7 @@
                         ]))
                             <div class="relative inline-flex w-full max-w-max">
                                 <select
-                                    class="w-full cursor-pointer appearance-none rounded-md border bg-white px-2.5 py-1.5 pr-8 text-center leading-6 text-gray-600 transition hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                    class="w-full cursor-pointer appearance-none rounded-md border bg-white px-2.5 py-1.5 pe-8 text-center leading-6 text-gray-600 transition hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     v-model="filters.period"
                                 >
                                     <option value="day">
@@ -133,7 +133,7 @@
                                     </option>
                                 </select>
                                 
-                                <span class="icon-sort-down pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform text-2xl text-gray-600 dark:text-gray-300"></span>
+                                <span class="icon-sort-down pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 transform text-2xl text-gray-600 dark:text-gray-300"></span>
                             </div>
                         @endif
                     </div>

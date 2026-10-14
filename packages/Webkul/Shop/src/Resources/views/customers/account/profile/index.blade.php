@@ -156,7 +156,7 @@
                             />
 
                             <x-shop::form.control-group.error
-                                class="text-left"
+                                class="text-start"
                                 control-name="password"
                             />
                         </x-shop::form.control-group>

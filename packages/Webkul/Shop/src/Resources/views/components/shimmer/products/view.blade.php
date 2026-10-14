@@ -24,7 +24,7 @@
             <div class="mt-5">
                 <h3 class="shimmer mb-4 h-9 w-1/5"></h3>
 
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
                     <span class="shimmer h-8 w-8 rounded-full"></span>
                     <span class="shimmer h-8 w-8 rounded-full"></span>
                     <span class="shimmer h-8 w-8 rounded-full"></span>

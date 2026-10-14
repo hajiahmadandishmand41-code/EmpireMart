@@ -280,7 +280,7 @@
                                 v-show="customerSavedAddresses.billing.length && ['billing', 'shipping'].includes(activeAddressForm)"
                                 @click="selectedAddressForEdit = null; activeAddressForm = null"
                             >
-                                <span class="icon-arrow-left text-2xl max-md:hidden"></span>
+                                <span class="icon-arrow-left rtl:icon-arrow-right text-2xl max-md:hidden"></span>
 
                                 @lang('shop::app.checkout.onepage.address.back')
                             </span>

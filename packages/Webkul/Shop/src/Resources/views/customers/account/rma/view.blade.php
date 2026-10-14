@@ -178,27 +178,27 @@
                 <table class="w-full table-fixed">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="w-[36%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[36%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.image') / @lang('shop::app.rma.table-heading.product-name')
                             </th>
 
-                            <th class="w-[16%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[16%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.sku')
                             </th>
 
-                            <th class="w-[11%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[11%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.price')
                             </th>
 
-                            <th class="w-[10%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[10%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.rma-qty')
                             </th>
 
-                            <th class="w-[13%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[13%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.resolution-type')
                             </th>
 
-                            <th class="w-[14%] px-4 py-3 text-left text-sm font-medium text-gray-600">
+                            <th class="w-[14%] px-4 py-3 text-start text-sm font-medium text-gray-600">
                                 @lang('shop::app.rma.table-heading.reason')
                             </th>
                         </tr>
@@ -421,7 +421,7 @@
                                     <input
                                         type="file"
                                         id="file"
-                                        class="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
+                                        class="opacity-0 absolute top-0 start-0 w-full h-full cursor-pointer"
                                         name="file"
                                         @change="handleFileSelect($event)"
                                     />
@@ -460,7 +460,7 @@
                                 :class="message.is_admin == 1 ? 'justify-start' : 'justify-end'"
                             >
                                 <div
-                                    class="max-w-[70%] w-fit rounded-xl p-3.5 text-left shadow-sm"
+                                    class="max-w-[70%] w-fit rounded-xl p-3.5 text-start shadow-sm"
                                     :class="message.is_admin == 1 ? 'bg-gray-100' : 'bg-blue-50'"
                                 >
                                     <div class="flex items-center gap-2 mb-1">

@@ -61,7 +61,7 @@
                 </div>
 
                 <div
-                    class="absolute left-0 z-20 mt-1 w-full overflow-hidden rounded-md border bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                    class="absolute start-0 z-20 mt-1 w-full overflow-hidden rounded-md border bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900"
                     v-show="isOpen"
                 >
                     <div class="border-b p-2 dark:border-gray-800">

@@ -30,7 +30,7 @@
                 <x-admin::quantity-changer
                     ::name="'qty[' + product.id + ']'"
                     ::value="product.qty"
-                    class="w-max gap-x-4 rounded-l px-4 py-1"
+                    class="w-max gap-x-4 rounded-s px-4 py-1"
                     @change="updateItem($event)"
                 />
             </div>

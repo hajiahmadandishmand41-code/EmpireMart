@@ -14,7 +14,7 @@
         </div>
 
         <!-- Right Information -->
-        <div class="grid place-content-center gap-1 text-right">
+        <div class="grid place-content-center gap-1 text-end">
                 <p class="shimmer h-[17px] w-[50px]"></p>
         </div>
     </div>

@@ -59,7 +59,7 @@
     {!! view_render_event('bagisto.shop.checkout.onepage.summary.sub_total.before') !!}
 
     <template v-if="displayTax.subtotal == 'including_tax'">
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.sub-total')
             </p>
@@ -71,7 +71,7 @@
     </template>
 
     <template v-else-if="displayTax.subtotal == 'both'">
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.sub-total')
             </p>
@@ -89,7 +89,7 @@
     </template>
 
     <template v-else>
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.sub-total')
             </p>
@@ -108,7 +108,7 @@
     <template v-if="cart.discount_amount && parseFloat(cart.discount_amount) > 0">
         <!-- Single Source: Simple line. -->
         <div
-            class="flex justify-between text-right"
+            class="flex justify-between text-end"
             v-if="parseFloat(cart.items_discount_amount || 0) <= 0 || parseFloat(cart.shipping_discount_amount || 0) <= 0"
         >
             <p class="text-base text-red-600 max-sm:text-sm">
@@ -126,7 +126,7 @@
             v-else
         >
             <div
-                class="flex cursor-pointer justify-between text-right"
+                class="flex cursor-pointer justify-between text-end"
                 @click="cart.show_discount_breakdown = ! cart.show_discount_breakdown"
             >
                 <p class="text-base text-red-600 max-sm:text-sm">
@@ -147,7 +147,7 @@
                 class="flex flex-col gap-1"
                 v-show="cart.show_discount_breakdown"
             >
-                <div class="flex justify-between gap-1 text-right">
+                <div class="flex justify-between gap-1 text-end">
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         @lang('shop::app.checkout.onepage.summary.items-discount')
                     </p>
@@ -157,7 +157,7 @@
                     </p>
                 </div>
 
-                <div class="flex justify-between gap-1 text-right">
+                <div class="flex justify-between gap-1 text-end">
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         @lang('shop::app.checkout.onepage.summary.shipping-discount')
                     </p>
@@ -183,7 +183,7 @@
     {!! view_render_event('bagisto.shop.checkout.onepage.summary.delivery_charges.before') !!}
         
     <template v-if="displayTax.shipping == 'including_tax'">
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')
             </p>
@@ -195,7 +195,7 @@
     </template>
 
     <template v-else-if="displayTax.shipping == 'both'">
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')
             </p>
@@ -213,7 +213,7 @@
     </template>
 
     <template v-else>
-        <div class="flex justify-between text-right">
+        <div class="flex justify-between text-end">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')
             </p>
@@ -235,7 +235,7 @@
     @endphp
 
     <div
-        class="flex justify-between text-right"
+        class="flex justify-between text-end"
         v-if="! cart.tax_total"
     >
         <p class="text-base max-md:font-normal max-sm:text-sm">
@@ -253,7 +253,7 @@
             v-else
         >
             <div
-                class="flex cursor-pointer items-center justify-between gap-2 text-right"
+                class="flex cursor-pointer items-center justify-between gap-2 text-end"
                 @click="cart.show_taxes = ! cart.show_taxes"
             >
                 <p class="text-base max-md:font-normal max-sm:text-sm">
@@ -291,7 +291,7 @@
                     </p>
 
                     <div
-                        class="flex items-center justify-between gap-2 pl-3"
+                        class="flex items-center justify-between gap-2 ps-3"
                         v-for="product in taxLine.items"
                     >
                         <p class="truncate text-xs text-gray-400 dark:text-gray-500">
@@ -311,7 +311,7 @@
         </div>
     @else
         <div
-            class="flex justify-between text-right"
+            class="flex justify-between text-end"
             v-else
         >
             <p class="text-base max-md:font-normal max-sm:text-sm">
@@ -337,7 +337,7 @@
     <!-- Cart Grand Total -->
     {!! view_render_event('bagisto.shop.checkout.onepage.summary.grand_total.before') !!}
 
-    <div class="flex justify-between text-right">
+    <div class="flex justify-between text-end">
         <p class="text-lg font-semibold max-sm:text-sm">
             @lang('shop::app.checkout.onepage.summary.grand-total')
         </p>

@@ -213,7 +213,7 @@
                 <x-admin::quantity-changer
                     ::name="'bundle_option_qty[' + option?.id + ']'"
                     ::value="productQty"
-                    class="mt-5 w-max gap-x-4 rounded-l px-4 py-1"
+                    class="mt-5 w-max gap-x-4 rounded-s px-4 py-1"
                     @change="qtyUpdated($event)"
                 />
             </template>

@@ -138,7 +138,7 @@
                             <p data-label="@lang('admin::app.settings.users.index.datagrid.name')">
                                 <div class="flex items-center gap-2.5">
                                     <div
-                                        class="border-3 mr-2 inline-block h-9 w-9 overflow-hidden rounded-full border-gray-800 text-center align-middle"
+                                        class="border-3 me-2 inline-block h-9 w-9 overflow-hidden rounded-full border-gray-800 text-center align-middle"
                                         v-if="record.user_img"
                                     >
                                         <img

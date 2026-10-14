@@ -15,12 +15,12 @@
         </div>
 
         <span
-            class="shimmer absolute -left-10 top-9 flex h-[50px] w-[50px] rounded-full max-sm:hidden"
+            class="shimmer absolute -start-10 top-9 flex h-[50px] w-[50px] rounded-full max-sm:hidden"
             role="presentation"
         ></span>
 
         <span
-            class="shimmer absolute -right-6 top-9 flex h-[50px] w-[50px] rounded-full max-sm:hidden"
+            class="shimmer absolute -end-6 top-9 flex h-[50px] w-[50px] rounded-full max-sm:hidden"
             role="presentation"
         ></span>
     </div>

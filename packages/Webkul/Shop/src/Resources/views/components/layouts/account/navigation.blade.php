@@ -39,7 +39,7 @@
 
             <!-- Account Navigation Content -->
             @if ($menuItem->haveChildren())
-                <div class="grid rounded-md border border-b border-l-[1px] border-r border-t-0 border-zinc-200 max-md:border-none">
+                <div class="grid rounded-md border border-b border-s-[1px] border-e border-t-0 border-zinc-200 max-md:border-none">
                     @foreach ($menuItem->getChildren() as $subMenuItem)
                         <a href="{{ $subMenuItem->getUrl() }}">
                             <div class="flex justify-between px-6 py-5 border-t border-zinc-200 hover:bg-zinc-100 cursor-pointer max-md:p-4 max-md:border-0 max-md:py-3 max-md:px-0 {{ $subMenuItem->isActive() ? 'bg-zinc-100' : '' }}">

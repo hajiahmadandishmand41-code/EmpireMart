@@ -207,7 +207,7 @@
                             </div>
                         </div>
 
-                        <p class="mb-6 w-full place-self-end text-left">
+                        <p class="mb-6 w-full place-self-end text-start">
                             <a
                                 class="bg-white text-blue-600 underline"
                                 href="https://bagisto.com/en/"
