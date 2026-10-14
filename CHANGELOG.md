@@ -14,6 +14,10 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 - Fixed the RMA screens showing every amount as US dollars through a hard-coded formatter, and the order factory writing test orders in a currency the store was not configured with.
 
+- Fixed the right-to-left invoice printing the amount of an Afghani price without its currency: Vazirmatn and the DejaVu Sans the invoices were drawn with have no glyph for the sign of the Afghani. The storefront serves the sign from a 692-byte subset of Noto Sans Arabic named for U+060B alone, and the invoice embeds the full Noto Sans Arabic for Persian and Dari.
+
+- The date pickers in both panels read in Dari: flatpickr ships no Afghan locale, so the Afghan month names, the Saturday week start and the labels a screen reader announces are added, and a regional code such as `fa_IR` falls back to the language it starts with instead of leaving the calendar in English.
+
 - Added the storefront strings that were still hard-coded in English (image alts, accessibility labels, star ratings, the video fallback) to the language files, and named both text directions in the locale screen.
 
 

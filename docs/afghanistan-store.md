@@ -166,12 +166,12 @@ With the store in Dari and pricing in Afghanis, confirm on the storefront:
   language.
 * Tax rates and exchange rates are settings, not data: they are seeded empty and
   have to be entered for Afghanistan.
-* An invoice PDF is drawn with the font mPDF is given (DejaVu Sans for the
-  right-to-left locales). DejaVu has the Arabic letters and the Persian digits
-  but no glyph for the Afghani sign, so an invoice prints the amount without the
-  sign beside it. Point mPDF at an Arabic-capable TTF — Vazirmatn or Noto Naskh
-  Arabic plus Noto Sans Arabic for the sign — through the `fontdata` option in
-  `Webkul\Core\Traits\PDFHandler::buildMpdf()` to have it print as it does on
-  the page. It is left as it is here because it cannot be rendered without a
-  vendor directory, and a font mPDF cannot find fails the whole invoice.
+* The invoice PDF embeds Noto Sans Arabic from `public/fonts` for Persian and
+  Dari, the way the other scripts are embedded. mPDF fetches it over the URL the
+  invoice was requested from, so the server has to be able to reach `APP_URL` —
+  the same requirement the Chinese, Japanese, Hindi, Bengali and Sinhala
+  invoices already have. Open one invoice after deploying and check the sign of
+  the Afghani is printed; if the font cannot be fetched, mPDF draws the invoice
+  in its own font and leaves the sign out, and the fix is the URL, not the
+  template.
 * The upstream Playwright suites need an English installation, as described above.
