@@ -34,6 +34,7 @@ class CurrencyTableSeeder extends Seeder
                     'name' => trans('installer::app.seeders.core.currencies.'.$currency, [], $defaultLocale),
                     'symbol' => SupportedCurrencies::symbol($currency),
                     'decimal' => SupportedCurrencies::decimal($currency),
+                    'currency_position' => SupportedCurrencies::position($currency),
                 ],
             ]);
         }

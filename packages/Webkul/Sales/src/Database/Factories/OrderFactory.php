@@ -46,9 +46,13 @@ class OrderFactory extends Factory
             'is_gift' => 0,
             'total_item_count' => 1,
             'total_qty_ordered' => 1,
-            'base_currency_code' => 'USD',
-            'channel_currency_code' => 'USD',
-            'order_currency_code' => 'USD',
+            /**
+             * Orders are written in the base currency the store is configured
+             * with, so a test order carries the same code a real one would.
+             */
+            'base_currency_code' => config('app.currency'),
+            'channel_currency_code' => config('app.currency'),
+            'order_currency_code' => config('app.currency'),
             'grand_total' => $grandTotal = rand(0, 9999),
             'base_grand_total' => $grandTotal,
             'grand_total_invoiced' => $grandTotal,

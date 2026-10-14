@@ -19,6 +19,7 @@ class SupportedLocales
         'en' => ['name' => 'english', 'direction' => 'ltr'],
         'es' => ['name' => 'spanish', 'direction' => 'ltr'],
         'fa' => ['name' => 'persian', 'direction' => 'rtl'],
+        'fa_AF' => ['name' => 'dari', 'direction' => 'rtl'],
         'fr' => ['name' => 'french', 'direction' => 'ltr'],
         'he' => ['name' => 'hebrew', 'direction' => 'rtl'],
         'hi_IN' => ['name' => 'hindi', 'direction' => 'ltr'],

@@ -35,6 +35,8 @@
         />
 
         @stack('styles')
+
+        @include('core::blade.rtl-fonts')
     </head>
 
     @php
@@ -806,7 +808,7 @@
                                         <x-installer::form.control-group.control
                                             type="select"
                                             name="app_currency"
-                                            ::value="envData.app_currency ?? 'USD'"
+                                            ::value="envData.app_currency ?? '{{ config('app.currency') }}'"
                                             :aria-label="trans('installer::app.installer.index.environment-configuration.default-currency')"
                                             rules="required"
                                             :label="trans('installer::app.installer.index.environment-configuration.default-currency')"
@@ -814,7 +816,7 @@
                                             <option value="" disabled>Select Currencies</option>
 
                                             @foreach ($currencies as $value => $label)
-                                                <option value="{{ $value }}" @if($value == 'USD') selected @endif>
+                                                <option value="{{ $value }}" @if($value == config('app.currency')) selected @endif>
                                                     @lang("installer::app.installer.index.environment-configuration.$label")
                                                 </option>
                                             @endforeach

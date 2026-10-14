@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Kabul'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +102,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'fa_AF'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
@@ -121,7 +121,7 @@ return [
     | (use capital letters!)
     */
 
-    'default_country' => null,
+    'default_country' => env('APP_DEFAULT_COUNTRY', 'AF'),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ return [
     |
     */
 
-    'currency' => env('APP_CURRENCY', 'USD'),
+    'currency' => env('APP_CURRENCY', 'AFN'),
 
     /*
     |--------------------------------------------------------------------------
