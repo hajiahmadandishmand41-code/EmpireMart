@@ -12,6 +12,18 @@ const currency = process.env.APP_CURRENCY ?? "USD";
 
 const RIGHT_TO_LEFT_LOCALES = ["ar", "fa", "fa_AF", "he"];
 
+/**
+ * A phone held in one hand is where a right-to-left page laid out for a desktop shows
+ * what it is worth, so both panels are read at the size they are actually used at.
+ */
+
+const PHONE = {
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 3,
+    isMobile: true,
+    hasTouch: true,
+};
+
 test.describe("Storefront localization", () => {
     test("serves the storefront in the configured language and direction", async ({
         shopPage,
@@ -74,5 +86,50 @@ test.describe("Storefront localization", () => {
         );
 
         expect(family).toContain("Vazirmatn");
+    });
+});
+
+test.describe("Storefront on a phone", () => {
+    test.use(PHONE);
+
+    test("keeps the storefront in the language, the direction and the font of the store", async ({
+        shopPage,
+    }) => {
+        await shopPage.goto("");
+
+        const html = shopPage.locator("html");
+
+        await expect(html).toHaveAttribute("lang", locale);
+
+        await expect(html).toHaveAttribute(
+            "dir",
+            RIGHT_TO_LEFT_LOCALES.includes(locale) ? "rtl" : "ltr",
+        );
+
+        test.skip(locale !== "fa_AF", "the storefront is not being served in Dari");
+
+        const family = await shopPage.evaluate(
+            () => getComputedStyle(document.body).fontFamily,
+        );
+
+        expect(family).toContain("Vazirmatn");
+    });
+
+    test("fits the screen it is read on", async ({ shopPage }, testInfo) => {
+        await shopPage.goto("");
+
+        const sideways = await shopPage.evaluate(
+            () => document.documentElement.scrollWidth - window.innerWidth,
+        );
+
+        await testInfo.attach("storefront-on-a-phone", {
+            body: await shopPage.screenshot(),
+            contentType: "image/png",
+        });
+
+        expect(
+            sideways,
+            "the storefront scrolls sideways on a phone",
+        ).toBeLessThanOrEqual(1);
     });
 });

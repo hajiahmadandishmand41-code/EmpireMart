@@ -12,6 +12,18 @@ const locale = process.env.APP_LOCALE ?? "en";
 
 const RIGHT_TO_LEFT_LOCALES = ["ar", "fa", "fa_AF", "he"];
 
+/**
+ * A phone held in one hand is where a right-to-left page laid out for a desktop shows
+ * what it is worth, so both panels are read at the size they are actually used at.
+ */
+
+const PHONE = {
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 3,
+    isMobile: true,
+    hasTouch: true,
+};
+
 test.describe("Admin panel localization", () => {
     test("serves the panel in the configured language and direction", async ({
         adminPage,
@@ -45,6 +57,37 @@ test.describe("Admin panel localization", () => {
         }
 
         await adminPage.goto("admin/dashboard");
+
+        const family = await adminPage.evaluate(
+            () => getComputedStyle(document.body).fontFamily,
+        );
+
+        expect(family).toContain("Vazirmatn");
+    });
+});
+
+test.describe("Admin panel on a phone", () => {
+    test.use(PHONE);
+
+    test("stays in the language, the direction and the font of the panel", async ({
+        adminPage,
+    }) => {
+        /**
+         * The fixture signs in at this viewport, so the panel is reached the way a shop
+         * owner reaches it from a phone.
+         */
+        await adminPage.goto("admin/dashboard");
+
+        const html = adminPage.locator("html");
+
+        await expect(html).toHaveAttribute("lang", locale);
+
+        await expect(html).toHaveAttribute(
+            "dir",
+            RIGHT_TO_LEFT_LOCALES.includes(locale) ? "rtl" : "ltr",
+        );
+
+        test.skip(locale !== "fa_AF", "the panel is not being served in Dari");
 
         const family = await adminPage.evaluate(
             () => getComputedStyle(document.body).fontFamily,
