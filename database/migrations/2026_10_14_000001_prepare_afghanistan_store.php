@@ -25,6 +25,16 @@ return new class extends Migration
 
 
     /**
+     * The address settings an Afghan store starts with, keyed by the
+     * configuration field they belong to. Both rows are per channel, which is
+     * why they are written for every channel that exists.
+     */
+    protected const ADDRESS_SETTINGS = [
+        'customer.address.requirements.postcode' => '0',
+        'customer.address.information.street_lines' => '2',
+    ];
+
+    /**
      * Run the migrations.
      *
      * Every step is additive and guarded, so the migration can be re-run on a
@@ -44,7 +54,7 @@ return new class extends Migration
 
         $this->seedAfghanProvinces();
 
-        $this->applyAfghanAddressRequirements();
+        $this->applyAfghanAddressSettings();
     }
 
     /**
@@ -57,10 +67,12 @@ return new class extends Migration
     {
         $this->removeAfghanProvinces();
 
-        DB::table('core_config')
-            ->where('code', 'customer.address.requirements.postcode')
-            ->where('value', '0')
-            ->delete();
+        foreach (self::ADDRESS_SETTINGS as $code => $value) {
+            DB::table('core_config')
+                ->where('code', $code)
+                ->where('value', $value)
+                ->delete();
+        }
 
         $locale = DB::table('locales')->where('code', self::LOCALE_CODE)->first();
 
@@ -215,34 +227,40 @@ return new class extends Migration
     }
 
     /**
-     * Afghanistan issues no postal codes, so the field must not be mandatory.
+     * The address settings an Afghan address needs.
      *
-     * Only written when the store has not decided the setting itself, and only
-     * for the channel the value is meant for.
+     * Afghanistan does not use postal codes, so the field must not be required,
+     * and an Afghan address is written over two lines rather than one — the
+     * street and the district or the house — so the second line is offered.
+     * Neither is written when the store has already decided the setting itself.
      */
-    protected function applyAfghanAddressRequirements(): void
+    protected function applyAfghanAddressSettings(): void
     {
-        $channel = DB::table('channels')->orderBy('id')->value('code');
+        $channels = DB::table('channels')->pluck('code');
 
-        $exists = DB::table('core_config')
-            ->where('code', 'customer.address.requirements.postcode')
-            ->where(function ($query) use ($channel) {
-                $query->whereNull('channel_code')->orWhere('channel_code', $channel);
-            })
-            ->exists();
+        foreach ($channels as $channelCode) {
+            foreach (self::ADDRESS_SETTINGS as $code => $value) {
+                $exists = DB::table('core_config')
+                    ->where('code', $code)
+                    ->where(function ($query) use ($channelCode) {
+                        $query->whereNull('channel_code')->orWhere('channel_code', $channelCode);
+                    })
+                    ->exists();
 
-        if ($exists) {
-            return;
+                if ($exists) {
+                    continue;
+                }
+
+                DB::table('core_config')->insert([
+                    'code' => $code,
+                    'value' => $value,
+                    'channel_code' => $channelCode,
+                    'locale_code' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
-
-        DB::table('core_config')->insert([
-            'code' => 'customer.address.requirements.postcode',
-            'value' => '0',
-            'channel_code' => $channel,
-            'locale_code' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
     }
 
     /**

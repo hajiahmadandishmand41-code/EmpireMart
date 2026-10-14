@@ -19,6 +19,7 @@ step beyond the installer itself.
 | Default country | `AF` | `config/app.php`, `APP_DEFAULT_COUNTRY` |
 | Provinces | the 34 provinces of Afghanistan, named in Dari | `country_states` / `country_state_translations` |
 | Postal code | not required | Admin → Configuration → Customer → Address |
+| Street lines | two | Admin → Configuration → Customer → Address |
 | Flat rate delivery | 150 AFN | Admin → Configuration → Sales → Shipping Methods |
 
 `.env` keys to set on a deployment:
@@ -91,7 +92,8 @@ php artisan cache:clear
 * **Settings → Locales** — `دری` is listed with direction `rtl`.
 * **Settings → Currencies** — AFN carries the symbol `؋` and two decimal places.
 * **Configuration → Customer → Address** — postal code is not required (the field
-  is not collected in Afghanistan); state is required and offers the provinces.
+  is not collected in Afghanistan), an address is written over two lines, and the
+  state field offers the provinces.
 * **Configuration → Sales → Shipping Methods** — the flat rate is 150 AFN, in the
   base currency. Change it to the current tariff.
 * **Customers → Taxes** — tax rates are per country; add the Afghan ones the shop

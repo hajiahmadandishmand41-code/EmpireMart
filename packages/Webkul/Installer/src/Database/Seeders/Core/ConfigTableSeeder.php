@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 class ConfigTableSeeder extends Seeder
 {
     /**
+     * Address settings a store set up for Afghanistan starts with.
+     */
+    protected const AFGHAN_ADDRESS_SETTINGS = [
+        'customer.address.requirements.postcode' => '0',
+        'customer.address.information.street_lines' => '2',
+    ];
+
+    /**
      * Seed the application's database.
      *
      * @param  array  $parameters
@@ -171,9 +179,10 @@ class ConfigTableSeeder extends Seeder
     }
 
     /**
-     * Afghanistan does not use postal codes, so a store set up for the country
-     * must not ask for one. The field is stored per channel, which is why the
-     * row is written for every channel that was just created.
+     * The address settings an Afghan store starts with: no postal code is asked
+     * for, because the country does not use them, and an address is written
+     * over two lines. Both settings are stored per channel, which is why a row
+     * is written for every channel that was just created.
      */
     protected function seedAfghanAddressSettings(Carbon $now): void
     {
@@ -182,14 +191,16 @@ class ConfigTableSeeder extends Seeder
         }
 
         foreach (DB::table('channels')->pluck('code') as $channelCode) {
-            DB::table('core_config')->insert([
-                'code' => 'customer.address.requirements.postcode',
-                'value' => '0',
-                'channel_code' => $channelCode,
-                'locale_code' => null,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+            foreach (self::AFGHAN_ADDRESS_SETTINGS as $code => $value) {
+                DB::table('core_config')->insert([
+                    'code' => $code,
+                    'value' => $value,
+                    'channel_code' => $channelCode,
+                    'locale_code' => null,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
         }
     }
 }
