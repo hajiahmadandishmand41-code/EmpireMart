@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Webkul\Core\Helpers\AfghanistanProvinces;
 use Webkul\Core\Helpers\SupportedCurrencies;
 use Webkul\Core\Helpers\SupportedLocales;
 use Webkul\Core\Models\Currency;
+use Webkul\Core\Rules\PhoneNumber;
 
 /**
  * The store sells in Afghanis from Afghanistan, so these pin what the platform
@@ -181,6 +183,43 @@ it('names a province in the language the storefront is read in', function () {
     expect($named)->not->toBeNull()
         ->and($named->default_name)->toBe('کابل');
 });
+
+it('registers Dari validation messages beside the other languages', function () {
+    foreach (['Admin', 'Shop'] as $package) {
+        $catalogue = json_decode(file_get_contents(
+            base_path("packages/Webkul/{$package}/src/Resources/assets/locales/fa_AF.json")
+        ), true);
+
+        expect($catalogue['code'])->toBe('fa_AF')
+            ->and($catalogue['messages'])->toHaveCount(25)
+            ->and($catalogue['messages']['required'])->toContain('{field}');
+
+        $plugin = file_get_contents(
+            base_path("packages/Webkul/{$package}/src/Resources/assets/js/plugins/vee-validate.js")
+        );
+
+        /** The catalogue only reaches the browser when the locale is a peer of the others. */
+        expect($plugin)->toContain("import fa_AF from \"../../locales/fa_AF.json\";")
+            ->and($plugin)->toContain("\n                fa_AF: {\n");
+    }
+});
+
+it('accepts the phone numbers an Afghan customer writes', function (string $number) {
+    expect(Validator::make(['phone' => $number], ['phone' => [new PhoneNumber]])->passes())->toBeTrue();
+})->with([
+    '+93700123456',
+    '+93 700 123 456',
+    '0700 123 456',
+    '0700123456',
+]);
+
+it('turns away what is not a phone number', function (string $number) {
+    expect(Validator::make(['phone' => $number], ['phone' => [new PhoneNumber]])->passes())->toBeFalse();
+})->with([
+    '0700 12',
+    'not a number',
+    '+93 700 123 4567 8901',
+]);
 
 it('converts nothing while no exchange rate is given', function () {
     afghaniCurrency();

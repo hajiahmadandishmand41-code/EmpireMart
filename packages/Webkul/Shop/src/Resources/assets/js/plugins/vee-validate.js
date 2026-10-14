@@ -210,6 +210,7 @@ export default {
                         phone: "این {field} باید یک شماره تلفن معتبر باشد",
                         address: "این {field} باید یک آدرس معتبر باشد",
                     },
+                },
 
                 fa_AF: {
                     ...fa_AF,
@@ -218,7 +219,6 @@ export default {
                         phone: "این {field} باید یک شماره تلیفون معتبر باشد",
                         address: "این {field} باید یک آدرس معتبر باشد",
                     },
-                },
                 },
 
                 fr: {
