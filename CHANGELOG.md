@@ -2,6 +2,21 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **Unreleased** - *Afghanistan store (Dari, AFN)*
+
+- The store is set up for Afghanistan: `fa_AF` (Dari) is a locale with a full translation pack, the Afghani (AFN) is the base currency, the timezone is `Asia/Kabul` and Afghanistan is the default country. A migration prepares a store that is already running and `php artisan bagisto:afghanistan:setup` converts its stored prices once the shop owner supplies the rate.
+
+- Right to left pages are written in Vazirmatn, self-hosted with its licence under `public/fonts/vazirmatn`, for the storefront, the admin panel, the installer, the emails and the invoice PDFs.
+
+- Afghanistan's 34 provinces are seeded with Dari and English names, so the state field offers them instead of free text, and the postal code requirement is cleared because the country does not use postal codes.
+
+- Fixed the phone rule refusing the way Afghan numbers are written down (`+93 700 123 456`), in the browser and on the server, and translated the validation messages into Dari.
+
+- Fixed the RMA screens showing every amount as US dollars through a hard-coded formatter, and the order factory writing test orders in a currency the store was not configured with.
+
+- Added the storefront strings that were still hard-coded in English (image alts, accessibility labels, star ratings, the video fallback) to the language files, and named both text directions in the locale screen.
+
+
 ## **v2.4.10 (21st of August 2026)** - *Release*
 
 - Themes now have their own Appearance area in the admin, listing the installed and available themes and activating one across chosen channels. Theme customisations are called sections throughout, and have moved out of Settings to the theme they belong to.

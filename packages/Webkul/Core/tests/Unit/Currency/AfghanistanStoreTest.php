@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Core\Helpers\AfghanistanProvinces;
 use Webkul\Core\Helpers\SupportedCurrencies;
 use Webkul\Core\Helpers\SupportedLocales;
 use Webkul\Core\Models\Currency;
@@ -50,6 +51,21 @@ it('ships a Dari translation for every English translation file', function () {
     }
 
     expect($missing)->toBeEmpty();
+});
+
+it('carries every province of Afghanistan in Dari and in Persian', function () {
+    expect(AfghanistanProvinces::codes())->toHaveCount(34);
+
+    foreach (AfghanistanProvinces::codes() as $code) {
+        expect(AfghanistanProvinces::name($code, 'fa_AF'))->not->toBeEmpty()
+            ->and(AfghanistanProvinces::name($code, 'en'))->not->toBeEmpty();
+    }
+
+    /** Kandahar is written with a ق in Iranian Persian and with a ک in Dari. */
+    expect(AfghanistanProvinces::name('KAN', 'fa'))->toBe('قندهار')
+        ->and(AfghanistanProvinces::name('KAN', 'fa_AF'))->toBe('کندهار');
+
+    expect(AfghanistanProvinces::name('KAB', 'fa_AF'))->toBe('کابل');
 });
 
 it('writes an Afghani price with Dari digits and the Afghani sign', function () {

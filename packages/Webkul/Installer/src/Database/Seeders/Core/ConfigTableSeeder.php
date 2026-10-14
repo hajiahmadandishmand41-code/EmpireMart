@@ -166,5 +166,30 @@ class ConfigTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ]);
+
+        $this->seedAfghanAddressSettings($now);
+    }
+
+    /**
+     * Afghanistan does not use postal codes, so a store set up for the country
+     * must not ask for one. The field is stored per channel, which is why the
+     * row is written for every channel that was just created.
+     */
+    protected function seedAfghanAddressSettings(Carbon $now): void
+    {
+        if (config('app.default_country') !== 'AF') {
+            return;
+        }
+
+        foreach (DB::table('channels')->pluck('code') as $channelCode) {
+            DB::table('core_config')->insert([
+                'code' => 'customer.address.requirements.postcode',
+                'value' => '0',
+                'channel_code' => $channelCode,
+                'locale_code' => null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
     }
 }

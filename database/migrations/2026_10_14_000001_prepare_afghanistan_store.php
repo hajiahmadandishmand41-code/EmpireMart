@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Webkul\Core\Helpers\AfghanistanProvinces;
 use Webkul\Core\Helpers\SupportedCurrencies;
 
 return new class extends Migration
@@ -22,53 +23,6 @@ return new class extends Migration
      */
     protected const COUNTRY_CODE = 'AF';
 
-    /**
-     * Primary key of Afghanistan inside the `countries` table.
-     */
-    protected const COUNTRY_ID = 1;
-
-    /**
-     * The provinces of Afghanistan (ISO 3166-2:AF) with their English and Dari
-     * names. The Dari name fills the base column and the Dari translation, the
-     * English one is stored for the `en` locale so the admin panel keeps
-     * readable labels when it is switched to English.
-     */
-    protected const PROVINCES = [
-        ['BDS', 'Badakhshan', 'بدخشان'],
-        ['BDG', 'Badghis', 'بادغیس'],
-        ['BGL', 'Baghlan', 'بغلان'],
-        ['BAL', 'Balkh', 'بلخ'],
-        ['BAM', 'Bamyan', 'بامیان'],
-        ['DAY', 'Daykundi', 'دایکندی'],
-        ['FRA', 'Farah', 'فراه'],
-        ['FYB', 'Faryab', 'فاریاب'],
-        ['GHA', 'Ghazni', 'غزنی'],
-        ['GHO', 'Ghor', 'غور'],
-        ['HEL', 'Helmand', 'هلمند'],
-        ['HER', 'Herat', 'هرات'],
-        ['JOW', 'Jowzjan', 'جوزجان'],
-        ['KAB', 'Kabul', 'کابل'],
-        ['KAN', 'Kandahar', 'کندهار'],
-        ['KAP', 'Kapisa', 'کاپیسا'],
-        ['KHO', 'Khost', 'خوست'],
-        ['KNR', 'Kunar', 'کنر'],
-        ['KDZ', 'Kunduz', 'کندز'],
-        ['LAG', 'Laghman', 'لغمان'],
-        ['LOG', 'Logar', 'لوگر'],
-        ['NAN', 'Nangarhar', 'ننگرهار'],
-        ['NIM', 'Nimroz', 'نیمروز'],
-        ['NUR', 'Nuristan', 'نورستان'],
-        ['PIA', 'Paktia', 'پکتیا'],
-        ['PKT', 'Paktika', 'پکتیکا'],
-        ['PAN', 'Panjshir', 'پنجشیر'],
-        ['PAR', 'Parwan', 'پروان'],
-        ['SAM', 'Samangan', 'سمنگان'],
-        ['SAR', 'Sar-e Pol', 'سرپل'],
-        ['TAK', 'Takhar', 'تخار'],
-        ['URU', 'Urozgan', 'ارزگان'],
-        ['WAR', 'Maidan Wardak', 'میدان وردک'],
-        ['ZAB', 'Zabul', 'زابل'],
-    ];
 
     /**
      * Run the migrations.
@@ -217,12 +171,14 @@ return new class extends Migration
             return;
         }
 
+        $countryId = DB::table('countries')->where('code', self::COUNTRY_CODE)->value('id');
+
         $locales = DB::table('locales')
             ->whereIn('code', ['en', 'fa', self::LOCALE_CODE])
             ->pluck('code')
             ->all();
 
-        foreach (self::PROVINCES as [$code, $englishName, $dariName]) {
+        foreach (AfghanistanProvinces::codes() as $code) {
             $state = DB::table('country_states')
                 ->where('country_code', self::COUNTRY_CODE)
                 ->where('code', $code)
@@ -232,10 +188,10 @@ return new class extends Migration
                 $id = $state->id;
             } else {
                 $id = DB::table('country_states')->insertGetId([
-                    'country_id' => self::COUNTRY_ID,
+                    'country_id' => $countryId,
                     'country_code' => self::COUNTRY_CODE,
                     'code' => $code,
-                    'default_name' => $dariName,
+                    'default_name' => AfghanistanProvinces::name($code, 'en'),
                 ]);
             }
 
@@ -252,7 +208,7 @@ return new class extends Migration
                 DB::table('country_state_translations')->insert([
                     'country_state_id' => $id,
                     'locale' => $locale,
-                    'default_name' => $this->provinceName($locale, $englishName, $dariName),
+                    'default_name' => AfghanistanProvinces::name($code, $locale),
                 ]);
             }
         }
@@ -300,7 +256,7 @@ return new class extends Migration
 
         $ids = DB::table('country_states')
             ->where('country_code', self::COUNTRY_CODE)
-            ->whereIn('code', array_column(self::PROVINCES, 0))
+            ->whereIn('code', AfghanistanProvinces::codes())
             ->pluck('id');
 
         if ($ids->isEmpty()) {
@@ -310,18 +266,6 @@ return new class extends Migration
         DB::table('country_state_translations')->whereIn('country_state_id', $ids)->delete();
 
         DB::table('country_states')->whereIn('id', $ids)->delete();
-    }
-
-    /**
-     * Name of a province in the given locale.
-     */
-    protected function provinceName(string $locale, string $englishName, string $dariName): string
-    {
-        return match ($locale) {
-            'en' => $englishName,
-            'fa' => str_replace('کندهار', 'قندهار', $dariName),
-            default => $dariName,
-        };
     }
 
     /**

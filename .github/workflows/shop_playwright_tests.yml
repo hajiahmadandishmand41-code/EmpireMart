@@ -90,6 +90,16 @@ jobs:
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1${{ matrix.db-password }}|" .env
           sed -i "s|^\(APP_DEBUG=\s*\).*$|\1false|" .env
           sed -i "s|^\(APP_URL=\s*\).*$|\1http://127.0.0.1:8000|" .env
+          #
+          # The store ships in Dari, but this suite finds the shop and the admin panel by
+          # their English labels, so the installation it drives is an English one. The
+          # storefront it does not cover - direction, font and the Afghani - is checked by
+          # packages/Webkul/Shop/tests/e2e-pw/tests/localization.spec.ts, which reads the
+          # configuration instead of any label. Run the suites against a Dari store with
+          # APP_LOCALE=fa_AF once the labels in them have been translated.
+          #
+          sed -i "s|^\(APP_LOCALE=\s*\).*$|\1en|" .env
+          sed -i "s|^\(APP_DEFAULT_COUNTRY=\s*\).*$|\1AF|" .env
           cat .env
 
       - name: Install Composer Dependencies
