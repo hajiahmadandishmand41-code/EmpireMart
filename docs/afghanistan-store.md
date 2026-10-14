@@ -9,6 +9,31 @@ Everything below is what has to be done on the machine that runs the store. The
 defaults already ship in this repository, so a fresh installation needs no manual
 step beyond the installer itself.
 
+## What this changed
+
+Nothing was removed and no feature was replaced: the store is Bagisto v2.4.10, configured,
+translated and pointed at Afghanistan. The areas touched, and where to look:
+
+| Area | Files | What to look at |
+| --- | --- | --- |
+| Store settings | `config/app.php`, `.env.example` | timezone `Asia/Kabul`, locale `fa_AF`, currency `AFN`, default country `AF` |
+| Existing installations | `database/migrations/2026_10_14_000001_prepare_afghanistan_store.php` | idempotent: currency, locale, channel links, provinces, address rules; reverses only its own rows |
+| Price conversion | `packages/Webkul/Core/src/Console/Commands/AfghanistanStoreSetup.php` | `bagisto:afghanistan:setup --rate=…`, one transaction, dry run, scoped to a channel |
+| Currency | `SupportedCurrencies.php`, `Concerns/CurrencyFormatter.php` | AFN with its symbol, two decimals and a left position |
+| Provinces | `Core/src/Helpers/AfghanistanProvinces.php`, `Installer/…/StatesTableSeeder.php`, `Core.php::groupedStatesByCountries()` | 34 provinces, Dari names, translated for the locale in use |
+| Translations | all 14 packages' `Resources/lang/fa_AF/*.php`, `lang/fa_AF/*.php`, plus the keys added to English and the other 21 locales | Dari packs, key for key with English |
+| Typography | `Core/src/Resources/views/blade/rtl-fonts.blade.php`, the four layouts, the invoice, `public/fonts/*` | self-hosted Vazirmatn and the sign of the Afghani |
+| Right to left | 105 views and both panels' assets | logical utilities and mirrored icons, `font-family` and `dir` from the locale |
+| Validation | `Core/src/Rules/PhoneNumber.php`, `{Shop,Admin}/…/plugins/vee-validate.js`, `locales/fa_AF.json` | Afghan phone formats and Dari messages, server and browser |
+| Installer | `Installer/…/ConfigTableSeeder.php`, `StatesTableSeeder.php`, `CurrencyTableSeeder.php` | a fresh installation comes up in Dari, priced in Afghanis, with the provinces |
+| Tests | `Core/tests/Unit/Afghanistan/`, `Shop/tests/Feature/Afghanistan/`, `Shop/tests/e2e-pw/tests/localization.spec.ts` | the Dari half of the suite |
+| CI | `.github/workflows/pest_tests.yml`, `shop_playwright_tests.yml`, `admin_playwright_tests.yml`, `pint_tests.yml` | the Dari installation step, and the English installation the platform's own suite needs |
+| Built assets | `public/themes/{shop,admin}/default/build/` | the bundles for the changes above |
+| Documentation | this file, `CHANGELOG.md` | |
+
+105 views changed in all, 86 translation files, 19 font files, 15 built bundles and 30 files of
+code and configuration.
+
 ## What the store is set to
 
 | Setting | Value | Where it lives |
