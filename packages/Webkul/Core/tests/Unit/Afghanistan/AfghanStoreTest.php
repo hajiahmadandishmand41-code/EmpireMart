@@ -199,7 +199,7 @@ it('registers Dari validation messages beside the other languages', function () 
         );
 
         /** The catalogue only reaches the browser when the locale is a peer of the others. */
-        expect($plugin)->toContain("import fa_AF from \"../../locales/fa_AF.json\";")
+        expect($plugin)->toContain('import fa_AF from "../../locales/fa_AF.json";')
             ->and($plugin)->toContain("\n                fa_AF: {\n");
     }
 });
