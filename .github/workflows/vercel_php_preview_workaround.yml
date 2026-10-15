@@ -1,0 +1,91 @@
+name: Vercel PHP Preview Runtime Workaround
+
+on:
+  push:
+    branches:
+      - arena/c267531a-empiremart
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vercel-php-preview-runtime-workaround
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    name: Build, patch, and deploy Preview only
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_3pkyehEtf69z1OVyJ6rhc7Qy
+      VERCEL_PROJECT_ID: prj_BXRzadJQYpww7EfDZqbMUDumKyNn
+
+    steps:
+      - name: Check out the reviewed branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.1'
+
+      - name: Verify Vercel token is configured without printing it
+        shell: bash
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [[ -z "${VERCEL_TOKEN:-}" ]]; then
+            echo "::error::Missing GitHub Actions secret VERCEL_TOKEN. Add a scoped Vercel token to the repository Actions secrets; never put it in code or chat."
+            exit 1
+          fi
+
+      - name: Install pinned Vercel CLI
+        run: npm install --global vercel@62.7.0
+
+      - name: Pull Preview configuration
+        run: vercel pull --yes --environment=preview
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Vercel output
+        run: vercel build
+        # Do not expose VERCEL_TOKEN to repository build scripts.
+
+      - name: Patch Vercel PHP launcher output
+        run: node scripts/patch-vercel-php-output.mjs
+
+      - name: Verify the patched function output
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const root = '.vercel/output/functions';
+          const found = [];
+          function walk(dir) {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const item = path.join(dir, entry.name);
+              if (entry.isDirectory()) walk(item);
+              else if (entry.name === '.vc-config.json') {
+                const config = JSON.parse(fs.readFileSync(item, 'utf8'));
+                if (config.awsLambdaHandler === 'launcher.launcher') found.push({ item, config });
+              }
+            }
+          }
+          walk(root);
+          if (found.length !== 1) throw new Error(`Expected one patched PHP function; found ${found.length}`);
+          const { item, config } = found[0];
+          if (config.handler !== 'launcher.js' || config.launcherType !== 'Nodejs') throw new Error('Vercel PHP launcher configuration is not patched');
+          if (!fs.existsSync(path.join(path.dirname(item), 'launcher.js')) || !fs.existsSync(path.join(path.dirname(item), 'launcher-orig.js'))) throw new Error('Launcher bridge files are incomplete');
+          console.log('Verified patched PHP function output.');
+          NODE
+
+      - name: Deploy patched build to Preview (never Production)
+        shell: bash
+        run: |
+          set -o pipefail
+          rm -f .vercelignore
+          vercel deploy --prebuilt --yes
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
