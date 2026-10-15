@@ -329,8 +329,9 @@ secrets in `vercel.json`, Git, or this document:
 * `FILESYSTEM_DISK=s3` with the S3-compatible bucket's credentials, endpoint, URL,
   and region. The default `public` disk writes to local storage and is not durable
   on Vercel. Existing uploads must be copied to the bucket before switching the
-  disk. This checkout currently does not lock `league/flysystem-aws-s3-v3`, so
-  obtain approval and add that Composer adapter before selecting the S3 disk.
+  disk. This checkout currently does not lock `league/flysystem-aws-s3-v3`; do
+  not select the S3 disk until the Composer adapter and lockfile are present and
+  the deployment has verified it.
   Function request/response payloads are limited, so large media should be
   uploaded directly to object storage rather than through a Laravel request.
 * Run queue workers on a persistent worker service. A Vercel Function cannot act

@@ -7,12 +7,6 @@ on:
   pull_request:
 
   workflow_dispatch:
-    inputs:
-      update_s3_lock:
-        description: Resolve the approved S3 filesystem adapter and commit its lockfile.
-        required: true
-        type: boolean
-        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
@@ -22,42 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  resolve_s3_dependency:
-    if: github.event_name == 'workflow_dispatch' && inputs.update_s3_lock == true && github.ref_name == 'arena/c267531a-empiremart'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout the fixed Arena branch
-        uses: actions/checkout@v4
-        with:
-          ref: arena/c267531a-empiremart
-
-      - name: Setup PHP and Composer
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          extensions: curl, fileinfo, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
-          tools: composer:v2
-
-      - name: Resolve the approved S3 adapter and lockfile
-        run: composer require league/flysystem-aws-s3-v3:^3.25.1 --no-interaction --prefer-dist --no-progress --no-scripts
-
-      - name: Commit only the Composer manifests to the fixed branch
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add composer.json composer.lock
-          git diff --cached --check
-          if git diff --cached --quiet; then
-            echo 'Composer manifests already contain the approved adapter.'
-            exit 0
-          fi
-          git commit -m 'build: add S3 filesystem adapter'
-          git push origin HEAD:arena/c267531a-empiremart
-
   vercel_php_build:
-    if: github.event_name != 'workflow_dispatch' || inputs.update_s3_lock != true
     runs-on: ubuntu-latest
 
     name: PHP 8.4 function and static assets
