@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\\Contracts\\Http\\Kernel;
-use Illuminate\\Http\\Request;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
 use Throwable;
 
 defined('LARAVEL_START') || define('LARAVEL_START', microtime(true));
