@@ -1,0 +1,73 @@
+name: Vercel PHP Build
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  vercel_php_build:
+    runs-on: ubuntu-latest
+
+    name: PHP 8.4 function and static assets
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, fileinfo, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.1'
+
+      - name: Check Vercel entrypoint syntax
+        run: php -l api/index.php
+
+      - name: Install production Composer dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Run the Vercel Composer setup script
+        run: composer run vercel
+
+      - name: Boot Laravel and list routes
+        env:
+          APP_ENV: production
+          APP_DEBUG: 'false'
+          APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+        run: php artisan route:list --no-ansi
+
+      - name: Install root Node.js dependencies
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm install --no-save --package-lock=false --no-audit --no-fund
+
+      - name: Build Vercel static output
+        run: npm run vercel:build
+
+      - name: Verify static output is safe and complete
+        run: |
+          test -f dist/build/manifest.json
+          test -f dist/themes/shop/default/build/manifest.json
+          test -f dist/themes/admin/default/build/manifest.json
+          if find dist -type f \( -name '*.php' -o -name '.htaccess' \) -print -quit | grep -q .; then
+            echo 'Server-side files must not be published as static output.'
+            exit 1
+          fi
