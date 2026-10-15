@@ -47,6 +47,19 @@ jobs:
       - name: Run the Vercel Composer setup script
         run: composer run vercel
 
+      - name: Validate Vercel project configuration
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          config = json.loads(Path('vercel.json').read_text())
+          exclusions = config['functions']['api/index.php']['excludeFiles']
+          assert isinstance(exclusions, str), 'Vercel excludeFiles must be a glob string'
+          for pattern in ('.env', '.env.*', 'node_modules/**', 'public/fonts/**'):
+              assert pattern in exclusions, f'Missing function exclusion: {pattern}'
+          PY
+
       - name: Install root Node.js dependencies
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
