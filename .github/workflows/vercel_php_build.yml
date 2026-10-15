@@ -47,13 +47,6 @@ jobs:
       - name: Run the Vercel Composer setup script
         run: composer run vercel
 
-      - name: Boot Laravel and list routes
-        env:
-          APP_ENV: production
-          APP_DEBUG: 'false'
-          APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-        run: php artisan route:list --no-ansi
-
       - name: Install root Node.js dependencies
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
