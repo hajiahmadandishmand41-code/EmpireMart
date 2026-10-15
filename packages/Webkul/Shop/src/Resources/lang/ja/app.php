@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'カテゴリカルーセル',
+            'hero-description' => 'お探しの商品を検索して、ショップのラインアップからお選びください。',
+            'hero-title' => 'かんたんに探して、じっくり選ぶ',
             'image-carousel' => '画像カルーセル',
             'offer' => '初回注文で最大40%オフ、今すぐ購入',
             'product-carousel' => '商品カルーセル',

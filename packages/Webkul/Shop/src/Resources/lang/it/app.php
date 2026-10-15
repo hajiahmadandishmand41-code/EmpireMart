@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Carosello delle categorie',
+            'hero-description' => 'Trova i prodotti che cerchi e scopri la selezione disponibile nel negozio.',
+            'hero-title' => 'Acquista con semplicità',
             'image-carousel' => 'Carosello delle immagini',
             'offer' => 'Ottieni fino al 40% di sconto sul tuo primo ordine, ACQUISTA ORA',
             'product-carousel' => 'Carosello dei prodotti',

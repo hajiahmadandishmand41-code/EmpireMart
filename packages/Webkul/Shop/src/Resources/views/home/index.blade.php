@@ -1,12 +1,19 @@
 @php
     $channel = core()->getCurrentChannel();
+
+    $pageTitle = $channel->home_seo['meta_title'] ?? config('app.name');
+
+    $hasImageCarousel = collect($sections)->contains(
+        fn ($section) => $section->type === $section::IMAGE_CAROUSEL
+            && ! empty(data_get($section->options, 'images.0.image'))
+    );
 @endphp
 
 <!-- SEO Meta Content -->
 @push ('meta')
     <meta
         name="title"
-        content="{{ $channel->home_seo['meta_title'] ?? '' }}"
+        content="{{ $pageTitle }}"
     />
 
     <meta
@@ -31,8 +38,69 @@
 <x-shop::layouts>
     <!-- Page Title -->
     <x-slot:title>
-        {{  $channel->home_seo['meta_title'] ?? '' }}
+        {{ $pageTitle }}
     </x-slot>
+
+    @if (! $hasImageCarousel)
+        <section
+            class="empiremart-hero"
+            aria-labelledby="empiremart-hero-title"
+        >
+            <div class="empiremart-hero__inner">
+                <div class="empiremart-hero__content">
+                    <span class="empiremart-hero__brand">
+                        {{ config('app.name') }}
+                    </span>
+
+                    <h1
+                        id="empiremart-hero-title"
+                        class="empiremart-hero__title"
+                    >
+                        @lang('shop::app.home.index.hero-title')
+                    </h1>
+
+                    <p class="empiremart-hero__description">
+                        @lang('shop::app.home.index.hero-description')
+                    </p>
+
+                    <form
+                        action="{{ route('shop.search.index') }}"
+                        class="empiremart-hero__search"
+                        role="search"
+                    >
+                        <label
+                            for="empiremart-home-search"
+                            class="sr-only"
+                        >
+                            @lang('shop::app.components.layouts.header.desktop.bottom.search')
+                        </label>
+
+                        <span
+                            class="icon-search empiremart-hero__search-icon"
+                            aria-hidden="true"
+                        ></span>
+
+                        <input
+                            id="empiremart-home-search"
+                            type="search"
+                            name="query"
+                            value="{{ request('query') }}"
+                            minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
+                            maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
+                            placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
+                            aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
+                            pattern="[^\\]+"
+                            required
+                        >
+
+                        <button type="submit">
+                            @lang('shop::app.components.layouts.header.desktop.bottom.search')
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    @endif
 
     <!-- Loop over the storefront sections -->
     @foreach ($sections as $section)
@@ -75,7 +143,9 @@
 
                 <!-- Render HTML -->
                 @if (! empty($data['html']))
-                    {!! $data['html'] !!}
+                    <div class="empiremart-home-content">
+                        {!! $data['html'] !!}
+                    </div>
                 @endif
 
                 @break

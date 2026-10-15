@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Categorieën Carrousel',
+            'hero-description' => 'Vind de producten die je zoekt en ontdek het aanbod in de winkel.',
+            'hero-title' => 'Eenvoudig winkelen, slim kiezen',
             'image-carousel' => 'Afbeeldingen Carrousel',
             'offer' => 'Krijg TOT 40% KORTING op je eerste bestelling, WINKEL NU',
             'product-carousel' => 'Producten Carrousel',
