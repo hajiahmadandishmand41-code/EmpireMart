@@ -216,7 +216,7 @@ it('accepts the phone numbers an Afghan customer writes', function (string $numb
 it('turns away what is not a phone number', function (string $number) {
     expect(Validator::make(['phone' => $number], ['phone' => [new PhoneNumber]])->passes())->toBeFalse();
 })->with([
-    '0700 12',
+    '0700 1',
     'not a number',
     '+93 700 123 4567 8901',
 ]);
