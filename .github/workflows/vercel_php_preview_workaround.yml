@@ -90,7 +90,7 @@ jobs:
           # Vercel's prebuilt uploader conflicts with the repository ignore file.
           # The function's excludeFiles config explicitly excludes that file and .git metadata.
           rm -f .vercelignore
-          vercel deploy --prebuilt --yes --target=preview 2>&1 | tee /tmp/vercel-deploy.log
+          vercel deploy --prebuilt --yes --target=preview --archive=tgz 2>&1 | tee /tmp/vercel-deploy.log
 
           DEPLOY_URL="$(grep -Eo 'https://[[:alnum:].-]+\.vercel\.app' /tmp/vercel-deploy.log | tail -n 1 || true)"
           if [[ -z "$DEPLOY_URL" ]]; then
