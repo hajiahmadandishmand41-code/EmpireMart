@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy-preview:
-    name: Build, patch, and deploy Preview only
+    name: Build, patch, and smoke-test Preview only
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: team_3pkyehEtf69z1OVyJ6rhc7Qy
@@ -50,7 +50,6 @@ jobs:
 
       - name: Build Vercel output
         run: vercel build
-        # Do not expose VERCEL_TOKEN to repository build scripts.
 
       - name: Patch Vercel PHP launcher output
         run: node scripts/patch-vercel-php-output.mjs
@@ -76,16 +75,52 @@ jobs:
           walk(root);
           if (found.length !== 1) throw new Error(`Expected one patched PHP function; found ${found.length}`);
           const { item, config } = found[0];
-          if (config.handler !== 'launcher.js' || config.launcherType !== 'Nodejs') throw new Error('Vercel PHP launcher configuration is not patched');
-          if (!fs.existsSync(path.join(path.dirname(item), 'launcher.js')) || !fs.existsSync(path.join(path.dirname(item), 'launcher-orig.js'))) throw new Error('Launcher bridge files are incomplete');
-          console.log('Verified patched PHP function output.');
+          const dir = path.dirname(item);
+          if (config.handler !== 'launcher.js' || config.launcherType !== 'Nodejs' || config.awsLambdaHandler !== 'launcher.launcher') throw new Error('Vercel PHP launcher configuration is not patched');
+          for (const file of ['launcher.js', 'launcher-orig.js', 'helpers.js']) {
+            if (!fs.existsSync(path.join(dir, file))) throw new Error(`Missing required runtime bridge file: ${file}`);
+          }
+          console.log('Verified patched PHP function output and launcher bridge files.');
           NODE
 
-      - name: Deploy patched build to Preview (never Production)
+      - name: Deploy patched build to Preview only and test HTTP response
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
+          # Vercel's prebuilt uploader conflicts with the repository ignore file.
+          # The function's excludeFiles config explicitly excludes that file and .git metadata.
           rm -f .vercelignore
-          vercel deploy --prebuilt --yes
+          vercel deploy --prebuilt --yes --target=preview 2>&1 | tee /tmp/vercel-deploy.log
+
+          DEPLOY_URL="$(grep -Eo 'https://[[:alnum:].-]+\.vercel\.app' /tmp/vercel-deploy.log | tail -n 1 || true)"
+          if [[ -z "$DEPLOY_URL" ]]; then
+            echo "::error::Vercel did not return a Preview URL. See deployment output above."
+            exit 1
+          fi
+
+          echo "Testing Preview URL: $DEPLOY_URL"
+          HTTP_CODE="000"
+          for attempt in 1 2 3 4 5; do
+            HTTP_CODE="$(curl --silent --show-error --location --max-time 25 --output /tmp/preview-response.txt --write-out '%{http_code}' "$DEPLOY_URL/" || true)"
+            if [[ "$HTTP_CODE" == "200" ]]; then
+              break
+            fi
+            echo "Preview returned HTTP $HTTP_CODE on attempt $attempt."
+            sleep 3
+          done
+
+          if [[ "$HTTP_CODE" != "200" ]]; then
+            echo "::error::Preview smoke test failed: expected HTTP 200, received $HTTP_CODE."
+            echo "Response preview (first 500 bytes):"
+            head -c 500 /tmp/preview-response.txt || true
+            exit 1
+          fi
+
+          if grep -Eq 'FUNCTION_INVOCATION_FAILED|Internal Server Error' /tmp/preview-response.txt; then
+            echo "::error::Preview response contains a runtime failure marker."
+            exit 1
+          fi
+
+          echo "Preview smoke test passed with HTTP 200. Production was not targeted."
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
