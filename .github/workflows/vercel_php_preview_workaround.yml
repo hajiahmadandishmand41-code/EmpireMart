@@ -98,29 +98,38 @@ jobs:
             exit 1
           fi
 
-          echo "Testing Preview URL: $DEPLOY_URL"
+          echo "Testing authenticated Preview URL: $DEPLOY_URL"
           HTTP_CODE="000"
           for attempt in 1 2 3 4 5; do
-            HTTP_CODE="$(curl --silent --show-error --location --max-time 25 --output /tmp/preview-response.txt --write-out '%{http_code}' "$DEPLOY_URL/" || true)"
-            if [[ "$HTTP_CODE" == "200" ]]; then
+            # This project has Vercel Authentication enabled for Preview. Plain curl
+            # can return the protection page with HTTP 200 and falsely pass the test.
+            HTTP_CODE="$(vercel curl "$DEPLOY_URL/" --silent --show-error --location --max-time 25 --output /tmp/preview-response.txt --write-out '%{http_code}' || true)"
+            if [[ "$HTTP_CODE" == "200" ]] && grep -Eiq 'Empire Mart|empiremart-hero|empiremart-hero-title' /tmp/preview-response.txt; then
               break
             fi
-            echo "Preview returned HTTP $HTTP_CODE on attempt $attempt."
+            echo "Authenticated Preview smoke test returned HTTP $HTTP_CODE or lacked storefront markers on attempt $attempt."
             sleep 3
           done
 
           if [[ "$HTTP_CODE" != "200" ]]; then
-            echo "::error::Preview smoke test failed: expected HTTP 200, received $HTTP_CODE."
+            echo "::error::Authenticated Preview smoke test failed: expected HTTP 200, received $HTTP_CODE."
             echo "Response preview (first 500 bytes):"
             head -c 500 /tmp/preview-response.txt || true
             exit 1
           fi
 
-          if grep -Eq 'FUNCTION_INVOCATION_FAILED|Internal Server Error' /tmp/preview-response.txt; then
-            echo "::error::Preview response contains a runtime failure marker."
+          if ! grep -Eiq 'Empire Mart|empiremart-hero|empiremart-hero-title' /tmp/preview-response.txt; then
+            echo "::error::Preview returned HTTP 200 but did not contain the Empire Mart storefront. It may be a protection page or an incorrect response."
+            echo "Response preview (first 500 bytes):"
+            head -c 500 /tmp/preview-response.txt || true
             exit 1
           fi
 
-          echo "Preview smoke test passed with HTTP 200. Production was not targeted."
+          if grep -Eiq 'FUNCTION_INVOCATION_FAILED|Internal Server Error|Vercel Authentication|Log in to Vercel' /tmp/preview-response.txt; then
+            echo "::error::Preview response contains a runtime or access-protection failure marker."
+            exit 1
+          fi
+
+          echo "Authenticated Preview smoke test passed: HTTP 200 and Empire Mart storefront markers found. Production was not targeted."
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
