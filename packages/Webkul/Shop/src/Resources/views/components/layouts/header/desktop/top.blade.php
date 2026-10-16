@@ -55,7 +55,7 @@
         type="text/x-template"
         id="v-topbar-template"
     >
-        <div class="flex w-full items-center justify-between border border-b border-s-0 border-e-0 border-t-0 px-16">
+        <div class="empiremart-topbar flex w-full items-center justify-between border border-b border-s-0 border-e-0 border-t-0 px-16">
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.top.currency_switcher.before') !!}
 
             <!-- Currency Switcher -->

@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Carusel categorii',
+            'hero-description' => 'Găsește produsele de care ai nevoie și descoperă selecția magazinului.',
+            'hero-title' => 'Cumpărături simple, alegeri inspirate',
             'image-carousel' => 'Carusel imagini',
             'offer' => 'Obțineți până la 40% REDUCERE la prima comandă CUMPĂRĂ ACUM',
             'product-carousel' => 'Carusel produse',

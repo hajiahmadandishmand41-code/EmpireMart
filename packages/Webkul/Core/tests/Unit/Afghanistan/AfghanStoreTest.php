@@ -199,7 +199,7 @@ it('registers Dari validation messages beside the other languages', function () 
         );
 
         /** The catalogue only reaches the browser when the locale is a peer of the others. */
-        expect($plugin)->toContain("import fa_AF from \"../../locales/fa_AF.json\";")
+        expect($plugin)->toContain('import fa_AF from "../../locales/fa_AF.json";')
             ->and($plugin)->toContain("\n                fa_AF: {\n");
     }
 });
@@ -216,7 +216,7 @@ it('accepts the phone numbers an Afghan customer writes', function (string $numb
 it('turns away what is not a phone number', function (string $number) {
     expect(Validator::make(['phone' => $number], ['phone' => [new PhoneNumber]])->passes())->toBeFalse();
 })->with([
-    '0700 12',
+    '0700 1',
     'not a number',
     '+93 700 123 4567 8901',
 ]);

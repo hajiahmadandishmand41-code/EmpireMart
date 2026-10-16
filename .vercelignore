@@ -1,0 +1,17 @@
+/.git
+/.github
+/.agents
+/.claude
+/.env
+/.env.*
+/docs
+/docker
+/tests
+/playwright-report
+/test-results
+/node_modules
+/vendor
+/storage
+/public/storage
+/packages/Webkul/*/tests
+/packages/Webkul/*/node_modules

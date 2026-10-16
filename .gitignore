@@ -20,6 +20,7 @@ agents/
 boost.json
 /stubs
 /data
+/dist/
 /docker-compose-collection
 Homestead.json
 Homestead.yaml

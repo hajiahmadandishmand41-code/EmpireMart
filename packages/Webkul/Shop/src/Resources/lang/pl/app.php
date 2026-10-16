@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Karuzela kategorii',
+            'hero-description' => 'Znajdź potrzebne produkty i odkryj ofertę sklepu.',
+            'hero-title' => 'Łatwe zakupy, dobry wybór',
             'image-carousel' => 'Karuzela obrazów',
             'offer' => 'Otrzymaj DO 40% RABATU na swoje pierwsze zamówienie, ZAKUP TERAZ',
             'product-carousel' => 'Karuzela produktów',

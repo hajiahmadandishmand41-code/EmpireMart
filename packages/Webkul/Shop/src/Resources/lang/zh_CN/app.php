@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => '分类轮播',
+            'hero-description' => '搜索您需要的商品，探索店铺中的精选商品。',
+            'hero-title' => '轻松购物，安心挑选',
             'image-carousel' => '图片轮播',
             'offer' => '首单最高可享40%折扣，立即购买',
             'product-carousel' => '产品轮播',

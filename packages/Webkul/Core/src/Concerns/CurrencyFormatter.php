@@ -56,21 +56,31 @@ trait CurrencyFormatter
 
         $formattedCurrency = preg_replace('/^\s+|\s+$/u', '', $formatter->format($price));
 
-        if (! empty($currency->group_separator)) {
+        // Use Dari/Persian punctuation for the Afghani regardless of ICU
+        // version or database defaults. The currency seeder may leave "," and
+        // "." in these columns, so these are locale rules rather than fallbacks.
+        $groupSeparator = $currency->group_separator;
+        $decimalSeparator = $currency->decimal_separator;
+        $groupingSymbol = $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL);
+        $decimalSymbol = $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
+
+        if ($currency->code === 'AFN' && in_array(app()->getLocale(), ['fa_AF', 'fa'], true)) {
+            $groupSeparator = '٬';
+            $decimalSeparator = '٫';
+        }
+
+        if (! empty($groupSeparator)) {
             $formattedCurrency = str_replace(
-                $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL),
-                $currency->group_separator,
+                $groupingSymbol,
+                $groupSeparator,
                 $formattedCurrency
             );
         }
 
-        if (
-            $currency->decimal > 0
-            && ! empty($currency->decimal_separator)
-        ) {
+        if ($currency->decimal > 0 && ! empty($decimalSeparator)) {
             $formattedCurrency = str_replace(
-                $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL),
-                $currency->decimal_separator,
+                $decimalSymbol,
+                $decimalSeparator,
                 $formattedCurrency
             );
         }

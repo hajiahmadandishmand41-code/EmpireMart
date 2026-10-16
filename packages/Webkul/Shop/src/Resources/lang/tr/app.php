@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Kategoriler',
+            'hero-description' => 'İhtiyacınız olan ürünleri bulun ve mağazadaki seçenekleri keşfedin.',
+            'hero-title' => 'Kolay alışveriş, doğru seçim',
             'image-carousel' => 'Görseller',
             'offer' => 'İlk siparişe özel %40 indirim fırsatı!',
             'product-carousel' => 'Ürünler',
