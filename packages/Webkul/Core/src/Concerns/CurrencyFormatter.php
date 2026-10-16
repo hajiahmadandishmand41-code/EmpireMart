@@ -61,8 +61,8 @@ trait CurrencyFormatter
         // "." in these columns, so these are locale rules rather than fallbacks.
         $groupSeparator = $currency->group_separator;
         $decimalSeparator = $currency->decimal_separator;
-        $groupingSymbol = $formatter->getSymbol(\\NumberFormatter::GROUPING_SEPARATOR_SYMBOL);
-        $decimalSymbol = $formatter->getSymbol(\\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
+        $groupingSymbol = $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL);
+        $decimalSymbol = $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
 
         if ($currency->code === 'AFN' && in_array(app()->getLocale(), ['fa_AF', 'fa'], true)) {
             $groupSeparator = '٬';
