@@ -6,7 +6,7 @@
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.8.0",
-            "excludeFiles": "{.env,.env.*,.npmrc,node_modules/**,dist/**,storage/**,**/tests/**,public/build/assets/**,public/themes/**/build/assets/**,public/fonts/**,public/forge/**,public/storage/**,public/index.php,public/.htaccess}"
+            "excludeFiles": "{.env,.env.*,.npmrc,.git/**,.github/**,**/.git/**,.gitignore,**/.gitignore,.gitattributes,**/.gitattributes,.gitmodules,**/.gitmodules,.vercelignore,node_modules/**,dist/**,storage/**,**/tests/**,public/build/assets/**,public/themes/**/build/assets/**,public/fonts/**,public/forge/**,public/storage/**,public/index.php,public/.htaccess}"
         }
     },
     "rewrites": [
