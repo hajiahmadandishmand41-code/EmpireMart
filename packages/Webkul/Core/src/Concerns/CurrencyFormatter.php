@@ -56,21 +56,30 @@ trait CurrencyFormatter
 
         $formattedCurrency = preg_replace('/^\s+|\s+$/u', '', $formatter->format($price));
 
-        if (! empty($currency->group_separator)) {
+        // ICU versions can disagree on the punctuation returned for fa_AF.
+        // Use Dari's explicit separators when the Afghan currency has no
+        // operator-defined separators, so output is stable across runtimes while
+        // preserving any configured currency separators.
+        $groupSeparator = $currency->group_separator;
+        $decimalSeparator = $currency->decimal_separator;
+
+        if ($currency->code === 'AFN' && in_array(app()->getLocale(), ['fa_AF', 'fa'], true)) {
+            $groupSeparator = $groupSeparator ?: '٬';
+            $decimalSeparator = $decimalSeparator ?: '٫';
+        }
+
+        if (! empty($groupSeparator)) {
             $formattedCurrency = str_replace(
                 $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL),
-                $currency->group_separator,
+                $groupSeparator,
                 $formattedCurrency
             );
         }
 
-        if (
-            $currency->decimal > 0
-            && ! empty($currency->decimal_separator)
-        ) {
+        if ($currency->decimal > 0 && ! empty($decimalSeparator)) {
             $formattedCurrency = str_replace(
                 $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL),
-                $currency->decimal_separator,
+                $decimalSeparator,
                 $formattedCurrency
             );
         }
