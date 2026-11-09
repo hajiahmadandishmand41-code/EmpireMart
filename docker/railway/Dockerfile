@@ -55,15 +55,14 @@ RUN mkdir -p storage/app/public storage/framework/cache/data \
 
 # Keep PHP-FPM environment variables visible to Laravel and apply production
 # upload/time limits suitable for product images and documents.
-RUN printf '%s\n' \
-        'clear_env = no' \
-        'catch_workers_output = yes' \
-        'pm = dynamic' \
-        'pm.max_children = 20' \
-        'pm.start_servers = 4' \
-        'pm.min_spare_servers = 2' \
-        'pm.max_spare_servers = 8' \
-        >> /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
+RUN sed -i \
+        -e 's/^;clear_env = no/clear_env = no/' \
+        -e 's/^;catch_workers_output = yes/catch_workers_output = yes/' \
+        -e 's/^pm.max_children = .*/pm.max_children = 20/' \
+        -e 's/^pm.start_servers = .*/pm.start_servers = 4/' \
+        -e 's/^pm.min_spare_servers = .*/pm.min_spare_servers = 2/' \
+        -e 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 8/' \
+        /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
     && printf '%s\n' \
         'memory_limit = 512M' \
         'upload_max_filesize = 64M' \
