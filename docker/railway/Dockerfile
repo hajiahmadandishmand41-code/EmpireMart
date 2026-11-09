@@ -40,16 +40,16 @@ COPY . ${APP_DIR}
 
 # Install the exact dependencies in composer.lock. Composer scripts are
 # disabled here so no database action can occur during an image build.
-RUN composer install \
+RUN mkdir -p storage/app/public storage/framework/cache/data \
+        storage/framework/sessions storage/framework/views storage/logs \
+        bootstrap/cache /run/php \
+    && composer install \
         --no-dev \
         --no-interaction \
         --prefer-dist \
         --optimize-autoloader \
         --no-scripts \
     && php artisan package:discover --ansi \
-    && mkdir -p storage/app/public storage/framework/cache/data \
-        storage/framework/sessions storage/framework/views storage/logs \
-        bootstrap/cache /run/php \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwX storage bootstrap/cache
 
