@@ -68,15 +68,15 @@ RUN chmod +x /usr/local/bin/empiremart-entrypoint \
         bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwX storage bootstrap/cache \
-    && printf '%s\\n' \
+    && printf '%s\n' \
         'date.timezone=Asia/Kabul' \
         'memory_limit=512M' \
         'upload_max_filesize=64M' \
         'post_max_size=64M' \
         'max_execution_time=120' \
         > /usr/local/etc/php/conf.d/99-empiremart.ini \
-    && printf '%s\\n' 'Listen 8080' > /etc/apache2/ports.conf \
-    && printf '%s\\n' \
+    && printf '%s\n' 'Listen 8080' > /etc/apache2/ports.conf \
+    && printf '%s\n' \
         '<VirtualHost *:8080>' \
         '    ServerName localhost' \
         '    DocumentRoot /var/www/html/public' \
