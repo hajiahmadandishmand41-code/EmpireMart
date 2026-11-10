@@ -58,10 +58,10 @@ RUN mkdir -p storage/app/public storage/framework/cache/data \
 RUN sed -i \
         -e 's/^;clear_env = no/clear_env = no/' \
         -e 's/^;catch_workers_output = yes/catch_workers_output = yes/' \
-        -e 's/^pm.max_children = .*/pm.max_children = 20/' \
-        -e 's/^pm.start_servers = .*/pm.start_servers = 4/' \
-        -e 's/^pm.min_spare_servers = .*/pm.min_spare_servers = 2/' \
-        -e 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 8/' \
+        -e 's/^pm.max_children = .*/pm.max_children = 4/' \
+        -e 's/^pm.start_servers = .*/pm.start_servers = 2/' \
+        -e 's/^pm.min_spare_servers = .*/pm.min_spare_servers = 1/' \
+        -e 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 2/' \
         /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
     && printf '%s\n' \
         'memory_limit = 256M' \
