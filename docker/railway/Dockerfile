@@ -74,6 +74,7 @@ RUN sed -i \
         > /etc/php/${PHP_VERSION}/fpm/conf.d/99-empiremart.ini \
     && cp /etc/php/${PHP_VERSION}/fpm/conf.d/99-empiremart.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-empiremart.ini
 
+COPY docker/railway/health.php /usr/local/lib/empiremart-health.php
 COPY docker/railway/nginx.conf /etc/nginx/sites-available/default
 COPY docker/railway/supervisord.conf /etc/supervisor/conf.d/empiremart.conf
 COPY docker/railway/entrypoint.sh /usr/local/bin/empiremart-entrypoint
