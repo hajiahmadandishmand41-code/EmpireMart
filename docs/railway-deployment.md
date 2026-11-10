@@ -86,4 +86,4 @@ The entrypoint deliberately does **not** run migrations, wipe tables, seed data,
 - The persistent storage volume holds uploaded media and Laravel runtime files. Database backups and volume backups are separate; configure both before accepting real orders.
 - The initial setup uses synchronous queues. Before enabling asynchronous jobs, create a separate worker service running the appropriate Laravel queue command. Add one scheduler service only when scheduled jobs are needed.
 - Before deploying schema changes to a live shop, take a database backup and review the migration. Do not put `migrate:fresh` or `db:wipe` into a start command or an automatic deploy hook.
-- The health endpoint is a lightweight web-server check. It is not a substitute for checking the database, logs, admin login, checkout, and storage after deployment.
+- The health endpoint calls a small PHP probe through PHP-FPM. It confirms Nginx and PHP-FPM respond, but it does not test the database. Check database connectivity, logs, admin login, checkout, and storage separately after deployment.
