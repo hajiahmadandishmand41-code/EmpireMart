@@ -1,0 +1,38 @@
+name: Railway Docker build
+
+on:
+  pull_request:
+    paths:
+      - 'docker/railway/**'
+      - '.dockerignore'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/railway-docker-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: railway-docker-build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build EmpireMart image without publishing
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/railway/Dockerfile
+          push: false
+          tags: empiremart:railway-build-check
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
