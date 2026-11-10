@@ -64,7 +64,7 @@ RUN sed -i \
         -e 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 8/' \
         /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
     && printf '%s\n' \
-        'memory_limit = 512M' \
+        'memory_limit = 256M' \
         'upload_max_filesize = 64M' \
         'post_max_size = 70M' \
         'max_execution_time = 300' \
