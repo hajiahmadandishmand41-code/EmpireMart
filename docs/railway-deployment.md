@@ -7,7 +7,7 @@ This service runs the **EmpireMart checkout in this repository** (Bagisto 2.4.10
 Use one Railway project with two independent services:
 
 1. **MySQL 8.0** for the store database. Give this service a persistent volume mounted at `/var/lib/mysql`.
-2. **EmpireMart Web** from this repository. Keep the repository root as the build context, set the Dockerfile path to `docker/railway/Dockerfile`, expose port `8080`, and set the health-check path to `/health`.
+2. **EmpireMart Web** from this repository. Keep the repository root as the build context, set the Dockerfile path to `docker/railway/Dockerfile`, expose port `8080`, set the service variable `PORT=8080`, set the domain target port to `8080`, and set the health-check path to `/health`.
 
 Attach a separate persistent volume to EmpireMart Web at:
 
@@ -41,6 +41,7 @@ APP_LOCALE=fa_AF
 APP_FALLBACK_LOCALE=en
 APP_CURRENCY=AFN
 APP_DEFAULT_COUNTRY=AF
+PORT=8080
 ```
 
 Set the database values with Railway reference variables pointing at the **new MySQL service**. If that service is named `MySQL`, the references are:
