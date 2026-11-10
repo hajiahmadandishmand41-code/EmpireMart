@@ -16,10 +16,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         nginx supervisor gettext-base \
         php${PHP_VERSION}-bcmath \
-        php${PHP_VERSION}-calendar \
         php${PHP_VERSION}-cli \
         php${PHP_VERSION}-curl \
-        php${PHP_VERSION}-exif \
         php${PHP_VERSION}-fpm \
         php${PHP_VERSION}-gd \
         php${PHP_VERSION}-gmp \
@@ -28,7 +26,6 @@ RUN apt-get update \
         php${PHP_VERSION}-mysql \
         php${PHP_VERSION}-opcache \
         php${PHP_VERSION}-soap \
-        php${PHP_VERSION}-sockets \
         php${PHP_VERSION}-xml \
         php${PHP_VERSION}-zip \
     && rm -rf /var/lib/apt/lists/*
