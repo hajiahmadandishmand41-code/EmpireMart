@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Categories Carousel',
+            'hero-description' => 'Find the products you need and explore the store’s selection.',
+            'hero-title' => 'Shopping made simple',
             'image-carousel' => 'Image Carousel',
             'offer' => 'Get UPTO 40% OFF on your 1st order SHOP NOW',
             'product-carousel' => 'Product Carousel',

@@ -204,6 +204,8 @@ class AfghanistanStoreSetup extends Command
         $this->newLine();
 
         $this->verify();
+
+        return self::SUCCESS;
     }
 
     /**

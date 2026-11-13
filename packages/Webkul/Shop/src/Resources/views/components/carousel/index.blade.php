@@ -27,7 +27,10 @@
     @endpush
 @endif
 
-<v-carousel :images="{{ json_encode($carouselImages) }}">
+<v-carousel
+    class="empiremart-image-carousel"
+    :images="{{ json_encode($carouselImages) }}"
+>
     <div class="overflow-hidden">
         @if ($firstImage)
             {{--

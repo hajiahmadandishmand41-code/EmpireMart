@@ -12,11 +12,11 @@
         id="v-products-carousel-template"
     >
         <div
-            class="container mt-20 max-lg:px-8 max-md:mt-8 max-sm:mt-7 max-sm:!px-4"
+            class="empiremart-products-section container mt-20 max-lg:px-8 max-md:mt-8 max-sm:mt-7 max-sm:!px-4"
             v-if="! isLoading && products.length"
         >
-            <div class="flex justify-between">
-                <h2 class="font-dmserif text-3xl max-md:text-2xl max-sm:text-xl">
+            <div class="empiremart-section-heading flex justify-between">
+                <h2 class="empiremart-section-heading__title font-dmserif text-3xl max-md:text-2xl max-sm:text-xl">
                     @{{ title }}
                 </h2>
 

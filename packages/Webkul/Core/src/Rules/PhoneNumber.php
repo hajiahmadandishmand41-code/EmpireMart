@@ -23,15 +23,16 @@ class PhoneNumber implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! is_string($value)) {
-            $fail('core::validation.phone-number')->translate();
+            $fail(__('core::validation.phone-number'));
 
             return;
         }
 
         $digits = preg_replace('/[\s\-().]/u', '', trim($value));
 
-        if (! preg_match('/^\+?\d{6,15}$/', $digits)) {
-            $fail('core::validation.phone-number')->translate();
+        // Invalid UTF-8 makes preg_replace return null; reject it as input instead of passing null to preg_match.
+        if (! is_string($digits) || ! preg_match('/^\+?\d{6,15}$/', $digits)) {
+            $fail(__('core::validation.phone-number'));
         }
     }
 }

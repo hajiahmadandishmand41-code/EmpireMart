@@ -279,25 +279,84 @@ With the store in Dari and pricing in Afghanis, confirm on the storefront:
 
 ## Deployment
 
-### What cannot host this store: Vercel
+### Vercel: serverless PHP runtime (deployment must be verified in Preview)
 
-The repository is wired to a Vercel project, and its check has been red on every
-commit since the sources were imported - not because of anything in the Dari
-work. Bagisto is a Laravel application: it needs PHP 8.3 with `intl`, `gd`,
-`mbstring` and `pdo_mysql`, a MySQL database, and a **writable** `storage/`
-directory for compiled views, caches and logs. Vercel's builder instead finds
-the Vite configuration in the repository root, tries to build a static front end
-from it, and fails; the platform has no PHP runtime in this project and no
-database, and its functions have a size limit far below a Bagisto checkout with
-its `vendor/` tree.
+Vercel can run this Laravel application through the community `vercel-php`
+runtime. `vercel.json` pins `vercel-php@0.8.0` (PHP 8.4, inside this project's
+`>=8.3 <8.5` Composer constraint), sends static files from `dist/` to the CDN,
+and rewrites application routes to `api/index.php`. The normal `public/index.php`
+entry point is unchanged, so conventional PHP hosts continue to use Bagisto's
+standard Laravel entry point. In Vercel, set the project's Root Directory to the
+repository root and remove any Dashboard build/ignore overrides that conflict
+with `vercel.json`.
 
-`vercel.json` therefore points Vercel's Ignored Build Step at
-`scripts/vercel-ignore-build.sh`, which skips the build and prints the reason
-into the build log: exit code 0 to Vercel means *skip*, exit code 1 means
-*continue*. That stops the permanent red check and stops the build minutes being
-spent. It does **not** put the store online - nothing is deployed to Vercel. If
-the Vercel project is not wanted at all, unlink it in the Vercel dashboard
-(Settings → Git) and delete `vercel.json` and `scripts/vercel-ignore-build.sh`.
+The PHP runtime installs Composer dependencies with Composer scripts disabled.
+The `vercel` Composer script therefore runs Laravel package discovery explicitly.
+The Vercel-only entry point directs Laravel's temporary storage, compiled views,
+and local cache/log paths to `/tmp`; those paths are **not durable** and must not
+be used for product uploads or other persistent data. The Vercel build creates a
+static copy of public assets in `dist/`; it does not run migrations, seeders, or
+any command that writes to the store database.
+
+Set the following in Vercel Project Settings → Environment Variables. Do not put
+secrets in `vercel.json`, Git, or this document:
+
+* `APP_NAME=Empire Mart`, `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`,
+  and the existing `APP_KEY` (do not rotate an existing production key).
+* `APP_TIMEZONE=Asia/Kabul`, `APP_LOCALE=fa_AF`,
+  `APP_DEFAULT_COUNTRY=AF`, `APP_FALLBACK_LOCALE=en`, and `LOG_CHANNEL=stderr`.
+  Set `APP_CURRENCY=AFN` only after checking the live channel currency and the
+  existing catalog/order prices; changing the base currency needs a confirmed
+  conversion rate and a tested backup/restore, not just a label change.
+* The Railway MySQL connection via `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`,
+  `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD`. Vercel is outside Railway's
+  private network, so use a Railway endpoint reachable from Vercel; a private
+  `*.railway.internal` host is not a public Vercel connection. Place the Vercel
+  Function in a region near Railway's database only after confirming Railway's
+  region (the Vercel default is `iad1`). Never paste the credentials into source
+  control or a public log. These environment values do not automatically change
+  the existing Bagisto channel locale, channel currency, or catalog prices stored
+  in Railway; inspect those settings first and do not run the Afghanistan setup
+  command or a migration without the agreed backup/restore check.
+* `SESSION_DRIVER=database` keeps sessions in the persistent database; confirm
+  the `sessions` table already exists. If it does not, only add it through a
+  controlled migration after a Railway backup. Use a shared Redis/database cache
+  for `CACHE_STORE` and `RESPONSE_CACHE_DRIVER`, or disable response caching
+  until a shared cache is configured; `/tmp` is local to an individual function
+  instance. For Redis, this project already includes Predis, so set
+  `REDIS_CLIENT=predis`; verify any required cache/queue tables before selecting
+  database-backed drivers.
+* `FILESYSTEM_DISK=s3` with the S3-compatible bucket's credentials, endpoint, URL,
+  and region. The default `public` disk writes to local storage and is not durable
+  on Vercel. Existing uploads must be copied to the bucket before switching the
+  disk. This checkout currently does not lock `league/flysystem-aws-s3-v3`; do
+  not select the S3 disk until the Composer adapter and lockfile are present and
+  the deployment has verified it.
+  Function request/response payloads are limited, so large media should be
+  uploaded directly to object storage rather than through a Laravel request.
+* Run queue workers on a persistent worker service. A Vercel Function cannot act
+  as a continuously running Laravel queue worker. Migrations must be run once,
+  as a controlled release after a Railway backup—not in a web request or every
+  Vercel build.
+
+The runtime is community-maintained, not an official PHP runtime. Vercel's
+standard function bundle-size limit and its request/response limits still apply;
+check the actual function size and upload flows in a Preview deployment. If the
+function exceeds the limit, do not remove Bagisto packages blindly: keep the
+Laravel backend on a persistent PHP host and use Vercel for a frontend that calls
+its API. See [Vercel runtime configuration](https://vercel.com/docs/functions/configuring-functions/runtime),
+[function limits](https://vercel.com/docs/functions/limitations), and the
+[PHP runtime project](https://github.com/vercel-community/php).
+
+The repository can prepare this Vercel build, but a READY status is not proof that
+the shop works. Validate the Preview URL, Laravel routes, database connectivity,
+admin login, cart and test-mode checkout, storage, cache and function logs before
+promoting anything to Production. Do not promote until the Railway backup and
+restore path is confirmed.
+
+`scripts/vercel-ignore-build.sh` is retained only for projects whose Vercel
+Dashboard still references the old Ignore Build command; it now returns the
+status that tells Vercel to continue the build.
 
 ### What does host it: the production image in this repository
 

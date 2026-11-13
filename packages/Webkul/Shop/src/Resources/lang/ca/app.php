@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Carrusel de Categories',
+            'hero-description' => 'Troba els productes que necessites i descobreix la selecció de la botiga.',
+            'hero-title' => 'Compra fàcil, tria encertada',
             'image-carousel' => 'Carrusel d\'Imatges',
             'offer' => 'Obté FINS A un 40% de DESCOMPTE en la teva primera comanda COMPRA ARA',
             'product-carousel' => 'Carrusel de Productes',

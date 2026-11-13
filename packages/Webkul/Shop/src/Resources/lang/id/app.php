@@ -1277,6 +1277,8 @@ return [
 
         'index' => [
             'categories-carousel' => 'Carousel Kategori',
+            'hero-description' => 'Temukan produk yang Anda butuhkan dan jelajahi pilihan di toko.',
+            'hero-title' => 'Belanja mudah, pilihan tepat',
             'image-carousel' => 'Carousel Gambar',
             'offer' => 'Dapatkan DISKON HINGGA 40% untuk pesanan pertama Anda BELI SEKARANG',
             'product-carousel' => 'Carousel Produk',

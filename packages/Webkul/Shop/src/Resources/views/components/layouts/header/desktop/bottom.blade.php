@@ -1,6 +1,6 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border border-b border-s-0 border-e-0 border-t-0 px-[60px] max-1180:px-8">
+<div class="empiremart-header__desktop-main flex min-h-[78px] w-full justify-between border border-b border-s-0 border-e-0 border-t-0 px-[60px] max-1180:px-8">
     <!--
         This section will provide categories for the first, second, and third levels. If
         additional levels are required, users can customize them according to their needs.
@@ -56,7 +56,7 @@
         <div class="relative w-full">
             <form
                 action="{{ route('shop.search.index') }}"
-                class="flex max-w-[445px] items-center"
+                class="empiremart-header__search flex max-w-[445px] items-center"
                 role="search"
                 toolname="search_products"
                 tooldescription="{{ trans('shop::app.components.layouts.webmcp.search-products') }}"
@@ -76,7 +76,7 @@
                     name="query"
                     value="{{ request('query') }}"
                     toolparamdescription="{{ trans('shop::app.components.layouts.webmcp.search-products-query') }}"
-                    class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
+                    class="empiremart-header__search-input block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
                     minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
                     maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
                     placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
@@ -301,7 +301,7 @@
                 <span>
                     <a
                         :href="category.url"
-                        class="inline-block px-5 uppercase"
+                        class="empiremart-category-nav-link inline-block px-5 uppercase"
                     >
                         @{{ category.name }}
                     </a>
@@ -368,7 +368,7 @@
                     <span>
                         <a
                             :href="category.url"
-                            class="inline-block px-5 uppercase"
+                            class="empiremart-category-nav-link inline-block px-5 uppercase"
                         >
                             @{{ category.name }}
                         </a>
